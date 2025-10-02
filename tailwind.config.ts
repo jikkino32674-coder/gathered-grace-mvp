@@ -13,7 +13,13 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        serif: ['ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+      },
       colors: {
+        rose: 'hsl(var(--rose))',
+        sage: 'hsl(var(--sage))',
+        gold: 'hsl(var(--gold))',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -57,6 +63,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      boxShadow: {
+        soft: 'var(--shadow-soft)',
+        elevated: 'var(--shadow-elevated)',
+      },
+      transitionProperty: {
+        smooth: 'var(--transition-smooth)',
       },
       borderRadius: {
         lg: "var(--radius)",
