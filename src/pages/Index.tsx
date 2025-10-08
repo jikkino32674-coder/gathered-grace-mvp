@@ -25,7 +25,7 @@ const Index = () => {
       image: mendKitImage,
     },
     {
-      title: "Grieve Kit",
+      title: "Custom Care Kit",
       description: "A tender kit to honor loss: chamomile tea, handkerchief, candle, and a space-for-sorrow message card.",
       price: "$62",
       badge: "Limited",
