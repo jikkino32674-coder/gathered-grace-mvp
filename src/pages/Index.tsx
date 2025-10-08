@@ -19,7 +19,7 @@ const Index = () => {
     },
     {
       title: "Mend Kit",
-      description: "Support for physical healing—heat/cold lavender eye pillow, handmade unscented balm, herbal tea trio, and a hopeful message card.",
+      description: "Support for physical healing—heat/cold lavender eye pillow, handmade unscented balm, and a hopeful message card.",
       price: "$64",
       badge: "Ships in 2–3 days",
       image: mendKitImage,
