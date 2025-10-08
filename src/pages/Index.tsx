@@ -26,7 +26,7 @@ const Index = () => {
     },
     {
       title: "Custom Care Kit",
-      description: "A tender kit to honor loss: chamomile tea, handkerchief, candle, and a space-for-sorrow message card.",
+      description: "A personalized care kit curated to comfort and uplift. Includes a lavender eye pillow, a hardcover journal and pen, and a meaningful custom gift chosen specifically for the recipient. Every detail is gathered with intention and given in love.",
       price: "$62",
       badge: "Limited",
       image: grieveKitImage,
