@@ -12,7 +12,7 @@ const Index = () => {
   const products = [
     {
       title: "Rest & Receive Kit",
-      description: "A gentle, restorative kit for quiet moments: lavender eye pillow, soothing tea, soft journal, and a message card.",
+      description: "A gentle, restorative kit for quiet moments: lavender eye pillow, hard journal and pen, and a message card.",
       price: "$58",
       badge: "In stock",
       image: restReceiveImage,
