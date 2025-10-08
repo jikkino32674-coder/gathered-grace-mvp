@@ -11,25 +11,11 @@ import grieveKitImage from "@/assets/grieve-kit.jpg";
 const Index = () => {
   const products = [
     {
-      title: "Rest & Receive Kit",
-      description: "A gentle, restorative kit for quiet moments: lavender eye pillow, hard journal and pen, and a message card.",
-      price: "$58",
+      title: "Gracefully Gathered",
+      description: "A thoughtfully curated care kit designed to comfort and uplift. Includes a lavender eye pillow for gentle rest, a hardcover journal and pen for reflection, handmade unscented balm for healing, and a heartfelt message card. Every detail is gathered with intention and given in love.",
+      price: "$68",
       badge: "In stock",
       image: restReceiveImage,
-    },
-    {
-      title: "Mend Kit",
-      description: "Support for physical healing—heat/cold lavender eye pillow, handmade unscented balm, and a hopeful message card.",
-      price: "$64",
-      badge: "Ships in 2–3 days",
-      image: mendKitImage,
-    },
-    {
-      title: "Custom Care Kit",
-      description: "A personalized care kit curated to comfort and uplift. Includes a lavender eye pillow, a hardcover journal and pen, and a meaningful custom gift chosen specifically for the recipient. Every detail is gathered with intention and given in love.",
-      price: "$62",
-      badge: "Limited",
-      image: grieveKitImage,
     },
   ];
 
