@@ -13,7 +13,7 @@ const Index = () => {
   const products = [
     {
       title: "Gathered Grace Gift Box",
-      description: "Whether it's to celebrate, to comfort, or simply to remind someone they're loved, the Gracefully Gathered Gift Box offers a moment of grace. Each piece is chosen with intention — a lavender eye pillow for gentle rest, a hardcover journal and pen for reflection, a handmade unscented balm for soothing care, and a heartfelt message card — along with a carefully selected custom gift, chosen especially for the recipient. Gracefully gathered, given in love.",
+      description: "Whether it's to celebrate, to comfort, or simply to remind someone they're loved, the Gathered Grace Gift Box offers a moment of grace. Each piece is chosen with intention — a lavender eye pillow for gentle rest, a hardcover journal and pen for reflection, a handmade unscented balm for soothing care, and a heartfelt message card — along with a carefully selected custom gift, chosen especially for the recipient. Gracefully gathered, given in love.",
       price: "$68",
       badge: "In stock",
       image: restReceiveImage,
