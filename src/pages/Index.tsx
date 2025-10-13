@@ -19,7 +19,7 @@ const Index = () => {
       image: restReceiveImage,
     },
     {
-      title: "Handmade Lavender Eye Pillow – Flax & Lavender for Gentle Rest",
+      title: "Handmade Lavender Eye Pillow",
       description: "A soothing handmade eye pillow crafted with natural flax seed and dried lavender. Designed to ease tension and encourage calm, it can be gently warmed or cooled for comfort. Perfect for quiet moments of rest, reflection, or renewal — grace, gathered in every stitch.",
       price: "$22",
       badge: "In stock",
