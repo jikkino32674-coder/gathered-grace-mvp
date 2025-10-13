@@ -9,10 +9,10 @@ const ContactSection = () => {
         <p className="text-muted-foreground mb-4">
           Email{" "}
           <a 
-            href="mailto:hello@gatheredgrace.com" 
+            href="mailto:gatheredgrace.giving@gmail.com" 
             className="text-accent hover:underline"
           >
-            hello@gatheredgrace.com
+            gatheredgrace.giving@gmail.com
           </a>{" "}
           or message us on social media.
         </p>
