@@ -13,7 +13,7 @@ const Index = () => {
   const products = [
     {
       title: "Gathered Grace Gift Box",
-      description: "A curated gift box for any occasion — filled with soothing essentials and an intentionally chosen custom piece made just for them.",
+      description: "A curated gift box for any occasion — filled with soothing essentials and an intentionally custom piece chosen just for them.",
       price: "$68",
       badge: "In stock",
       image: restReceiveImage,
