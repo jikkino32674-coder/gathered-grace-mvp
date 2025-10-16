@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   title: string;
@@ -6,9 +7,10 @@ interface ProductCardProps {
   price: string;
   badge: string;
   image: string;
+  detailsLink?: string;
 }
 
-const ProductCard = ({ title, description, price, badge, image }: ProductCardProps) => {
+const ProductCard = ({ title, description, price, badge, image, detailsLink }: ProductCardProps) => {
   return (
     <article 
       className="bg-card rounded-2xl shadow-soft overflow-hidden border border-border/60 flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-elevated"
@@ -49,9 +51,15 @@ const ProductCard = ({ title, description, price, badge, image }: ProductCardPro
             <Button variant="rose" size="sm" aria-label={`Buy ${title}`}>
               Buy
             </Button>
-            <Button variant="sage" size="sm" aria-label={`Learn more about ${title}`}>
-              Details
-            </Button>
+            {detailsLink ? (
+              <Button variant="sage" size="sm" aria-label={`Learn more about ${title}`} asChild>
+                <Link to={detailsLink}>Details</Link>
+              </Button>
+            ) : (
+              <Button variant="sage" size="sm" aria-label={`Learn more about ${title}`}>
+                Details
+              </Button>
+            )}
           </div>
         </div>
       </div>

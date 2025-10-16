@@ -17,6 +17,7 @@ const Index = () => {
       price: "$68",
       badge: "In stock",
       image: restReceiveImage,
+      detailsLink: "/products/gathered-grace",
     },
     {
       title: "Handmade Lavender Eye Pillow",
