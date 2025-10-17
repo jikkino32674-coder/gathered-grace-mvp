@@ -25,6 +25,7 @@ const Index = () => {
       price: "$22",
       badge: "In stock",
       image: lavenderEyePillowImage,
+      detailsLink: "/products/lavender-eye-pillow",
     },
   ];
 
