@@ -1,19 +1,23 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import ValuePropsSection from "@/components/ValuePropsSection";
 import ProductCard from "@/components/ProductCard";
+import HowItWorksSection from "@/components/HowItWorksSection";
+import NominateSection from "@/components/NominateSection";
+import StorySection from "@/components/StorySection";
+import FAQSection from "@/components/FAQSection";
+import EmailCaptureSection from "@/components/EmailCaptureSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
-import mendKitImage from "@/assets/mend-kit.jpg";
-import grieveKitImage from "@/assets/grieve-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 
 const Index = () => {
   const products = [
     {
-      title: "Gathered Grace Gift Box",
-      description: "A curated gift box for any occasion — filled with soothing essentials and an intentionally custom piece chosen just for them.",
+      title: "Gracefully Gathered Gift Box",
+      description: "A meaningful way to mark any moment — joyful, healing, or simply in need of a little care. Includes lavender eye pillow, hardcover journal & pen, handmade unscented balm, heartfelt message card, and an intentionally chosen custom gift.",
       price: "$68",
       badge: "In stock",
       image: restReceiveImage,
@@ -36,22 +40,36 @@ const Index = () => {
       <main className="flex-1">
         <Hero />
         
-        <section 
-          id="products" 
-          className="container max-w-6xl mx-auto px-6 pb-8"
-          aria-label="Products"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard
-                key={product.title}
-                {...product}
-              />
-            ))}
+        <ValuePropsSection />
+        
+        <section id="products" className="py-16 md:py-20 bg-background" aria-label="Featured products">
+          <div className="container max-w-6xl mx-auto px-4">
+            <div className="flex items-end justify-between gap-4 mb-8">
+              <h2 className="font-serif text-3xl text-foreground">Featured gifts</h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.title}
+                  {...product}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
-        <div className="container max-w-6xl mx-auto px-6">
+        <HowItWorksSection />
+        
+        <NominateSection />
+        
+        <StorySection />
+        
+        <FAQSection />
+        
+        <EmailCaptureSection />
+
+        <div className="container max-w-6xl mx-auto px-6 py-8">
           <ContactSection />
         </div>
       </main>

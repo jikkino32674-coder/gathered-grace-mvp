@@ -1,13 +1,37 @@
+import { Button } from "@/components/ui/button";
+
 const Hero = () => {
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="py-12 sm:py-16" id="hero">
-      <div className="container max-w-6xl mx-auto px-6">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-3">
-          Gracefully gathered, given in love.
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
-          Thoughtfully curated care kits for moments of rest, healing, and tender grace.
-        </p>
+    <section className="relative overflow-hidden" id="hero">
+      <div className="container max-w-6xl mx-auto px-4 py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 className="font-serif text-4xl md:text-5xl text-foreground leading-tight">
+              Thoughtful care, beautifully gathered.
+            </h1>
+            <p className="mt-4 text-muted-foreground text-lg">
+              Curated gifts for any occasion — joyful, healing, or simply to show you care. Each
+              piece is chosen with intention and given in love.
+            </p>
+            <div className="mt-8 flex gap-3 flex-wrap">
+              <Button onClick={() => scrollToSection('products')}>
+                Shop gift boxes
+              </Button>
+              <Button variant="outline" onClick={() => scrollToSection('nominate')}>
+                Nominate someone
+              </Button>
+            </div>
+          </div>
+          <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-muted to-background shadow-soft flex items-center justify-center overflow-hidden">
+            <div className="text-center text-muted-foreground text-sm">
+              [Hero Image]
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
