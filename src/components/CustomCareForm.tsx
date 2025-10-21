@@ -279,9 +279,13 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label>Preferred Budget Range*</Label>
+              <Label>Preferred Budget Range for Additional Custom Gift*</Label>
               <RadioGroup value={formData.budget} onValueChange={(value) => updateField("budget", value)} required>
                 <div className="flex flex-wrap gap-2">
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="$20–$50" id="budget-20" />
+                    <span>$20–$50</span>
+                  </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
                     <RadioGroupItem value="$50–$75" id="budget-50" />
                     <span>$50–$75</span>
