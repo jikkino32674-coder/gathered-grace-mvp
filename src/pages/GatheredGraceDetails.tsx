@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CustomCareForm from "@/components/CustomCareForm";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 
 const GatheredGraceDetails = () => {
+  const [formOpen, setFormOpen] = useState(false);
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -71,7 +74,7 @@ const GatheredGraceDetails = () => {
               </div>
 
               <div className="flex gap-3 pt-6">
-                <Button variant="rose" size="lg" className="flex-1">
+                <Button variant="rose" size="lg" className="flex-1" onClick={() => setFormOpen(true)}>
                   Buy Now
                 </Button>
                 <Button variant="sage" size="lg" className="flex-1" asChild>
@@ -86,6 +89,7 @@ const GatheredGraceDetails = () => {
       </main>
       
       <Footer />
+      <CustomCareForm open={formOpen} onOpenChange={setFormOpen} />
     </div>
   );
 };

@@ -32,9 +32,6 @@ const Header = () => {
               FAQ
             </button>
           </div>
-          <Button onClick={() => scrollToSection('products')} size="sm">
-            Shop now
-          </Button>
         </nav>
       </div>
     </header>
