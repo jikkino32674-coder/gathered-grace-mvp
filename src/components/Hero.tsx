@@ -17,12 +17,9 @@ const Hero = () => {
               Curated gifts for any occasion — joyful, healing, or simply to show you care. Each
               piece is chosen with intention and given in love.
             </p>
-            <div className="mt-8 flex gap-3 flex-wrap">
+            <div className="mt-8">
               <Button onClick={() => scrollToSection('products')}>
                 Shop gift boxes
-              </Button>
-              <Button variant="outline" onClick={() => scrollToSection('nominate')}>
-                Nominate someone
               </Button>
             </div>
           </div>

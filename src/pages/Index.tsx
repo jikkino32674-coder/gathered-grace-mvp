@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import ValuePropsSection from "@/components/ValuePropsSection";
 import ProductCard from "@/components/ProductCard";
 import HowItWorksSection from "@/components/HowItWorksSection";
-import NominateSection from "@/components/NominateSection";
 import StorySection from "@/components/StorySection";
 import FAQSection from "@/components/FAQSection";
 import EmailCaptureSection from "@/components/EmailCaptureSection";
@@ -60,8 +59,6 @@ const Index = () => {
         </section>
 
         <HowItWorksSection />
-        
-        <NominateSection />
         
         <StorySection />
         
