@@ -19,7 +19,7 @@ const Hero = () => {
             </p>
             <div className="mt-8">
               <Button onClick={() => scrollToSection('products')}>
-                Shop gift boxes
+                Shop now
               </Button>
             </div>
           </div>
