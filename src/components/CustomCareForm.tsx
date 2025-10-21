@@ -24,6 +24,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     zip: "",
     recipient_email: "",
     occasion: "",
+    occasion_other: "",
     season: "",
     comforts: "",
     card_message: "",
@@ -72,6 +73,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
           zip: "",
           recipient_email: "",
           occasion: "",
+          occasion_other: "",
           season: "",
           comforts: "",
           card_message: "",
@@ -212,6 +214,19 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                 </SelectContent>
               </Select>
             </div>
+
+            {formData.occasion === "Other" && (
+              <div>
+                <Label htmlFor="occasion_other">Please specify the occasion</Label>
+                <Input
+                  id="occasion_other"
+                  name="occasion_other"
+                  placeholder="Enter the occasion or reason"
+                  value={formData.occasion_other}
+                  onChange={(e) => updateField("occasion_other", e.target.value)}
+                />
+              </div>
+            )}
 
             <div>
               <Label htmlFor="season">How would you describe their current season or situation?</Label>
