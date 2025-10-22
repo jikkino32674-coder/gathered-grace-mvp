@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useToast } from "@/hooks/use-toast";
+import { Check } from "lucide-react";
 
 interface CustomCareFormProps {
   open: boolean;
@@ -14,8 +14,9 @@ interface CustomCareFormProps {
 }
 
 const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useState({
     recipient_name: "",
     address: "",
@@ -24,7 +25,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     zip: "",
     recipient_email: "",
     occasion: "",
-    occasion_other: "",
     season: "",
     comforts: "",
     card_message: "",
@@ -42,10 +42,10 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     if (formData.website) return;
     
     setIsSubmitting(true);
+    setError(false);
 
     try {
-      // Replace with your actual endpoint
-      const ENDPOINT = "YOUR_WEB_APP_URL";
+      const ENDPOINT = "https://script.google.com/macros/s/AKfycby2zEiokF8aNFXZSOVaXNJFUEhUjqGHo-PEPgR-_ttQflwgwMiNeH86afPWhe13EuE1/exec";
       
       const payload = {
         ...formData,
@@ -61,10 +61,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
       const data = await response.json().catch(() => ({ ok: false }));
 
       if (response.ok && data.ok) {
-        toast({
-          title: "Thank you!",
-          description: "Your details have been received with care. We'll begin curating your Gathered Grace gift and reach out if we need any clarification. 💛",
-        });
+        setShowSuccess(true);
         setFormData({
           recipient_name: "",
           address: "",
@@ -73,7 +70,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
           zip: "",
           recipient_email: "",
           occasion: "",
-          occasion_other: "",
           season: "",
           comforts: "",
           card_message: "",
@@ -83,19 +79,18 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
           sender_email: "",
           website: "",
         });
-        onOpenChange(false);
       } else {
-        throw new Error("Submission failed");
+        setError(true);
       }
-    } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Please try again, or email us directly at gatheredgrace.giving@gmail.com",
-        variant: "destructive",
-      });
+    } catch (err) {
+      setError(true);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleStartAnother = () => {
+    setShowSuccess(false);
   };
 
   const updateField = (field: string, value: string) => {
@@ -105,14 +100,16 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="font-serif text-2xl">Gathered Grace — Custom Care Gift</DialogTitle>
-          <DialogDescription>
-            Let's create something special. Share a few details so we can curate a gift that feels personal and meaningful.
-          </DialogDescription>
-        </DialogHeader>
+        {!showSuccess ? (
+          <>
+            <DialogHeader>
+              <DialogTitle className="font-serif text-2xl">Gathered Grace — Custom Care Gift</DialogTitle>
+              <DialogDescription>
+                Let's create something special. Share a few details so we can curate a gift that feels personal and meaningful.
+              </DialogDescription>
+            </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
           {/* Recipient Details */}
           <fieldset className="space-y-4">
             <legend className="font-semibold text-lg mb-2">Recipient Details</legend>
@@ -154,18 +151,19 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                   autoComplete="address-level2"
                 />
               </div>
-              <div>
-                <Label htmlFor="state">State*</Label>
-                <Input
-                  id="state"
-                  name="state"
-                  required
-                  maxLength={2}
-                  value={formData.state}
-                  onChange={(e) => updateField("state", e.target.value.toUpperCase())}
-                  autoComplete="address-level1"
-                />
-              </div>
+            <div>
+              <Label htmlFor="state">State*</Label>
+              <Input
+                id="state"
+                name="state"
+                required
+                maxLength={2}
+                placeholder="NE"
+                value={formData.state}
+                onChange={(e) => updateField("state", e.target.value.toUpperCase())}
+                autoComplete="address-level1"
+              />
+            </div>
               <div>
                 <Label htmlFor="zip">ZIP*</Label>
                 <Input
@@ -214,18 +212,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               </Select>
             </div>
 
-            {formData.occasion === "Other" && (
-              <div>
-                <Label htmlFor="occasion_other">Please specify the occasion</Label>
-                <Input
-                  id="occasion_other"
-                  name="occasion_other"
-                  placeholder="Enter the occasion or reason"
-                  value={formData.occasion_other}
-                  onChange={(e) => updateField("occasion_other", e.target.value)}
-                />
-              </div>
-            )}
 
             <div>
               <Label htmlFor="season">How would you describe their current season or situation?</Label>
@@ -278,32 +264,16 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label>Preferred Budget for Additional Custom Gift*</Label>
+              <Label>Preferred Budget Range*</Label>
               <RadioGroup value={formData.budget} onValueChange={(value) => updateField("budget", value)} required>
                 <div className="flex flex-wrap gap-2">
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="No custom gift" id="budget-none" />
-                    <span>No custom gift</span>
+                    <RadioGroupItem value="$50–$75" id="budget-50-75" />
+                    <span>$50–$75</span>
                   </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$10" id="budget-10" />
-                    <span>$10</span>
-                  </Label>
-                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$20" id="budget-20" />
-                    <span>$20</span>
-                  </Label>
-                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$40" id="budget-40" />
-                    <span>$40</span>
-                  </Label>
-                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$50" id="budget-50" />
-                    <span>$50</span>
-                  </Label>
-                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$75" id="budget-75" />
-                    <span>$75</span>
+                    <RadioGroupItem value="$75–$100" id="budget-75-100" />
+                    <span>$75–$100</span>
                   </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
                     <RadioGroupItem value="$100+" id="budget-100" />
@@ -360,11 +330,33 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
             <Button type="submit" disabled={isSubmitting} className="w-full">
               {isSubmitting ? "Sending..." : "Send My Details"}
             </Button>
-            <p className="text-sm text-muted-foreground text-center">
-              We'll only use contact details for this gift. Never for marketing.
-            </p>
+            {!isSubmitting && (
+              <p className="text-sm text-muted-foreground text-center">
+                We'll only use contact details for this gift. Never for marketing.
+              </p>
+            )}
+            {error && (
+              <div className="text-sm text-destructive text-center p-3 bg-destructive/10 rounded-lg" role="alert">
+                Hmm, something went wrong submitting the form. Please try again, or email us directly.
+              </div>
+            )}
           </div>
         </form>
+          </>
+        ) : (
+          <div className="text-center py-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <div className="inline-flex items-center justify-center w-16 h-16 mb-4 text-primary animate-in zoom-in duration-500">
+              <Check className="w-12 h-12" strokeWidth={3} />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Details received with care.</h3>
+            <p className="text-muted-foreground mb-6">
+              We'll begin curating your Gathered Grace gift and reach out if any clarification is needed. 💛
+            </p>
+            <Button variant="outline" onClick={handleStartAnother}>
+              Start another submission
+            </Button>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
