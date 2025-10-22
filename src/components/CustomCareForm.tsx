@@ -161,7 +161,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                   name="state"
                   required
                   maxLength={2}
-                  placeholder="NE"
                   value={formData.state}
                   onChange={(e) => updateField("state", e.target.value.toUpperCase())}
                   autoComplete="address-level1"
@@ -282,6 +281,10 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               <Label>Preferred Budget for Additional Custom Gift*</Label>
               <RadioGroup value={formData.budget} onValueChange={(value) => updateField("budget", value)} required>
                 <div className="flex flex-wrap gap-2">
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="No custom gift" id="budget-none" />
+                    <span>No custom gift</span>
+                  </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
                     <RadioGroupItem value="$10" id="budget-10" />
                     <span>$10</span>
