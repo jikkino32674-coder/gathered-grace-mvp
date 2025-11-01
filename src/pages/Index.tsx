@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ValuePropsSection from "@/components/ValuePropsSection";
@@ -15,6 +16,7 @@ import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const products = [
     {
@@ -55,7 +57,13 @@ const Index = () => {
                 <ProductCard
                   key={product.title}
                   {...product}
-                  onBuyClick={product.title === "Gracefully Gathered Gift Box" ? () => setIsFormOpen(true) : undefined}
+                  onBuyClick={
+                    product.title === "Gracefully Gathered Gift Box" 
+                      ? () => setIsFormOpen(true) 
+                      : product.title === "Handmade Lavender Eye Pillow"
+                      ? () => navigate("/payment")
+                      : undefined
+                  }
                 />
               ))}
             </div>
