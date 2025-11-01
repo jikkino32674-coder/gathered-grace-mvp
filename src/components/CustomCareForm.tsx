@@ -343,9 +343,24 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
           />
 
           <div className="space-y-3">
-            <Button type="submit" disabled={isSubmitting} className="w-full">
-              {isSubmitting ? "Sending..." : "Send My Details"}
-            </Button>
+            <div className="flex gap-3">
+              <Button 
+                type="button"
+                variant="outline"
+                className="flex-1"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                type="submit" 
+                variant="rose" 
+                className="flex-1"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Send My Details"}
+              </Button>
+            </div>
             {!isSubmitting && (
               <p className="text-sm text-muted-foreground text-center">
                 We'll only use contact details for this gift. Never for marketing.
