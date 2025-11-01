@@ -264,16 +264,32 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label>Preferred Budget Range*</Label>
+              <Label>Preferred budget for additional custom gift*</Label>
               <RadioGroup value={formData.budget} onValueChange={(value) => updateField("budget", value)} required>
                 <div className="flex flex-wrap gap-2">
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$50–$75" id="budget-50-75" />
-                    <span>$50–$75</span>
+                    <RadioGroupItem value="No custom gift" id="budget-none" />
+                    <span>No custom gift</span>
                   </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
-                    <RadioGroupItem value="$75–$100" id="budget-75-100" />
-                    <span>$75–$100</span>
+                    <RadioGroupItem value="$10" id="budget-10" />
+                    <span>$10</span>
+                  </Label>
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="$20" id="budget-20" />
+                    <span>$20</span>
+                  </Label>
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="$40" id="budget-40" />
+                    <span>$40</span>
+                  </Label>
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="$50" id="budget-50" />
+                    <span>$50</span>
+                  </Label>
+                  <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
+                    <RadioGroupItem value="$75" id="budget-75" />
+                    <span>$75</span>
                   </Label>
                   <Label className="flex items-center gap-2 border border-border rounded-full px-4 py-2 cursor-pointer hover:bg-muted">
                     <RadioGroupItem value="$100+" id="budget-100" />
