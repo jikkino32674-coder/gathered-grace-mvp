@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ValuePropsSection from "@/components/ValuePropsSection";
@@ -8,11 +9,13 @@ import FAQSection from "@/components/FAQSection";
 import EmailCaptureSection from "@/components/EmailCaptureSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import CustomCareForm from "@/components/CustomCareForm";
 
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 
 const Index = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const products = [
     {
       title: "Gracefully Gathered Gift Box",
@@ -52,6 +55,7 @@ const Index = () => {
                 <ProductCard
                   key={product.title}
                   {...product}
+                  onBuyClick={product.title === "Gracefully Gathered Gift Box" ? () => setIsFormOpen(true) : undefined}
                 />
               ))}
             </div>
@@ -72,6 +76,8 @@ const Index = () => {
       </main>
       
       <Footer />
+      
+      <CustomCareForm open={isFormOpen} onOpenChange={setIsFormOpen} />
     </div>
   );
 };
