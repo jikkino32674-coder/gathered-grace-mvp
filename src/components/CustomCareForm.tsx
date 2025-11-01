@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,7 @@ interface CustomCareFormProps {
 }
 
 const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -61,24 +63,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
       const data = await response.json().catch(() => ({ ok: false }));
 
       if (response.ok && data.ok) {
-        setShowSuccess(true);
-        setFormData({
-          recipient_name: "",
-          address: "",
-          city: "",
-          state: "",
-          zip: "",
-          recipient_email: "",
-          occasion: "",
-          season: "",
-          comforts: "",
-          card_message: "",
-          name_on_card: "Include my name",
-          budget: "",
-          sender_name: "",
-          sender_email: "",
-          website: "",
-        });
+        onOpenChange(false);
+        navigate("/payment");
       } else {
         setError(true);
       }
@@ -358,7 +344,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                 className="flex-1"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Sending..." : "Send My Details"}
+                {isSubmitting ? "Sending..." : "Send my details and proceed to payment"}
               </Button>
             </div>
             {!isSubmitting && (
