@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 interface CustomCareFormProps {
   open: boolean;
@@ -47,6 +48,37 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     setError(false);
 
     try {
+      // Save to Supabase as B2C lead
+      const supabaseResult = await supabase
+        .from('b2c_leads')
+        .insert({
+          email: formData.sender_email.trim(),
+          full_name: formData.sender_name.trim(),
+          lead_type: 'custom_care_form',
+          source_page: window.location.href,
+          website_type: 'b2c',
+          metadata: {
+            recipient_name: formData.recipient_name,
+            recipient_email: formData.recipient_email || null,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zip: formData.zip,
+            occasion: formData.occasion || null,
+            season: formData.season || null,
+            comforts: formData.comforts || null,
+            card_message: formData.card_message || null,
+            name_on_card: formData.name_on_card,
+            budget: formData.budget || null,
+          },
+        });
+
+      if (supabaseResult.error) {
+        console.error('Error saving to Supabase:', supabaseResult.error);
+        // Continue anyway - don't block the form submission
+      }
+
+      // Also send to Google Apps Script (existing endpoint)
       const ENDPOINT = "https://script.google.com/macros/s/AKfycby2zEiokF8aNFXZSOVaXNJFUEhUjqGHo-PEPgR-_ttQflwgwMiNeH86afPWhe13EuE1/exec";
       
       const payload = {
@@ -69,6 +101,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
         setError(true);
       }
     } catch (err) {
+      console.error('Error submitting form:', err);
       setError(true);
     } finally {
       setIsSubmitting(false);

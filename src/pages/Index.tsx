@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -11,6 +11,7 @@ import EmailCaptureSection from "@/components/EmailCaptureSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CustomCareForm from "@/components/CustomCareForm";
+import DiscountPopup from "@/components/DiscountPopup";
 
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
@@ -18,6 +19,22 @@ import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 const Index = () => {
   const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isDiscountPopupOpen, setIsDiscountPopupOpen] = useState(false);
+
+  // Auto-trigger discount popup after 3 seconds on first visit
+  useEffect(() => {
+    const hasSeenPopup = localStorage.getItem('discount_popup_seen');
+    
+    if (!hasSeenPopup) {
+      const timer = setTimeout(() => {
+        setIsDiscountPopupOpen(true);
+        localStorage.setItem('discount_popup_seen', 'true');
+      }, 3000); // Show after 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const products = [
     {
       title: "Gracefully Gathered Gift Box",
@@ -86,6 +103,7 @@ const Index = () => {
       <Footer />
       
       <CustomCareForm open={isFormOpen} onOpenChange={setIsFormOpen} />
+      <DiscountPopup open={isDiscountPopupOpen} onOpenChange={setIsDiscountPopupOpen} />
     </div>
   );
 };
