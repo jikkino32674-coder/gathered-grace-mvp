@@ -2,17 +2,31 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 
 const LavenderEyePillowDetails = () => {
+  const navigate = useNavigate();
+  
+  const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate('/');
+    setTimeout(() => {
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1">
         <article className="container max-w-6xl mx-auto px-6 py-12">
-          <Link to="/#products" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <Link 
+            to="/" 
+            onClick={handleBackClick}
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+          >
             <ArrowLeft className="w-4 h-4" />
             Back to products
           </Link>
