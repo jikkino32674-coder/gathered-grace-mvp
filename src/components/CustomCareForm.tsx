@@ -48,45 +48,48 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     setError(false);
 
     try {
-      // Save to Supabase as B2C lead
-      const supabaseResult = await supabase
-        .from('b2c_leads')
-        .insert({
-          email: formData.sender_email.trim(),
-          full_name: formData.sender_name.trim(),
-          lead_type: 'custom_care_form',
-          source_page: window.location.href,
-          website_type: 'b2c',
-          metadata: {
-            recipient_name: formData.recipient_name,
-            recipient_email: formData.recipient_email || null,
-            address: formData.address,
-            city: formData.city,
-            state: formData.state,
-            zip: formData.zip,
-            occasion: formData.occasion || null,
-            season: formData.season || null,
-            comforts: formData.comforts || null,
-            card_message: formData.card_message || null,
-            name_on_card: formData.name_on_card,
-            budget: formData.budget || null,
-          },
-        });
+      // Save to Supabase as B2C lead (optional - continue even if this fails)
+      try {
+        const supabaseResult = await supabase
+          .from('b2c_leads')
+          .insert({
+            email: formData.sender_email.trim(),
+            full_name: formData.sender_name.trim(),
+            lead_type: 'custom_care_form',
+            source_page: window.location.href,
+            website_type: 'b2c',
+            metadata: {
+              recipient_name: formData.recipient_name,
+              recipient_email: formData.recipient_email || null,
+              address: formData.address,
+              city: formData.city,
+              state: formData.state,
+              zip: formData.zip,
+              occasion: formData.occasion || null,
+              season: formData.season || null,
+              comforts: formData.comforts || null,
+              card_message: formData.card_message || null,
+              name_on_card: formData.name_on_card,
+              budget: formData.budget || null,
+            },
+          });
 
-      if (supabaseResult.error) {
-        console.error('Error saving to Supabase:', supabaseResult.error);
-        // Continue anyway - don't block the form submission
+        if (supabaseResult.error) {
+          console.error('Error saving to Supabase:', supabaseResult.error);
+        }
+      } catch (supabaseErr) {
+        console.error('Supabase error (non-blocking):', supabaseErr);
       }
 
-      // Also send to Google Apps Script (existing endpoint)
-      const ENDPOINT = "https://script.google.com/macros/s/AKfycby2zEiokF8aNFXZSOVaXNJFUEhUjqGHo-PEPgR-_ttQflwgwMiNeH86afPWhe13EuE1/exec";
+      // Submit to Vercel API endpoint (sends email notification)
+      const apiEndpoint = import.meta.env.VITE_API_URL || '/api/submit-form';
       
       const payload = {
         ...formData,
         source_page: window.location.href,
       };
 
-      const response = await fetch(ENDPOINT, {
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -95,9 +98,11 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
       const data = await response.json().catch(() => ({ ok: false }));
 
       if (response.ok && data.ok) {
+        // Success - close form and navigate to payment
         onOpenChange(false);
         navigate("/payment");
       } else {
+        console.error('Form submission error:', data);
         setError(true);
       }
     } catch (err) {
