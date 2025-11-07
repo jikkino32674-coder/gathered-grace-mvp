@@ -72,13 +72,16 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               name_on_card: formData.name_on_card,
               budget: formData.budget || null,
             },
-          });
+          })
+          .select();
 
         if (supabaseResult.error) {
-          console.error('Error saving to Supabase:', supabaseResult.error);
+          console.error('⚠️ Error saving to Supabase (non-blocking):', supabaseResult.error);
+        } else {
+          console.log('✅ Form data saved to Supabase database:', supabaseResult.data?.[0]?.id);
         }
       } catch (supabaseErr) {
-        console.error('Supabase error (non-blocking):', supabaseErr);
+        console.error('⚠️ Supabase error (non-blocking):', supabaseErr);
       }
 
       // Submit to Vercel API endpoint (sends email notification via Resend)
