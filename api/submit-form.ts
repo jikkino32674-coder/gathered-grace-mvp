@@ -73,6 +73,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     console.log('📧 Sending to email:', recipientEmail);
 
+    // Get the base URL for CSV download link
+    const host = req.headers.host || 'momgatheredgrace.vercel.app';
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const baseUrl = `${protocol}://${host}`;
+    
+    // Encode form data for CSV download link
+    const encodedData = Buffer.from(JSON.stringify(formData)).toString('base64');
+    const csvDownloadUrl = `${baseUrl}/api/download-csv?data=${encodedData}`;
+
     // Format the email content
     const emailHtml = `
       <!DOCTYPE html>
@@ -171,12 +180,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </div>
             ` : ''}
 
-            ${formData.source_page ? `
             <div class="footer">
-              <p><strong>Source Page:</strong> ${formData.source_page}</p>
-              <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+              <div style="margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+                <p style="margin-bottom: 15px; font-size: 14px; color: #666;">
+                  Need to import this into Google Sheets?
+                </p>
+                <a href="${csvDownloadUrl}" 
+                   style="display: inline-block; padding: 12px 24px; background-color: #6a0505; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px;">
+                  📥 Download as CSV
+                </a>
+              </div>
+              ${formData.source_page ? `
+              <p style="margin-top: 20px; font-size: 12px; color: #666;"><strong>Source Page:</strong> ${formData.source_page}</p>
+              ` : ''}
+              <p style="margin-top: 10px; font-size: 12px; color: #666;"><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
             </div>
-            ` : ''}
           </div>
         </body>
       </html>
@@ -209,6 +227,8 @@ Name on Card: ${formData.name_on_card}
 
 ${formData.source_page ? `Source: ${formData.source_page}` : ''}
 Submitted: ${new Date().toLocaleString()}
+
+Download CSV: ${csvDownloadUrl}
     `.trim();
 
     // Send email using Resend
