@@ -1,7 +1,12 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with API key validation
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  console.warn('⚠️ WARNING: RESEND_API_KEY is not set in environment variables');
+}
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 interface FormData {
   recipient_name: string;
@@ -23,6 +28,14 @@ interface FormData {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Handle OPTIONS request for CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return res.status(200).end();
+  }
+
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -32,10 +45,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
 
   try {
     const formData: FormData = req.body;
@@ -192,8 +201,25 @@ Submitted: ${new Date().toLocaleString()}
     `.trim();
 
     // Send email using Resend
+    if (!resend) {
+      console.error('❌ RESEND_API_KEY is not configured. Cannot send email.');
+      return res.status(500).json({
+        ok: false,
+        error: 'Email service not configured',
+        message: 'RESEND_API_KEY environment variable is missing',
+      });
+    }
+
+    // Validate and format the from email
+    let fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+    // Ensure proper format: "Name <email@domain.com>" or "email@domain.com"
+    if (!fromEmail.includes('<') && !fromEmail.includes('>')) {
+      // If it's just an email, use default name
+      fromEmail = `Gathered Grace <${fromEmail}>`;
+    }
+    
     const emailResult = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || 'Gathered Grace <onboarding@resend.dev>',
+      from: fromEmail,
       to: recipientEmail,
       replyTo: formData.sender_email,
       subject: `🎁 New Gift Order from ${formData.sender_name} - ${formData.recipient_name}`,
@@ -201,13 +227,19 @@ Submitted: ${new Date().toLocaleString()}
       text: emailText,
     });
 
-    // If email fails, still return success but log the error
+    // Check for errors
     if (emailResult.error) {
-      console.error('Error sending email:', emailResult.error);
-      // Don't fail the request - email service might be down
+      console.error('❌ Error sending email:', JSON.stringify(emailResult.error, null, 2));
+      return res.status(500).json({
+        ok: false,
+        error: 'Failed to send email',
+        message: emailResult.error.message || 'Unknown error',
+        details: emailResult.error,
+      });
     }
 
     // Return success response
+    console.log('✅ Email sent successfully:', emailResult.data?.id);
     return res.status(200).json({
       ok: true,
       message: 'Form submitted successfully',
