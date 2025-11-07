@@ -59,8 +59,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Get the recipient email (default to your business email)
-    const recipientEmail = process.env.FORM_RECIPIENT_EMAIL || 'gatheredgrace.giving@gmail.com';
+    // Get the recipient email - should be gatheredgrace.giving@gmail.com
+    let recipientEmail = process.env.FORM_RECIPIENT_EMAIL || 'gatheredgrace.giving@gmail.com';
+    
+    // Clean up the email - remove any formatting issues
+    recipientEmail = recipientEmail.trim();
+    // Remove any name formatting if present (just get the email part)
+    if (recipientEmail.includes('<') && recipientEmail.includes('>')) {
+      const match = recipientEmail.match(/<([^>]+)>/);
+      if (match) {
+        recipientEmail = match[1].trim();
+      }
+    }
+    console.log('📧 Sending to email:', recipientEmail);
 
     // Format the email content
     const emailHtml = `
@@ -211,12 +222,23 @@ Submitted: ${new Date().toLocaleString()}
     }
 
     // Validate and format the from email
-    let fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-    // Ensure proper format: "Name <email@domain.com>" or "email@domain.com"
-    if (!fromEmail.includes('<') && !fromEmail.includes('>')) {
-      // If it's just an email, use default name
+    // Resend requires a verified domain or uses onboarding@resend.dev for testing
+    let fromEmail = process.env.RESEND_FROM_EMAIL;
+    
+    // If RESEND_FROM_EMAIL is not set or empty, use Resend's default
+    if (!fromEmail || fromEmail.trim() === '') {
+      fromEmail = 'onboarding@resend.dev';
+    }
+    
+    // Clean up the format - remove any extra whitespace
+    fromEmail = fromEmail.trim();
+    
+    // If it doesn't contain < >, assume it's just an email and add default name
+    if (!fromEmail.includes('<') && !fromEmail.includes('>') && fromEmail.includes('@')) {
       fromEmail = `Gathered Grace <${fromEmail}>`;
     }
+    
+    console.log('📧 Using from email:', fromEmail);
     
     const emailResult = await resend.emails.send({
       from: fromEmail,
