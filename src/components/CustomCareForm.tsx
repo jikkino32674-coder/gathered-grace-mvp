@@ -81,28 +81,73 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
         console.error('Supabase error (non-blocking):', supabaseErr);
       }
 
-      // Submit to Vercel API endpoint (sends email notification)
-      const apiEndpoint = import.meta.env.VITE_API_URL || '/api/submit-form';
-      
+      // Submit to both Google Apps Script (existing) AND Vercel API (email notification)
       const payload = {
         ...formData,
         source_page: window.location.href,
       };
 
-      const response = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      // Submit to Google Apps Script (existing endpoint)
+      const googleAppsScriptEndpoint = "https://script.google.com/macros/s/AKfycby2zEiokF8aNFXZSOVaXNJFUEhUjqGHo-PEPgR-_ttQflwgwMiNeH86afPWhe13EuE1/exec";
+      
+      // Submit to Vercel API endpoint (sends email notification via Resend)
+      const apiEndpoint = import.meta.env.VITE_API_URL || '/api/submit-form';
 
-      const data = await response.json().catch(() => ({ ok: false }));
+      // Submit to both endpoints in parallel (don't wait for both to succeed)
+      const [googleResponse, emailResponse] = await Promise.allSettled([
+        fetch(googleAppsScriptEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).catch(err => {
+          console.error('Google Apps Script error (non-blocking):', err);
+          return null;
+        }),
+        fetch(apiEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).catch(err => {
+          console.error('Email API error (non-blocking):', err);
+          return null;
+        }),
+      ]);
 
-      if (response.ok && data.ok) {
-        // Success - close form and navigate to payment
+      // Check Google Apps Script response (primary endpoint)
+      let googleSuccess = false;
+      if (googleResponse.status === 'fulfilled' && googleResponse.value) {
+        try {
+          const googleData = await googleResponse.value.json().catch(() => ({ ok: false }));
+          googleSuccess = googleResponse.value.ok && googleData.ok;
+        } catch (err) {
+          console.error('Error parsing Google Apps Script response:', err);
+        }
+      }
+
+      // Check email API response (secondary - for notifications)
+      let emailSuccess = false;
+      if (emailResponse.status === 'fulfilled' && emailResponse.value) {
+        try {
+          const emailData = await emailResponse.value.json().catch(() => ({ ok: false }));
+          emailSuccess = emailResponse.value.ok && emailData.ok;
+        } catch (err) {
+          console.error('Error parsing email API response:', err);
+        }
+      }
+
+      // Log email status for debugging
+      if (emailSuccess) {
+        console.log('✅ Email notification sent successfully');
+      } else {
+        console.warn('⚠️ Email notification failed, but continuing...');
+      }
+
+      // Form is successful if Google Apps Script succeeds (primary endpoint)
+      if (googleSuccess) {
         onOpenChange(false);
         navigate("/payment");
       } else {
-        console.error('Form submission error:', data);
+        console.error('Form submission failed to Google Apps Script');
         setError(true);
       }
     } catch (err) {
