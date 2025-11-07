@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import GatheredGraceDetails from "./pages/GatheredGraceDetails";
 import LavenderEyePillowDetails from "./pages/LavenderEyePillowDetails";
+import HandmadeBalmDetails from "./pages/HandmadeBalmDetails";
+import JournalPenDetails from "./pages/JournalPenDetails";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/products/gathered-grace" element={<GatheredGraceDetails />} />
           <Route path="/products/lavender-eye-pillow" element={<LavenderEyePillowDetails />} />
+          <Route path="/products/handmade-balm" element={<HandmadeBalmDetails />} />
+          <Route path="/products/journal-pen" element={<JournalPenDetails />} />
           <Route path="/payment" element={<Payment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

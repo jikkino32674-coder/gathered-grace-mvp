@@ -15,6 +15,8 @@ import DiscountPopup from "@/components/DiscountPopup";
 
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
+import handmadeBalmImage from "@/assets/handmade-balm.png";
+import journalPenImage from "@/assets/journal-pen.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -51,6 +53,22 @@ const Index = () => {
       badge: "In stock",
       image: lavenderEyePillowImage,
       detailsLink: "/products/lavender-eye-pillow",
+    },
+    {
+      title: "Handmade Balm",
+      description: "A soothing, all-purpose balm handcrafted with beeswax and natural oils — simple care, made with grace",
+      price: "Price TBD",
+      badge: "In stock",
+      image: handmadeBalmImage,
+      detailsLink: "/products/handmade-balm",
+    },
+    {
+      title: "Journal and Pen Set",
+      description: "A timeless hardcover notebook and pen set — created for moments of reflection, gratitude, and quiet grace",
+      price: "Price TBD",
+      badge: "In stock",
+      image: journalPenImage,
+      detailsLink: "/products/journal-pen",
     },
   ];
 
