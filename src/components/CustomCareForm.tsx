@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 interface CustomCareFormProps {
   open: boolean;
@@ -103,7 +104,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
       if (response.ok && data.ok) {
         console.log('✅ Form submitted successfully');
         onOpenChange(false);
-        navigate("/payment");
+        // Redirect to Stripe payment link for Gathered Grace Gift Box
+        window.location.href = STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.paymentLink;
       } else {
         console.error('Form submission error:', data);
         setError(true);

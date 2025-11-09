@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import journalPenImage from "@/assets/journal-pen.png";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const JournalPenDetails = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const JournalPenDetails = () => {
                   Journal and Pen Set
                 </h1>
                 <p className="text-xl font-semibold text-foreground mb-6">
-                  Price TBD
+                  {STRIPE_PRODUCTS.JOURNAL_PEN_SET.price}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   A timeless pair for quiet reflection and gentle intention.
@@ -62,7 +63,12 @@ const JournalPenDetails = () => {
               </div>
 
               <div className="flex gap-3 pt-6">
-                <Button variant="rose" size="lg" className="flex-1">
+                <Button 
+                  variant="rose" 
+                  size="lg" 
+                  className="flex-1"
+                  onClick={() => window.location.href = STRIPE_PRODUCTS.JOURNAL_PEN_SET.paymentLink}
+                >
                   Buy Now
                 </Button>
                 <Button variant="sage" size="lg" className="flex-1" asChild>

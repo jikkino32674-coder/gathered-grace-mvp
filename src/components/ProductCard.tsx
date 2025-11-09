@@ -9,9 +9,19 @@ interface ProductCardProps {
   image: string;
   detailsLink?: string;
   onBuyClick?: () => void;
+  purchaseLink?: string;
 }
 
-const ProductCard = ({ title, description, price, badge, image, detailsLink, onBuyClick }: ProductCardProps) => {
+const ProductCard = ({
+  title,
+  description,
+  price,
+  badge,
+  image,
+  detailsLink,
+  onBuyClick,
+  purchaseLink,
+}: ProductCardProps) => {
   return (
     <article 
       className="bg-card rounded-2xl shadow-soft overflow-hidden border border-border/60 flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-elevated"
@@ -49,9 +59,21 @@ const ProductCard = ({ title, description, price, badge, image, detailsLink, onB
             <span className="text-sm text-gold">{badge}</span>
           </div>
           <div className="flex gap-2">
-            <Button variant="rose" size="sm" aria-label={`Buy ${title}`} onClick={onBuyClick}>
-              Buy
-            </Button>
+            {onBuyClick ? (
+              <Button variant="rose" size="sm" aria-label={`Buy ${title}`} onClick={onBuyClick}>
+                Buy
+              </Button>
+            ) : purchaseLink ? (
+              <Button variant="rose" size="sm" aria-label={`Buy ${title}`} asChild>
+                <a href={purchaseLink}>
+                  Buy
+                </a>
+              </Button>
+            ) : (
+              <Button variant="rose" size="sm" aria-label={`Buy ${title}`} disabled>
+                Buy
+              </Button>
+            )}
             {detailsLink ? (
               <Button variant="sage" size="sm" aria-label={`Learn more about ${title}`} asChild>
                 <Link to={detailsLink}>Details</Link>

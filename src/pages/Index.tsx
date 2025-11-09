@@ -17,6 +17,7 @@ import restReceiveImage from "@/assets/rest-receive-kit.jpg";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 import handmadeBalmImage from "@/assets/handmade-balm.png";
 import journalPenImage from "@/assets/journal-pen.png";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Index = () => {
     {
       title: "Gracefully Gathered Gift Box",
       description: "A meaningful way to mark any moment — joyful, healing, or simply in need of a little care. Includes lavender eye pillow, hardcover journal & pen, handmade unscented balm, heartfelt message card, and an intentionally chosen custom gift.",
-      price: "$68",
+      price: STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.price,
       badge: "In stock",
       image: restReceiveImage,
       detailsLink: "/products/gathered-grace",
@@ -49,7 +50,7 @@ const Index = () => {
     {
       title: "Handmade Lavender Eye Pillow",
       description: "A calming handmade eye pillow filled with flax seed and lavender — warm or cool for moments of gentle rest.",
-      price: "$22",
+      price: STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.price,
       badge: "In stock",
       image: lavenderEyePillowImage,
       detailsLink: "/products/lavender-eye-pillow",
@@ -57,7 +58,7 @@ const Index = () => {
     {
       title: "Handmade Balm",
       description: "A soothing, all-purpose balm handcrafted with beeswax and natural oils — simple care, made with grace",
-      price: "Price TBD",
+      price: STRIPE_PRODUCTS.HANDMADE_BALM.price,
       badge: "In stock",
       image: handmadeBalmImage,
       detailsLink: "/products/handmade-balm",
@@ -65,7 +66,7 @@ const Index = () => {
     {
       title: "Journal and Pen Set",
       description: "A timeless hardcover notebook and pen set — created for moments of reflection, gratitude, and quiet grace",
-      price: "Price TBD",
+      price: STRIPE_PRODUCTS.JOURNAL_PEN_SET.price,
       badge: "In stock",
       image: journalPenImage,
       detailsLink: "/products/journal-pen",
@@ -96,7 +97,11 @@ const Index = () => {
                     product.title === "Gracefully Gathered Gift Box" 
                       ? () => setIsFormOpen(true) 
                       : product.title === "Handmade Lavender Eye Pillow"
-                      ? () => navigate("/payment")
+                      ? () => window.location.href = STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink
+                      : product.title === "Handmade Balm"
+                      ? () => window.location.href = STRIPE_PRODUCTS.HANDMADE_BALM.paymentLink
+                      : product.title === "Journal and Pen Set"
+                      ? () => window.location.href = STRIPE_PRODUCTS.JOURNAL_PEN_SET.paymentLink
                       : undefined
                   }
                 />

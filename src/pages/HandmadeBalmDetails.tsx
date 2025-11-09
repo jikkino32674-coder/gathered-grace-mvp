@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import handmadeBalmImage from "@/assets/handmade-balm.png";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const HandmadeBalmDetails = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const HandmadeBalmDetails = () => {
                   Handmade Balm
                 </h1>
                 <p className="text-xl font-semibold text-foreground mb-6">
-                  Price TBD
+                  {STRIPE_PRODUCTS.HANDMADE_BALM.price}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   Crafted in small batches with natural ingredients and a touch of beeswax, this balm softens and soothes dry skin while offering the quiet comfort of something made by hand. Its natural texture melts on contact, leaving behind a subtle, grounded calm — a reminder to pause and tend to yourself with grace.
@@ -59,7 +60,12 @@ const HandmadeBalmDetails = () => {
               </div>
 
               <div className="flex gap-3 pt-6">
-                <Button variant="rose" size="lg" className="flex-1">
+                <Button 
+                  variant="rose" 
+                  size="lg" 
+                  className="flex-1"
+                  onClick={() => window.location.href = STRIPE_PRODUCTS.HANDMADE_BALM.paymentLink}
+                >
                   Buy Now
                 </Button>
                 <Button variant="sage" size="lg" className="flex-1" asChild>

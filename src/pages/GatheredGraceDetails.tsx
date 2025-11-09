@@ -6,6 +6,7 @@ import CustomCareForm from "@/components/CustomCareForm";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import restReceiveImage from "@/assets/rest-receive-kit.jpg";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const GatheredGraceDetails = () => {
   const [formOpen, setFormOpen] = useState(false);
@@ -54,7 +55,7 @@ const GatheredGraceDetails = () => {
                   Gathered Grace Gift Box
                 </h1>
                 <p className="text-xl font-semibold text-foreground mb-6">
-                  Starting at $68
+                  Starting at {STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.price}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   Whether it's to celebrate, to comfort, or simply to remind someone they're loved, the Gathered Grace Gift Box is a meaningful way to mark any moment — joyful, healing, or simply in need of a little care. Each piece is chosen with intention — a lavender eye pillow for gentle rest, a hardcover journal and pen for reflection, a handmade unscented balm for soothing care, and a heartfelt message card — along with a carefully selected custom gift chosen especially for the recipient. Gracefully gathered, given in love.
