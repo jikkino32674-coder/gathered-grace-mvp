@@ -11,7 +11,7 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
             <h1 className="font-serif text-4xl md:text-5xl text-foreground leading-tight">
-              Thoughtful care, beautifully gathered.
+              Gracefully gathered, given in Love.
             </h1>
             <p className="mt-4 text-muted-foreground text-lg">
               Curated gifts for any occasion — joyful, healing, or simply to show you care. Each
