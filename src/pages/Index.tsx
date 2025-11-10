@@ -57,7 +57,7 @@ const Index = () => {
     },
     {
       title: "Handmade Balm",
-      description: "A soothing, all-purpose balm handcrafted with beeswax and natural oils — simple care, made with grace",
+      description: "A soothing, all-purpose balm handcrafted with beeswax and natural oils — simple care, made with grace.",
       price: STRIPE_PRODUCTS.HANDMADE_BALM.price,
       badge: "In stock",
       image: handmadeBalmImage,
@@ -65,7 +65,7 @@ const Index = () => {
     },
     {
       title: "Journal and Pen Set",
-      description: "A timeless hardcover notebook and pen set — created for moments of reflection, gratitude, and quiet grace",
+      description: "A timeless hardcover notebook and pen set — created for moments of reflection, gratitude, and quiet grace.",
       price: STRIPE_PRODUCTS.JOURNAL_PEN_SET.price,
       badge: "In stock",
       image: journalPenImage,
