@@ -71,11 +71,6 @@ const JournalPenDetails = () => {
                 >
                   Buy Now
                 </Button>
-                <Button variant="sage" size="lg" className="flex-1" asChild>
-                  <a href="mailto:gatheredgrace.giving@gmail.com">
-                    Contact Us
-                  </a>
-                </Button>
               </div>
             </div>
           </div>
