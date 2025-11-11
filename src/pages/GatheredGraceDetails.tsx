@@ -67,15 +67,15 @@ const GatheredGraceDetails = () => {
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex items-start gap-3">
                     <span className="text-gold mt-1">•</span>
-                    <span>Handmade lavender eye pillow for gentle rest</span>
+                    <span>Handmade lavender eye pillow, made with flaxseed and dried lavender</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-gold mt-1">•</span>
-                    <span>Hardcover journal and pen for reflection</span>
+                    <span>Hardcover journal and pen</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-gold mt-1">•</span>
-                    <span>Handmade unscented balm for soothing care</span>
+                    <span>Handmade unscented balm made with jojoba oil, shea butter and beeswax</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-gold mt-1">•</span>
