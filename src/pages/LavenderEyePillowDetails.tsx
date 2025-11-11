@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 import lavenderPillowSingle from "@/assets/lavender-pillow-single.png";
@@ -10,6 +11,7 @@ import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const LavenderEyePillowDetails = () => {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -18,6 +20,40 @@ const LavenderEyePillowDetails = () => {
       document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
+
+  const handleImageClick = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
+  };
+
+  const handleModalBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  // Close modal on Escape key press
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedImage) {
+        handleCloseModal();
+      }
+    };
+
+    if (selectedImage) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -36,7 +72,10 @@ const LavenderEyePillowDetails = () => {
 
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div className="space-y-6">
-              <div className="aspect-square rounded-2xl overflow-hidden border border-border/60 shadow-soft">
+              <div 
+                className="aspect-square rounded-2xl overflow-hidden border border-border/60 shadow-soft cursor-pointer transition-transform hover:scale-[1.02]"
+                onClick={() => handleImageClick(lavenderEyePillowImage)}
+              >
                 <img 
                   src={lavenderEyePillowImage} 
                   alt="Handmade Lavender Eye Pillow"
@@ -45,14 +84,20 @@ const LavenderEyePillowDetails = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft">
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft cursor-pointer transition-transform hover:scale-[1.02]"
+                  onClick={() => handleImageClick(lavenderPillowSingle)}
+                >
                   <img 
                     src={lavenderPillowSingle} 
                     alt="Lavender Eye Pillow with instructions tag"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft">
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft cursor-pointer transition-transform hover:scale-[1.02]"
+                  onClick={() => handleImageClick(lavenderPillowVariety)}
+                >
                   <img 
                     src={lavenderPillowVariety} 
                     alt="Lavender Eye Pillow fabric variety"
@@ -94,6 +139,31 @@ const LavenderEyePillowDetails = () => {
       </main>
       
       <Footer />
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          onClick={handleModalBackdropClick}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] w-full">
+            <button
+              onClick={handleCloseModal}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
+              aria-label="Close image"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
+              <img
+                src={selectedImage}
+                alt="Full size view"
+                className="w-full h-auto max-h-[90vh] object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
