@@ -55,7 +55,7 @@ const HandmadeBalmDetails = () => {
                   {STRIPE_PRODUCTS.HANDMADE_BALM.price}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Crafted in small batches with natural ingredients and a touch of beeswax, this balm softens and soothes dry skin while offering the quiet comfort of something made by hand. Its natural texture melts on contact, leaving behind a subtle, grounded calm — a reminder to pause and tend to yourself with grace.
+                  Crafted in small batches with natural ingredients - jojoba oil, shea butter, and beeswax - this balm softens and soothes dry skin while offering the quiet comfort of something made by hand. Its natural texture melts on contact, leaving behind a subtle, grounded calm — a reminder to pause and tend to yourself with grace.
                 </p>
               </div>
 
