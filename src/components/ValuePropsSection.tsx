@@ -5,8 +5,8 @@ const ValuePropsSection = () => {
       description: "Celebration, healing, thank you, or simply because.",
     },
     {
-      title: "Personal, not generic",
-      description: "Each box includes a carefully chosen custom gift for the recipient.",
+      title: "Personal and Intentional",
+      description: "Each box is thoughtfully gathered with care — complete with a personal message and a hand-selected gift, when chosen.",
     },
     {
       title: "Natural & gentle",
