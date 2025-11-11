@@ -9,8 +9,8 @@ const ValuePropsSection = () => {
       description: "Each box is thoughtfully gathered with care — complete with a personal message and a hand-selected gift, when chosen.",
     },
     {
-      title: "Natural & gentle",
-      description: "Handmade lavender eye pillow with flax & dried lavender; unscented balm.",
+      title: "Natural & Gentle",
+      description: "Handmade lavender eye pillow with flax seed and dried lavender. Unscented balm artisan crafted using natural emollients.",
     },
     {
       title: "Small-batch",
