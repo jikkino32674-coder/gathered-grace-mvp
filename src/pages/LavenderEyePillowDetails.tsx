@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
+import lavenderPillowSingle from "@/assets/lavender-pillow-single.png";
+import lavenderPillowVariety from "@/assets/lavender-pillow-variety.png";
 import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const LavenderEyePillowDetails = () => {
@@ -40,6 +42,23 @@ const LavenderEyePillowDetails = () => {
                   alt="Handmade Lavender Eye Pillow"
                   className="w-full h-full object-cover"
                 />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft">
+                  <img 
+                    src={lavenderPillowSingle} 
+                    alt="Lavender Eye Pillow with instructions tag"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft">
+                  <img 
+                    src={lavenderPillowVariety} 
+                    alt="Lavender Eye Pillow fabric variety"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
 
