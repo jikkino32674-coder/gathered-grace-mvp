@@ -36,28 +36,40 @@ const Index = () => {
     }
   }, []);
 
-  const products = [
+  const kits = [
     {
-      title: "🌿 Rest Kit",
-      description: "A moment of ease. Includes a lavender eye pillow and soothing balm — a simple pairing to help quiet the mind and soften the day's edges.",
-      price: "Coming soon",
-      badge: "New",
-      image: restKitImage,
+      emoji: "🌿",
+      title: "Rest Kit",
+      price: "$39",
+      tagline: "A moment of ease.",
+      description: "Includes a lavender eye pillow and soothing balm — a simple duo to ease tension and invite calm.",
+      perfectFor: "quiet evenings, gentle self-care, or a thoughtful \"thinking of you\" gift.",
+      href: "/products/rest-kit",
+      bgColor: "#fffaf3",
+      borderColor: "#efe8dc",
     },
     {
-      title: "✨ Reflect Kit",
-      description: "For gentle pauses and personal moments. Includes a lavender eye pillow, soothing balm, and a notepad with pen — an invitation to unwind, breathe deeply, and put thoughts to paper.",
-      price: "Coming soon",
-      badge: "New",
-      image: reflectKitImage,
+      emoji: "✨",
+      title: "Reflect Kit",
+      price: "$49",
+      tagline: "For gentle pauses and personal moments.",
+      description: "Includes a lavender eye pillow, soothing balm, notepad, and pen — an invitation to unwind, breathe deeply, and put thoughts to paper.",
+      perfectFor: "journaling, reflection, or nurturing mindfulness.",
+      href: "/products/reflect-kit",
+      bgColor: "#ffffff",
+      borderColor: "#ececec",
     },
     {
-      title: "💛 Restore Kit",
-      description: "Grace, gathered in full. Includes a lavender eye pillow, soothing balm, notepad with pen, and a custom gift — a thoughtful collection to nurture body, heart, and spirit.",
-      price: "Coming soon",
-      badge: "New",
-      image: restoreKitImage,
-      onBuyClick: () => setIsFormOpen(true),
+      emoji: "💛",
+      title: "Restore Kit",
+      price: "$78",
+      tagline: "Grace, gathered in full.",
+      description: "Includes a lavender eye pillow, soothing balm, notepad, pen, and a custom gift — a complete collection to nurture rest and renewal.",
+      perfectFor: "meaningful care, recovery, or special occasions.",
+      href: "/products/restore-kit",
+      bgColor: "#fffdf8",
+      borderColor: "#efe8dc",
+      onClick: () => setIsFormOpen(true),
     },
   ];
 
@@ -70,21 +82,79 @@ const Index = () => {
         
         <ValuePropsSection />
         
-        <section id="products" className="py-16 md:py-20 bg-background" aria-label="Featured products">
-          <div className="container max-w-6xl mx-auto px-4">
-            <div className="flex items-end justify-between gap-4 mb-8">
-              <h2 className="font-serif text-3xl text-foreground">Featured gifts</h2>
-            </div>
+        <section id="products" className="py-16 md:py-20 bg-background" aria-label="Gathered Grace Kits" style={{ maxWidth: '960px', margin: '0 auto', padding: '32px 20px' }}>
+          <header style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <h2 style={{ margin: '0 0 8px', fontSize: '28px', letterSpacing: '.2px' }} className="font-serif">Gathered Grace Kits</h2>
+            <p style={{ margin: 0, opacity: .85 }}>Choose the level of care that feels right. Each kit is mindfully assembled and ships beautifully packaged — <strong>complimentary U.S. shipping included.</strong></p>
+          </header>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              {products.map((product) => (
-                <ProductCard
-                  key={product.title}
-                  {...product}
-                />
-              ))}
-            </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }} className="gg-grid">
+            {kits.map((kit) => (
+              <article 
+                key={kit.title}
+                style={{ 
+                  background: kit.bgColor, 
+                  border: `1px solid ${kit.borderColor}`, 
+                  borderRadius: '16px', 
+                  padding: '20px' 
+                }}
+              >
+                <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
+                  <span aria-hidden="true">{kit.emoji} </span>
+                  <strong>{kit.title} — {kit.price}</strong>
+                </h3>
+                <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>{kit.tagline}</em>
+                <p style={{ margin: '0 0 10px' }}>{kit.description}</p>
+                <p style={{ margin: '0 0 16px', opacity: .85 }}><strong>Perfect for:</strong> {kit.perfectFor}</p>
+                {kit.onClick ? (
+                  <button
+                    onClick={kit.onClick}
+                    style={{ 
+                      display: 'inline-block', 
+                      textDecoration: 'none', 
+                      background: '#2f3a34', 
+                      color: '#fff', 
+                      padding: '10px 14px', 
+                      borderRadius: '12px', 
+                      boxShadow: '0 2px 0 rgba(0,0,0,.08)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontFamily: 'inherit'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
+                  >
+                    Shop {kit.title.split(' ')[0]}
+                  </button>
+                ) : (
+                  <a 
+                    href={kit.href}
+                    style={{ 
+                      display: 'inline-block', 
+                      textDecoration: 'none', 
+                      background: '#2f3a34', 
+                      color: '#fff', 
+                      padding: '10px 14px', 
+                      borderRadius: '12px', 
+                      boxShadow: '0 2px 0 rgba(0,0,0,.08)' 
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
+                    onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
+                  >
+                    Shop {kit.title.split(' ')[0]}
+                  </a>
+                )}
+              </article>
+            ))}
           </div>
+
+          <div style={{ height: '8px' }}></div>
+
+          <style>{`
+            @media (min-width: 720px) {
+              .gg-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 20px !important; }
+            }
+          `}</style>
         </section>
 
         <HowItWorksSection />
