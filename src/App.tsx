@@ -9,6 +9,9 @@ import GatheredGraceDetails from "./pages/GatheredGraceDetails";
 import LavenderEyePillowDetails from "./pages/LavenderEyePillowDetails";
 import HandmadeBalmDetails from "./pages/HandmadeBalmDetails";
 import JournalPenDetails from "./pages/JournalPenDetails";
+import RestKitDetails from "./pages/RestKitDetails";
+import ReflectKitDetails from "./pages/ReflectKitDetails";
+import RestoreKitDetails from "./pages/RestoreKitDetails";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +41,9 @@ const App = () => (
           <Route path="/products/lavender-eye-pillow" element={<LavenderEyePillowDetails />} />
           <Route path="/products/handmade-balm" element={<HandmadeBalmDetails />} />
           <Route path="/products/journal-pen" element={<JournalPenDetails />} />
+          <Route path="/products/rest-kit" element={<RestKitDetails />} />
+          <Route path="/products/reflect-kit" element={<ReflectKitDetails />} />
+          <Route path="/products/restore-kit" element={<RestoreKitDetails />} />
           <Route path="/payment" element={<Payment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

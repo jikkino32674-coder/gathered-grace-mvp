@@ -104,8 +104,7 @@ const Index = () => {
                   <strong>{kit.title} — {kit.price}</strong>
                 </h3>
                 <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>{kit.tagline}</em>
-                <p style={{ margin: '0 0 10px' }}>{kit.description}</p>
-                <p style={{ margin: '0 0 16px', opacity: .85 }}><strong>Perfect for:</strong> {kit.perfectFor}</p>
+                <p style={{ margin: '0 0 16px' }}>{kit.description}</p>
                 {kit.onClick ? (
                   <button
                     onClick={kit.onClick}
