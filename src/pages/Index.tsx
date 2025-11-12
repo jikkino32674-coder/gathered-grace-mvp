@@ -57,6 +57,7 @@ const Index = () => {
       price: "Coming soon",
       badge: "New",
       image: restoreKitImage,
+      onBuyClick: () => setIsFormOpen(true),
     },
   ];
 
