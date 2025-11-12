@@ -13,11 +13,9 @@ import Footer from "@/components/Footer";
 import CustomCareForm from "@/components/CustomCareForm";
 import DiscountPopup from "@/components/DiscountPopup";
 
-import restReceiveImage from "@/assets/rest-receive-kit.jpg";
-import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
-import handmadeBalmImage from "@/assets/handmade-balm.png";
-import journalPenImage from "@/assets/journal-pen.png";
-import { STRIPE_PRODUCTS } from "@/config/stripe";
+import restKitImage from "@/assets/rest-kit.jpg";
+import reflectKitImage from "@/assets/reflect-kit.jpg";
+import restoreKitImage from "@/assets/restore-kit.jpg";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -40,36 +38,25 @@ const Index = () => {
 
   const products = [
     {
-      title: "Gracefully Gathered Gift Box",
-      description: "A meaningful way to mark any moment — joyful, healing, or simply in need of a little care. Includes lavender eye pillow, hardcover journal & pen, handmade unscented balm, heartfelt message card, and an intentionally chosen custom gift.",
-      price: STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.price,
-      badge: "In stock",
-      image: restReceiveImage,
-      detailsLink: "/products/gathered-grace",
+      title: "🌿 Rest Kit",
+      description: "A moment of ease. Includes a lavender eye pillow and soothing balm — a simple pairing to help quiet the mind and soften the day's edges.",
+      price: "Coming soon",
+      badge: "New",
+      image: restKitImage,
     },
     {
-      title: "Handmade Lavender Eye Pillow",
-      description: "A calming handmade eye pillow filled with flax seed and lavender — warm or cool for moments of gentle rest.",
-      price: STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.price,
-      badge: "In stock",
-      image: lavenderEyePillowImage,
-      detailsLink: "/products/lavender-eye-pillow",
+      title: "✨ Reflect Kit",
+      description: "For gentle pauses and personal moments. Includes a lavender eye pillow, soothing balm, and a notepad with pen — an invitation to unwind, breathe deeply, and put thoughts to paper.",
+      price: "Coming soon",
+      badge: "New",
+      image: reflectKitImage,
     },
     {
-      title: "Handmade Balm",
-      description: "A soothing, all-purpose balm handcrafted with beeswax and natural oils — simple care, made with grace.",
-      price: STRIPE_PRODUCTS.HANDMADE_BALM.price,
-      badge: "In stock",
-      image: handmadeBalmImage,
-      detailsLink: "/products/handmade-balm",
-    },
-    {
-      title: "Journal and Pen Set",
-      description: "A timeless hardcover notebook and pen set — created for moments of reflection, gratitude, and quiet grace.",
-      price: STRIPE_PRODUCTS.JOURNAL_PEN_SET.price,
-      badge: "In stock",
-      image: journalPenImage,
-      detailsLink: "/products/journal-pen",
+      title: "💛 Restore Kit",
+      description: "Grace, gathered in full. Includes a lavender eye pillow, soothing balm, notepad with pen, and a custom gift — a thoughtful collection to nurture body, heart, and spirit.",
+      price: "Coming soon",
+      badge: "New",
+      image: restoreKitImage,
     },
   ];
 
@@ -88,22 +75,11 @@ const Index = () => {
               <h2 className="font-serif text-3xl text-foreground">Featured gifts</h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-3 gap-6">
               {products.map((product) => (
                 <ProductCard
                   key={product.title}
                   {...product}
-                  onBuyClick={
-                    product.title === "Gracefully Gathered Gift Box" 
-                      ? () => setIsFormOpen(true) 
-                      : product.title === "Handmade Lavender Eye Pillow"
-                      ? () => window.location.href = STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink
-                      : product.title === "Handmade Balm"
-                      ? () => window.location.href = STRIPE_PRODUCTS.HANDMADE_BALM.paymentLink
-                      : product.title === "Journal and Pen Set"
-                      ? () => window.location.href = STRIPE_PRODUCTS.JOURNAL_PEN_SET.paymentLink
-                      : undefined
-                  }
                 />
               ))}
             </div>
