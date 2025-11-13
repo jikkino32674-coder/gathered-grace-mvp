@@ -40,7 +40,7 @@ const RestoreKitDetails = () => {
           <div className="space-y-6">
             <div>
               <h1 className="text-4xl font-serif mb-2">💛 Restore Kit</h1>
-              <p className="text-2xl font-semibold">$78</p>
+              <p className="text-2xl font-semibold">Starting at $59</p>
               <p className="text-lg italic text-muted-foreground mt-2">Grace, gathered in full.</p>
             </div>
 
