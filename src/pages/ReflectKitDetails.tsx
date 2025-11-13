@@ -60,7 +60,7 @@ const ReflectKitDetails = () => {
                   <strong>Lavender Eye Pillow:</strong> Made with cotton and includes dried lavender and whole flax seeds.
                 </p>
                 <p className="text-muted-foreground">
-                  <strong>Balm:</strong> Made using jojoba oil, Shea Butter, and beeswax.
+                  <strong>Balm:</strong> Made using jojoba oil, shea butter, and beeswax.
                 </p>
               </div>
 
