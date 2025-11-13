@@ -62,7 +62,7 @@ const Index = () => {
     {
       emoji: "💛",
       title: "Restore Kit",
-      price: "Starting at $59",
+      price: "$69",
       tagline: "Grace, gathered in full.",
       description: "Includes a lavender eye pillow, soothing balm, notepad, pen, and a custom gift — a complete collection to nurture rest and renewal.",
       perfectFor: "meaningful care, recovery, or special occasions.",
