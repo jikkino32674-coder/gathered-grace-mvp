@@ -69,7 +69,6 @@ const Index = () => {
       href: "/products/restore-kit",
       bgColor: "#fffdf8",
       borderColor: "#efe8dc",
-      onClick: () => setIsFormOpen(true),
     },
   ];
 
@@ -105,44 +104,22 @@ const Index = () => {
                 </h3>
                 <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>{kit.tagline}</em>
                 <p style={{ margin: '0 0 16px' }}>{kit.description}</p>
-                {kit.onClick ? (
-                  <button
-                    onClick={kit.onClick}
-                    style={{ 
-                      display: 'inline-block', 
-                      textDecoration: 'none', 
-                      background: '#2f3a34', 
-                      color: '#fff', 
-                      padding: '10px 14px', 
-                      borderRadius: '12px', 
-                      boxShadow: '0 2px 0 rgba(0,0,0,.08)',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontFamily: 'inherit'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
-                    onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
-                  >
-                    Shop {kit.title.split(' ')[0]}
-                  </button>
-                ) : (
-                  <a 
-                    href={kit.href}
-                    style={{ 
-                      display: 'inline-block', 
-                      textDecoration: 'none', 
-                      background: '#2f3a34', 
-                      color: '#fff', 
-                      padding: '10px 14px', 
-                      borderRadius: '12px', 
-                      boxShadow: '0 2px 0 rgba(0,0,0,.08)' 
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
-                    onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
-                  >
-                    Shop {kit.title.split(' ')[0]}
-                  </a>
-                )}
+                <a 
+                  href={kit.href}
+                  style={{ 
+                    display: 'inline-block', 
+                    textDecoration: 'none', 
+                    background: '#2f3a34', 
+                    color: '#fff', 
+                    padding: '10px 14px', 
+                    borderRadius: '12px', 
+                    boxShadow: '0 2px 0 rgba(0,0,0,.08)' 
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
+                  onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
+                >
+                  Shop {kit.title.split(' ')[0]}
+                </a>
               </article>
             ))}
           </div>
