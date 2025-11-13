@@ -57,6 +57,16 @@ const RestoreKitDetails = () => {
               </div>
 
               <div className="border-t pt-4">
+                <p className="font-semibold mb-2">Product Description:</p>
+                <p className="text-muted-foreground mb-2">
+                  <strong>Lavender Eye Pillow:</strong> Made with cotton and includes dried lavender and whole flax seeds.
+                </p>
+                <p className="text-muted-foreground">
+                  <strong>Balm:</strong> Made using jojoba oil, Shea Butter, and beeswax.
+                </p>
+              </div>
+
+              <div className="border-t pt-4">
                 <p className="text-sm text-muted-foreground">
                   <strong>Complimentary U.S. shipping included.</strong>
                 </p>
