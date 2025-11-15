@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import StandardKitForm from "@/components/StandardKitForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const RestKitDetails = () => {
   const navigate = useNavigate();
+  const [formOpen, setFormOpen] = useState(false);
 
   const handleBackClick = () => {
     navigate("/#products");
@@ -73,7 +77,7 @@ const RestKitDetails = () => {
             <Button 
               size="lg" 
               className="w-full md:w-auto"
-              onClick={() => navigate("/payment")}
+              onClick={() => setFormOpen(true)}
             >
               Buy Now
             </Button>
@@ -82,6 +86,12 @@ const RestKitDetails = () => {
       </main>
 
       <Footer />
+      <StandardKitForm 
+        open={formOpen} 
+        onOpenChange={setFormOpen}
+        kitName="Rest Kit"
+        paymentLink={STRIPE_PRODUCTS.REST_KIT.paymentLink}
+      />
     </div>
   );
 };
