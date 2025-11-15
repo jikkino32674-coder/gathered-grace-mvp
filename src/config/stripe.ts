@@ -4,6 +4,8 @@ export const STRIPE_PAYMENT_LINKS = {
   LAVENDER_EYE_PILLOW: "https://buy.stripe.com/28EdR9gSl5tEcba3DC1RC01",
   HANDMADE_BALM: "https://buy.stripe.com/00wcN5dG93lwcba0rq1RC02",
   JOURNAL_PEN_SET: "https://buy.stripe.com/5kQdR9eKd7BMdfeb641RC03",
+  REST_KIT: "https://buy.stripe.com/placeholder-rest-kit",
+  REFLECT_KIT: "https://buy.stripe.com/placeholder-reflect-kit",
 } as const;
 
 // Product information
@@ -35,6 +37,20 @@ export const STRIPE_PRODUCTS = {
     name: "Journal and Pen Set",
     price: "$18",
     paymentLink: STRIPE_PAYMENT_LINKS.JOURNAL_PEN_SET,
+  },
+  REST_KIT: {
+    id: "prod_rest_kit",
+    priceId: "price_rest_kit",
+    name: "Rest Kit",
+    price: "$39",
+    paymentLink: STRIPE_PAYMENT_LINKS.REST_KIT,
+  },
+  REFLECT_KIT: {
+    id: "prod_reflect_kit",
+    priceId: "price_reflect_kit",
+    name: "Reflect Kit",
+    price: "$49",
+    paymentLink: STRIPE_PAYMENT_LINKS.REFLECT_KIT,
   },
 } as const;
 
