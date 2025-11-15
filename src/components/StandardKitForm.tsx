@@ -31,7 +31,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
     zip: "",
     recipient_email: "",
     occasion: "",
-    season: "",
     comforts: "",
     card_message: "",
     name_on_card: "Include my name",
@@ -68,7 +67,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
               state: formData.state,
               zip: formData.zip,
               occasion: formData.occasion || null,
-              season: formData.season || null,
               comforts: formData.comforts || null,
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
@@ -235,21 +233,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
                   value={formData.occasion}
                   onChange={(e) => updateField("occasion", e.target.value)}
                 />
-              </div>
-
-              <div>
-                <Label htmlFor="season">What season or time of year? (optional)</Label>
-                <Select value={formData.season} onValueChange={(value) => updateField("season", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select season" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="spring">Spring</SelectItem>
-                    <SelectItem value="summer">Summer</SelectItem>
-                    <SelectItem value="fall">Fall</SelectItem>
-                    <SelectItem value="winter">Winter</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
 
               <div>
