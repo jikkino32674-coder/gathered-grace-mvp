@@ -29,7 +29,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     zip: "",
     recipient_email: "",
     occasion: "",
-    season: "",
     comforts: "",
     card_message: "",
     name_on_card: "Include my name",
@@ -67,7 +66,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               state: formData.state,
               zip: formData.zip,
               occasion: formData.occasion || null,
-              season: formData.season || null,
               comforts: formData.comforts || null,
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
@@ -288,18 +286,6 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               </Select>
             </div>
 
-
-            <div>
-              <Label htmlFor="season">How would you describe their current season or situation?</Label>
-              <Textarea
-                id="season"
-                name="season"
-                rows={3}
-                placeholder="She's recovering from surgery and feeling a little discouraged."
-                value={formData.season}
-                onChange={(e) => updateField("season", e.target.value)}
-              />
-            </div>
 
             <div>
               <Label htmlFor="comforts">What comforts or uplifts them most?</Label>
