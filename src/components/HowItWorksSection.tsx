@@ -4,15 +4,15 @@ const HowItWorksSection = () => {
   const steps = [
     {
       number: "01",
-      title: "Choose your gift",
-      description: "Pick the Gift Box or Lavender Eye Pillow. Add any notes about the recipient.",
+      title: "Choose Your Gift",
+      description: "Choose from our three curated care kits.",
       icon: Gift,
       color: "rose",
     },
     {
       number: "02",
       title: "Personalize",
-      description: "We include a message card and a carefully selected custom item chosen just for them.",
+      description: "Each kit includes a message card—write your own note, or let us craft one for you. The Restore Kit also includes a custom item lovingly chosen for the recipient based on what you tell us.",
       icon: Heart,
       color: "sage",
     },
