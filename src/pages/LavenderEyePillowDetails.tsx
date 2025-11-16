@@ -123,6 +123,17 @@ const LavenderEyePillowDetails = () => {
                 </p>
               </div>
 
+              <div className="border-t pt-4 space-y-3">
+                <div className="ml-4 space-y-2">
+                  <p className="text-muted-foreground">
+                    <strong>Fabric Options:</strong> Eye pillows are premade in assorted fabrics. If you'd like to choose your own fabric, a custom selection is available for an additional $5. Please include your preferred fabric or print in the Notes section of the custom form.
+                  </p>
+                  <p className="text-muted-foreground">
+                    <strong>Sustainability:</strong> We prioritize environmental care by using reclaimed fabric scraps from sewing artisans—giving beautiful materials a second life.
+                  </p>
+                </div>
+              </div>
+
               <div className="flex gap-3 pt-6">
                 <Button 
                   variant="rose" 
