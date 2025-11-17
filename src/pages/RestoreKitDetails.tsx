@@ -13,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import restoreKit from "@/assets/restore-kit.jpg";
+import journalPen from "@/assets/journal-pen.png";
 
 const RestoreKitDetails = () => {
   const navigate = useNavigate();
@@ -47,6 +48,15 @@ const RestoreKitDetails = () => {
                     <img 
                       src={restoreKit} 
                       alt="Restore Kit with complete collection of care items" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={journalPen} 
+                      alt="Journals with pens in various colors" 
                       className="w-full h-full object-cover"
                     />
                   </div>
