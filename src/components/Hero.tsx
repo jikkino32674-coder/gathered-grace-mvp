@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import heroImage from "@/assets/hero-image.png";
 
 const Hero = () => {
   const scrollToSection = (id: string) => {
@@ -23,10 +24,12 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-muted to-background shadow-soft flex items-center justify-center overflow-hidden">
-            <div className="text-center text-muted-foreground text-sm">
-              [Hero Image]
-            </div>
+          <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-soft">
+            <img 
+              src={heroImage} 
+              alt="Gathered Grace care products including lavender eye pillow, balm, journal, and coffee on natural linen" 
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
