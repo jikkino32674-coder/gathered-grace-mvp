@@ -59,7 +59,7 @@ const ReflectKitDetails = () => {
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
                       src={lavenderEyePillow} 
-                      alt="Lavender eye pillows with floral pattern" 
+                      alt="Blue lavender eye pillows with daisy pattern" 
                       className="w-full h-full object-cover"
                     />
                   </div>
