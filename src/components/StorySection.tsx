@@ -1,3 +1,5 @@
+import storyPhoto from "@/assets/story-photo.jpg";
+
 const StorySection = () => {
   return (
     <section id="story" className="py-16 md:py-20 bg-card" aria-label="Our story">
@@ -14,10 +16,12 @@ const StorySection = () => {
               Now, Gathered Grace is a small, heart-forward studio crafting thoughtful gifts for any season of life. Each piece is chosen with intention—gentle to the senses, useful, and made to be received with warmth.
             </p>
           </div>
-          <div className="md:col-span-2 rounded-2xl overflow-hidden bg-muted h-56 flex items-center justify-center">
-            <div className="text-center text-muted-foreground text-sm">
-              [Story Image]
-            </div>
+          <div className="md:col-span-2 rounded-2xl overflow-hidden h-56">
+            <img 
+              src={storyPhoto} 
+              alt="Gathered Grace founder" 
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
