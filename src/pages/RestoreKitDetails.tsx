@@ -5,6 +5,14 @@ import Footer from "@/components/Footer";
 import CustomCareForm from "@/components/CustomCareForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import restoreKit from "@/assets/restore-kit.jpg";
 
 const RestoreKitDetails = () => {
   const navigate = useNavigate();
@@ -32,9 +40,21 @@ const RestoreKitDetails = () => {
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <div className="bg-muted rounded-lg aspect-square flex items-center justify-center">
-              <p className="text-muted-foreground">Product photos coming soon</p>
-            </div>
+            <Carousel className="w-full">
+              <CarouselContent>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restoreKit} 
+                      alt="Restore Kit with complete collection of care items" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
 
           <div className="space-y-6">
