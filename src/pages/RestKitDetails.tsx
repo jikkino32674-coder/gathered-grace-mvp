@@ -6,6 +6,17 @@ import StandardKitForm from "@/components/StandardKitForm";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { STRIPE_PRODUCTS } from "@/config/stripe";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import restKitBalm from "@/assets/rest-kit-balm.png";
+import restKitEyePillows from "@/assets/rest-kit-eye-pillows.png";
+import restKitPillowWrapped from "@/assets/rest-kit-pillow-wrapped.png";
+import restKitBoxed from "@/assets/rest-kit-boxed.jpg";
 
 const RestKitDetails = () => {
   const navigate = useNavigate();
@@ -33,9 +44,48 @@ const RestKitDetails = () => {
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <div className="bg-muted rounded-lg aspect-square flex items-center justify-center">
-              <p className="text-muted-foreground">Product photos coming soon</p>
-            </div>
+            <Carousel className="w-full">
+              <CarouselContent>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitBalm} 
+                      alt="Handmade balm with natural ingredients in green container" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitEyePillows} 
+                      alt="Lavender eye pillows with floral pattern" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitPillowWrapped} 
+                      alt="Wrapped lavender eye pillow with twine" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitBoxed} 
+                      alt="Rest Kit beautifully packaged in a gift box" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious className="left-2" />
+              <CarouselNext className="right-2" />
+            </Carousel>
           </div>
 
           <div className="space-y-6">
