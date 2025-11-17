@@ -13,7 +13,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import reflectKit from "@/assets/reflect-kit.jpg";
+import handmadeBalm from "@/assets/handmade-balm.png";
+import lavenderEyePillow from "@/assets/lavender-eye-pillow.png";
+import lavenderPillowWrapped from "@/assets/lavender-pillow-wrapped.png";
 import journalPen from "@/assets/journal-pen.png";
 
 const ReflectKitDetails = () => {
@@ -47,8 +49,26 @@ const ReflectKitDetails = () => {
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
-                      src={reflectKit} 
-                      alt="Reflect Kit with lavender eye pillow, balm, notepad and pen" 
+                      src={handmadeBalm} 
+                      alt="Handmade balm with natural ingredients in green container" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={lavenderEyePillow} 
+                      alt="Lavender eye pillows with floral pattern" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={lavenderPillowWrapped} 
+                      alt="Wrapped lavender eye pillow with twine" 
                       className="w-full h-full object-cover"
                     />
                   </div>
