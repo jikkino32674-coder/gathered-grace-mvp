@@ -1,4 +1,4 @@
-import storyPhoto from "@/assets/story-photo.jpg";
+import storyPhoto from "@/assets/story-photo.png";
 
 const StorySection = () => {
   return (
@@ -16,11 +16,11 @@ const StorySection = () => {
               Now, Gathered Grace is a small, heart-forward studio crafting thoughtful gifts for any season of life. Each piece is chosen with intention—gentle to the senses, useful, and made to be received with warmth.
             </p>
           </div>
-          <div className="md:col-span-2 rounded-2xl overflow-hidden h-56">
+          <div className="md:col-span-2 rounded-2xl overflow-hidden h-56 flex items-center justify-center bg-card">
             <img 
               src={storyPhoto} 
-              alt="Gathered Grace founder" 
-              className="w-full h-full object-cover"
+              alt="Gathered Grace logo" 
+              className="w-full h-full object-contain p-6"
             />
           </div>
         </div>
