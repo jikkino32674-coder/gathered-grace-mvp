@@ -16,7 +16,7 @@ const StorySection = () => {
               Now, Gathered Grace is a small, heart-forward studio crafting thoughtful gifts for any season of life. Each piece is chosen with intention—gentle to the senses, useful, and made to be received with warmth.
             </p>
           </div>
-          <div className="md:col-span-2 rounded-2xl overflow-hidden h-56 flex items-center justify-center bg-card">
+          <div className="md:col-span-2 rounded-2xl overflow-hidden h-56 flex items-center justify-center" style={{ backgroundColor: 'hsl(15, 30%, 82%)' }}>
             <img 
               src={storyPhoto} 
               alt="Gathered Grace logo" 
