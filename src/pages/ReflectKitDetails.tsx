@@ -14,6 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import reflectKit from "@/assets/reflect-kit.jpg";
+import journalPen from "@/assets/journal-pen.png";
 
 const ReflectKitDetails = () => {
   const navigate = useNavigate();
@@ -48,6 +49,15 @@ const ReflectKitDetails = () => {
                     <img 
                       src={reflectKit} 
                       alt="Reflect Kit with lavender eye pillow, balm, notepad and pen" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={journalPen} 
+                      alt="Journals with pens in various colors" 
                       className="w-full h-full object-cover"
                     />
                   </div>
