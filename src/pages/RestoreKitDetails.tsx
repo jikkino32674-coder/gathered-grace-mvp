@@ -12,7 +12,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import restoreKit from "@/assets/restore-kit.jpg";
+import handmadeBalm from "@/assets/handmade-balm.png";
+import lavenderEyePillow from "@/assets/lavender-eye-pillow.png";
+import lavenderPillowWrapped from "@/assets/lavender-pillow-wrapped.png";
 import journalPen from "@/assets/journal-pen.png";
 
 const RestoreKitDetails = () => {
@@ -46,8 +48,26 @@ const RestoreKitDetails = () => {
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
-                      src={restoreKit} 
-                      alt="Restore Kit with complete collection of care items" 
+                      src={handmadeBalm} 
+                      alt="Handmade balm with natural ingredients in green container" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={lavenderEyePillow} 
+                      alt="Lavender eye pillows with floral pattern" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={lavenderPillowWrapped} 
+                      alt="Wrapped lavender eye pillow with twine" 
                       className="w-full h-full object-cover"
                     />
                   </div>
