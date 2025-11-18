@@ -17,7 +17,8 @@ import restKitBalm from "@/assets/rest-kit-balm.png";
 import restKitEyePillows from "@/assets/rest-kit-eye-pillows.png";
 import restKitPillowWrapped from "@/assets/rest-kit-pillow-wrapped.png";
 import restKitBoxed from "@/assets/rest-kit-boxed.jpg";
-import restKitBoxContents from "@/assets/rest-kit-box-contents.png";
+import restKit from "@/assets/rest-kit.jpg";
+import restReceiveKit from "@/assets/rest-receive-kit.jpg";
 
 const RestKitDetails = () => {
   const navigate = useNavigate();
@@ -86,8 +87,17 @@ const RestKitDetails = () => {
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
-                      src={restKitBoxContents} 
-                      alt="Rest Kit contents showing balm and lavender eye pillow in box" 
+                      src={restKit} 
+                      alt="Rest Kit complete set" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restReceiveKit} 
+                      alt="Rest Kit ready to receive" 
                       className="w-full h-full object-cover"
                     />
                   </div>
