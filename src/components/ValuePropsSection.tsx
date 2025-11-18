@@ -10,7 +10,7 @@ const ValuePropsSection = () => {
     },
     {
       title: "Natural & Gentle",
-      description: "Handmade lavender eye pillow with flax seed and dried lavender. Unscented balm artisan crafted using natural emollients.",
+      description: "Handmade lavender eye pillow with flax seed and dried lavender. Unscented balm artisan-crafted using natural emollients.",
     },
     {
       title: "Small-batch",
