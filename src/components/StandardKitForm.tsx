@@ -31,7 +31,8 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
     zip: "",
     recipient_email: "",
     occasion: "",
-    comforts: "",
+    custom_fabric: "no",
+    fabric_theme: "",
     card_message: "",
     name_on_card: "Include my name",
     sender_name: "",
@@ -67,7 +68,8 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
               state: formData.state,
               zip: formData.zip,
               occasion: formData.occasion || null,
-              comforts: formData.comforts || null,
+              custom_fabric: formData.custom_fabric,
+              fabric_theme: formData.fabric_theme || null,
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
               kit_type: kitName,
@@ -236,15 +238,39 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
               </div>
 
               <div>
-                <Label htmlFor="comforts">What brings them comfort? (optional)</Label>
-                <Textarea
-                  id="comforts"
-                  placeholder="Reading, gardening, cozy nights in, nature walks..."
-                  value={formData.comforts}
-                  onChange={(e) => updateField("comforts", e.target.value)}
-                  rows={3}
-                />
+                <Label>Do you want a custom fabric for the eye pillow?</Label>
+                <RadioGroup
+                  value={formData.custom_fabric}
+                  onValueChange={(value) => updateField("custom_fabric", value)}
+                  className="flex gap-4 mt-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="no" id="fabric-no" />
+                    <Label htmlFor="fabric-no" className="font-normal cursor-pointer">
+                      No
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="yes" id="fabric-yes" />
+                    <Label htmlFor="fabric-yes" className="font-normal cursor-pointer">
+                      Yes (+$5)
+                    </Label>
+                  </div>
+                </RadioGroup>
               </div>
+
+              {formData.custom_fabric === "yes" && (
+                <div>
+                  <Label htmlFor="fabric_theme">What theme of fabric would you like?</Label>
+                  <Textarea
+                    id="fabric_theme"
+                    placeholder="e.g., birds, florals, sports, etc."
+                    value={formData.fabric_theme}
+                    onChange={(e) => updateField("fabric_theme", e.target.value)}
+                    rows={2}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Card Message */}
