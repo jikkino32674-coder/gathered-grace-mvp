@@ -13,6 +13,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import reflectKitBox from "@/assets/reflect-kit-box.png";
+import reflectKitEyepillowUse from "@/assets/reflect-kit-eyepillow-use.png";
+import reflectKitNotebook from "@/assets/reflect-kit-notebook.jpg";
 import handmadeBalm from "@/assets/handmade-balm.png";
 import lavenderEyePillow from "@/assets/lavender-eye-pillow.png";
 import lavenderPillowWrapped from "@/assets/lavender-pillow-wrapped.png";
@@ -46,6 +49,33 @@ const ReflectKitDetails = () => {
           <div className="space-y-6">
             <Carousel className="w-full">
               <CarouselContent>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={reflectKitBox} 
+                      alt="Reflect Kit gift box with lavender eye pillow, balm, notebook, and pen" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={reflectKitEyepillowUse} 
+                      alt="Person relaxing with lavender eye pillow" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={reflectKitNotebook} 
+                      alt="Blue notebook with pen, coffee, and lavender on cozy blanket" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
