@@ -49,24 +49,6 @@ const RestKitDetails = () => {
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
-                      src={restKitBalm} 
-                      alt="Handmade balm with natural ingredients in green container" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
-                      src={restKitEyePillows} 
-                      alt="Lavender eye pillows with floral pattern" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
                       src={restKitLifestyle} 
                       alt="Rest Kit beautifully packaged with tea and lavender" 
                       className="w-full h-full object-cover"
@@ -78,6 +60,24 @@ const RestKitDetails = () => {
                     <img 
                       src={restKitFlatlay} 
                       alt="Rest Kit flatlay showing eye pillow and balm with gift box" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitBalm} 
+                      alt="Handmade balm with natural ingredients in green container" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restKitEyePillows} 
+                      alt="Lavender eye pillows with floral pattern" 
                       className="w-full h-full object-cover"
                     />
                   </div>
