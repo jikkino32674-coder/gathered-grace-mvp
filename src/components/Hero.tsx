@@ -49,28 +49,28 @@ const Hero = () => {
                   <img 
                     src={heroGiftBox} 
                     alt="Gathered Grace gift box with lavender eye pillow, balm, and heartfelt message card" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroNotebook} 
                     alt="Cozy scene with notebook, candle, tea, and lavender" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroLotionBar} 
                     alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroEyePillow} 
                     alt="Lavender eye pillow with herbal tea and dried lavender on wooden tray" 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </CarouselItem>
               </CarouselContent>
