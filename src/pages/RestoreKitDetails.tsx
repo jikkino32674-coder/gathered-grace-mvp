@@ -113,7 +113,7 @@ const RestoreKitDetails = () => {
               <div className="border-t pt-4">
                 <p className="font-semibold mb-2">Product Description:</p>
                 <p className="text-muted-foreground mb-2">
-                  <strong>Custom Gift:</strong> Custom gifts will vary based on the dollar amount you choose on the form and the details you share about who the gift is for. Examples include books, religious or inspirational items, small self-care pieces, or gift cards to local businesses. Every custom item is thoughtfully chosen to reflect the recipient's personality, interests, and needs.
+                  <strong>Custom Gift:</strong> Custom gifts will vary based on the dollar amount you choose on the form and the details you share about who the gift is for. Examples include books, team swag, religious or inspirational items, small self-care pieces, or gift cards to local businesses. Every custom item is thoughtfully chosen to reflect the recipient's personality, interests, and needs.
                 </p>
                 <p className="text-muted-foreground mb-2">
                   <strong>Lavender Eye Pillow:</strong> Made with cotton and includes dried lavender and whole flax seeds.
