@@ -238,7 +238,7 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
               </div>
 
               <div>
-                <Label>Do you want a custom fabric for the eye pillow?</Label>
+                <Label>Do you want a custom themed fabric for the eye pillow?</Label>
                 <RadioGroup
                   value={formData.custom_fabric}
                   onValueChange={(value) => updateField("custom_fabric", value)}
