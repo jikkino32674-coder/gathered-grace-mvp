@@ -5,12 +5,16 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 import heroGiftBox from "@/assets/hero-gift-box.png";
 import heroNotebook from "@/assets/hero-notebook.png";
 import heroLotionBar from "@/assets/hero-lotion-bar.png";
 import heroEyePillow from "@/assets/hero-eye-pillow.png";
 
 const Hero = () => {
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: true })
+  );
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -38,11 +42,7 @@ const Hero = () => {
                 align: "start",
                 loop: true,
               }}
-              plugins={[
-                Autoplay({
-                  delay: 3000,
-                }),
-              ]}
+              plugins={[plugin.current]}
             >
               <CarouselContent>
                 <CarouselItem>
