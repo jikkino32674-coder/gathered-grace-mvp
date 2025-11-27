@@ -7,7 +7,7 @@ const StorySection = () => {
         <div className="grid md:grid-cols-5 gap-8 items-center">
           <div className="md:col-span-3">
             <p className="text-muted-foreground mb-4">
-              Gathered Grace was created during a time when a loved one was in cancer treatment, inspiring a desire to offer comfort in meaningful, tangible ways.
+              Gathered Grace was created during a time when a loved one was in cancer treatment, inspiring a desire to offer comfort in meaningful, tangible ways. I searched for something that could provide something soft, supportive, and genuinely meaningful. When I couldn't find it, I created it.
             </p>
             <h2 className="font-serif text-3xl text-foreground mb-4">
               Gracefully gathered, given in love.
