@@ -1,5 +1,14 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-image.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import heroGiftBox from "@/assets/hero-gift-box.png";
+import heroNotebook from "@/assets/hero-notebook.png";
+import heroLotionBar from "@/assets/hero-lotion-bar.png";
+import heroEyePillow from "@/assets/hero-eye-pillow.png";
 
 const Hero = () => {
   const scrollToSection = (id: string) => {
@@ -24,11 +33,48 @@ const Hero = () => {
             </div>
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-soft">
-            <img 
-              src={heroImage} 
-              alt="Gathered Grace care products including lavender eye pillow, balm, journal, and coffee on natural linen" 
-              className="w-full h-full object-cover"
-            />
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+            >
+              <CarouselContent>
+                <CarouselItem>
+                  <img 
+                    src={heroGiftBox} 
+                    alt="Gathered Grace gift box with lavender eye pillow, balm, and heartfelt message card" 
+                    className="w-full h-full object-cover"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <img 
+                    src={heroNotebook} 
+                    alt="Cozy scene with notebook, candle, tea, and lavender" 
+                    className="w-full h-full object-cover"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <img 
+                    src={heroLotionBar} 
+                    alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
+                    className="w-full h-full object-cover"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <img 
+                    src={heroEyePillow} 
+                    alt="Lavender eye pillow with herbal tea and dried lavender on wooden tray" 
+                    className="w-full h-full object-cover"
+                  />
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </div>
