@@ -36,7 +36,7 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-soft">
+          <div className="rounded-2xl overflow-hidden shadow-soft">
             <Carousel
               opts={{
                 align: "start",
@@ -49,28 +49,28 @@ const Hero = () => {
                   <img 
                     src={heroGiftBox} 
                     alt="Gathered Grace gift box with lavender eye pillow, balm, and heartfelt message card" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-auto"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroNotebook} 
                     alt="Cozy scene with notebook, candle, tea, and lavender" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-auto"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroLotionBar} 
                     alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-auto"
                   />
                 </CarouselItem>
                 <CarouselItem>
                   <img 
                     src={heroEyePillow} 
                     alt="Lavender eye pillow with herbal tea and dried lavender on wooden tray" 
-                    className="w-full h-full object-contain"
+                    className="w-full h-auto"
                   />
                 </CarouselItem>
               </CarouselContent>
