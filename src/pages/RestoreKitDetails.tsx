@@ -12,6 +12,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import restoreKitBox from "@/assets/restore-kit-box.png";
+import restoreKitBalm from "@/assets/restore-kit-balm.png";
+import restoreKitNotebook from "@/assets/restore-kit-notebook.png";
+import restoreKitEyepillowUse from "@/assets/restore-kit-eyepillow-use.png";
 import handmadeBalm from "@/assets/handmade-balm.png";
 import lavenderEyePillow from "@/assets/lavender-eye-pillow.png";
 import lavenderPillowWrapped from "@/assets/lavender-pillow-wrapped.png";
@@ -45,6 +49,42 @@ const RestoreKitDetails = () => {
           <div className="space-y-6">
             <Carousel className="w-full">
               <CarouselContent>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restoreKitBox} 
+                      alt="Restore Kit box with lavender eye pillow, notebook, pen, and balm" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restoreKitBalm} 
+                      alt="Handmade lotion bar with candle and open book" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restoreKitNotebook} 
+                      alt="Hand writing in blue notebook with pen" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="rounded-lg overflow-hidden aspect-square">
+                    <img 
+                      src={restoreKitEyepillowUse} 
+                      alt="Person relaxing with lavender eye pillow" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
                 <CarouselItem>
                   <div className="rounded-lg overflow-hidden aspect-square">
                     <img 
