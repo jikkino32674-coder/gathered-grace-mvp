@@ -85,42 +85,6 @@ const RestoreKitDetails = () => {
                     />
                   </div>
                 </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
-                      src={handmadeBalm} 
-                      alt="Handmade balm with natural ingredients in green container" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
-                      src={lavenderEyePillow} 
-                      alt="Blue lavender eye pillows with daisy pattern" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
-                      src={lavenderPillowWrapped} 
-                      alt="Wrapped lavender eye pillow with twine" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="rounded-lg overflow-hidden aspect-square">
-                    <img 
-                      src={journalPen} 
-                      alt="Journals with pens in various colors" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </CarouselItem>
               </CarouselContent>
               <CarouselPrevious className="left-2" />
               <CarouselNext className="right-2" />
