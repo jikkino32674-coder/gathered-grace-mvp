@@ -33,6 +33,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     card_message: "",
     name_on_card: "Include my name",
     budget: "",
+    custom_fabric: "no",
+    fabric_theme: "",
     sender_name: "",
     sender_email: "",
     website: "", // honeypot
@@ -70,6 +72,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
               budget: formData.budget || null,
+              custom_fabric: formData.custom_fabric,
+              fabric_theme: formData.fabric_theme || null,
             },
           })
           .select();
@@ -356,6 +360,34 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                 </div>
               </RadioGroup>
             </div>
+
+            <div className="space-y-2">
+              <Label>Do you want a custom themed fabric for the eye pillow?</Label>
+              <RadioGroup value={formData.custom_fabric} onValueChange={(value) => updateField("custom_fabric", value)}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="no" id="fabric-no" />
+                  <Label htmlFor="fabric-no" className="font-normal">No</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="yes" id="fabric-yes" />
+                  <Label htmlFor="fabric-yes" className="font-normal">Yes (+$5)</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            {formData.custom_fabric === "yes" && (
+              <div>
+                <Label htmlFor="fabric_theme">What theme of fabric would you like?</Label>
+                <Textarea
+                  id="fabric_theme"
+                  name="fabric_theme"
+                  rows={2}
+                  placeholder="e.g., birds, florals, sports, etc."
+                  value={formData.fabric_theme}
+                  onChange={(e) => updateField("fabric_theme", e.target.value)}
+                />
+              </div>
+            )}
           </fieldset>
 
           {/* Sender Info */}
