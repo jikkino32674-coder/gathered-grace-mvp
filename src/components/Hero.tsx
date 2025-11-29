@@ -21,8 +21,8 @@ const Hero = () => {
 
   return (
     <section className="relative overflow-hidden" id="hero">
-      <div className="container max-w-6xl mx-auto px-4 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-10 items-center">
+      <div className="container max-w-6xl mx-auto px-4 py-8 md:py-12">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
           <div>
             <h1 className="font-serif text-4xl md:text-5xl text-foreground leading-tight">
               Looking for the perfect gift? We've gathered something special for you.
@@ -46,7 +46,7 @@ const Hero = () => {
             >
               <CarouselContent>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[400px]">
+                  <div className="flex items-center justify-center min-h-[300px]">
                     <img 
                       src={heroGiftBox} 
                       alt="Gathered Grace gift box with lavender eye pillow, balm, and heartfelt message card" 
@@ -55,7 +55,7 @@ const Hero = () => {
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[400px]">
+                  <div className="flex items-center justify-center min-h-[300px]">
                     <img 
                       src={heroNotebook} 
                       alt="Cozy scene with notebook, candle, tea, and lavender" 
@@ -64,7 +64,7 @@ const Hero = () => {
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[400px]">
+                  <div className="flex items-center justify-center min-h-[300px]">
                     <img 
                       src={heroLotionBar} 
                       alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
@@ -73,7 +73,7 @@ const Hero = () => {
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[400px]">
+                  <div className="flex items-center justify-center min-h-[300px]">
                     <img 
                       src={heroEyePillow} 
                       alt="Lavender eye pillow with herbal tea and dried lavender on wooden tray" 
