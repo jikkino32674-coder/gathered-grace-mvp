@@ -33,7 +33,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 backdrop-blur-md border-b border-border" style={{ backgroundColor: '#e8f0e8' }}>
       <div className="container max-w-6xl mx-auto px-4 py-4">
         <nav className="flex items-center justify-between gap-4" aria-label="Main navigation">
           <a 
