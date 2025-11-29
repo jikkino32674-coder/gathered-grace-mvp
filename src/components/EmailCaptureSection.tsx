@@ -87,9 +87,9 @@ const EmailCaptureSection = () => {
   return (
     <section className="py-16 bg-card" aria-label="Newsletter signup">
       <div className="container max-w-3xl mx-auto px-6 text-center">
-        <h2 className="font-serif text-2xl text-foreground">Be the first to know</h2>
+        <h2 className="font-serif text-2xl text-foreground">Stay connected with us</h2>
         <p className="mt-2 text-muted-foreground">
-          Occasional notes with new releases and restocks — no spam.
+          Receive occasional notes from Gathered Grace about new products, gentle reminders for self-care, and thoughtful inspiration for gifting — no spam, just warmth.
         </p>
         <form onSubmit={handleSubmit} className="mt-6 flex max-w-md mx-auto gap-2">
           <Input
