@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
+import { Heart } from "lucide-react";
 
 const EmailCaptureSection = () => {
   const [email, setEmail] = useState("");
@@ -87,6 +88,9 @@ const EmailCaptureSection = () => {
   return (
     <section className="py-16 bg-card" aria-label="Newsletter signup">
       <div className="container max-w-3xl mx-auto px-6 text-center">
+        <div className="flex justify-center mb-4">
+          <Heart className="w-6 h-6 text-primary/40 animate-pulse" />
+        </div>
         <h2 className="font-serif text-2xl text-foreground">Stay connected with us</h2>
         <p className="mt-2 text-muted-foreground">
           Receive occasional notes from Gathered Grace about new products, gentle reminders for self-care, and thoughtful inspiration for gifting — no spam, just warmth.
