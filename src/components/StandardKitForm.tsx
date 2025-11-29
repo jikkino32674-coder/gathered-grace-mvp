@@ -35,7 +35,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
     fabric_theme: "",
     card_message: "",
     name_on_card: "Include my name",
-    special_requests: "",
     sender_name: "",
     sender_email: "",
     website: "", // honeypot
@@ -73,7 +72,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
               fabric_theme: formData.fabric_theme || null,
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
-              special_requests: formData.special_requests || null,
               kit_type: kitName,
             },
           })
@@ -310,22 +308,6 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
                     </Label>
                   </div>
                 </RadioGroup>
-              </div>
-            </div>
-
-            {/* Special Requests */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Special Requests (optional)</h3>
-              
-              <div>
-                <Label htmlFor="special_requests">Want to customize your kit?</Label>
-                <Textarea
-                  id="special_requests"
-                  placeholder="Want to remove an item, swap something out, or request something special? Let us know here..."
-                  value={formData.special_requests}
-                  onChange={(e) => updateField("special_requests", e.target.value)}
-                  rows={3}
-                />
               </div>
             </div>
 
