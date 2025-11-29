@@ -100,7 +100,7 @@ const EmailCaptureSection = () => {
         </div>
         <h2 className="font-serif text-2xl text-foreground">Stay connected with us</h2>
         <p className="mt-2 text-muted-foreground">
-          Receive occasional notes from Gathered Grace about new products, gentle reminders for self-care, and thoughtful inspiration for gifting — no spam, just warmth.
+          Receive occasional notes from Gathered Grace about new products, seasonal reflections on rest and care, and thoughtful inspiration for gifting — no spam, just warmth.
         </p>
         <form onSubmit={handleSubmit} className="mt-6 flex max-w-md mx-auto gap-2">
           {showSuccess ? (
