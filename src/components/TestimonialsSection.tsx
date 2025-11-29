@@ -3,8 +3,8 @@ import { Star } from "lucide-react";
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      name: "Sarah M.",
-      text: "The Rest Kit was exactly what my friend needed during a difficult time. The lavender eye pillow is so soothing, and the balm smells amazing. She told me it was the most thoughtful gift she'd ever received.",
+      name: "Anne H.",
+      text: "Thank you so much for the basket you put together. So sweet! She was so surprised when she received it and so appreciative! Thank you!!!",
       rating: 5,
     },
     {
