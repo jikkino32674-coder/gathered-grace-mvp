@@ -136,6 +136,21 @@ const Index = () => {
 
         <HowItWorksSection />
         
+        {/* Decorative Divider */}
+        <div className="py-12 bg-background overflow-hidden">
+          <div className="container max-w-3xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+              <div className="flex items-center gap-2 animate-fade-in">
+                <div className="w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: '0s' }} />
+                <div className="w-2 h-2 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                <div className="w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: '0.4s' }} />
+              </div>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+            </div>
+          </div>
+        </div>
+        
         <StorySection />
         
         <TestimonialsSection />
