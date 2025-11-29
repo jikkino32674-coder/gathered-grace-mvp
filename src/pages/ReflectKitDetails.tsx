@@ -145,6 +145,12 @@ const ReflectKitDetails = () => {
                   <strong>Complimentary U.S. shipping included.</strong>
                 </p>
               </div>
+
+              <div className="bg-muted/50 rounded-lg p-4 border border-border/50">
+                <p className="text-sm text-muted-foreground">
+                  <strong>Looking for something a little different?</strong> We're happy to swap items, remove pieces, or create a fully custom box. Just let us know in the form — or email us at <a href="mailto:gatheredgrace.giving@gmail.com" className="text-primary hover:underline">gatheredgrace.giving@gmail.com</a>.
+                </p>
+              </div>
             </div>
 
             <Button 
