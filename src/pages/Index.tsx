@@ -46,8 +46,8 @@ const Index = () => {
       description: "Includes a lavender eye pillow and soothing balm — a simple duo to ease tension and invite calm.",
       perfectFor: "quiet evenings, gentle self-care, or a thoughtful \"thinking of you\" gift.",
       href: "/products/rest-kit",
-      bgColor: "#fffaf3",
-      borderColor: "#efe8dc",
+      bgColor: "#e8f0e8",
+      borderColor: "#d0ddd0",
     },
     {
       emoji: "✨",
