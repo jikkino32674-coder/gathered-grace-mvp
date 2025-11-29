@@ -3,11 +3,12 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Heart } from "lucide-react";
+import { Heart, CheckCircle } from "lucide-react";
 
 const EmailCaptureSection = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -67,11 +68,17 @@ const EmailCaptureSection = () => {
         });
       } else {
         console.log('Email signup saved successfully:', data);
+        setShowSuccess(true);
         toast({
           title: "Thank you for subscribing!",
           description: "You'll be the first to know about new releases.",
         });
         setEmail("");
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          setShowSuccess(false);
+        }, 3000);
       }
     } catch (err) {
       console.error('Error:', err);
@@ -96,18 +103,27 @@ const EmailCaptureSection = () => {
           Receive occasional notes from Gathered Grace about new products, gentle reminders for self-care, and thoughtful inspiration for gifting — no spam, just warmth.
         </p>
         <form onSubmit={handleSubmit} className="mt-6 flex max-w-md mx-auto gap-2">
-          <Input
-            name="email"
-            type="email"
-            required
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1"
-          />
-          <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Subscribing..." : "Subscribe"}
-          </Button>
+          {showSuccess ? (
+            <div className="flex-1 flex items-center justify-center gap-2 py-2 text-primary animate-scale-in">
+              <CheckCircle className="w-5 h-5 animate-scale-in" />
+              <span className="font-medium">Successfully subscribed!</span>
+            </div>
+          ) : (
+            <>
+              <Input
+                name="email"
+                type="email"
+                required
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1"
+              />
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
+              </Button>
+            </>
+          )}
         </form>
       </div>
     </section>
