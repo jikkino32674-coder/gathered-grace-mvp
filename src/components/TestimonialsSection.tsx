@@ -16,7 +16,7 @@ const TestimonialsSection = () => {
     },
     {
       name: "Sally M.",
-      giftedFor: "Friend needing encouragement",
+      giftedFor: "Sister in Law needing encouragement",
       text: "The kit was put together really pretty and neat little things to brighten her day!",
       rating: 5,
     },
