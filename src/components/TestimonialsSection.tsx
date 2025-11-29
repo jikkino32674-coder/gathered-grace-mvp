@@ -8,8 +8,8 @@ const TestimonialsSection = () => {
       rating: 5,
     },
     {
-      name: "Jennifer L.",
-      text: "I ordered the Restore Kit for my sister who was going through cancer treatment. The custom gift was so perfectly chosen - you could tell real thought went into it. She was moved to tears. Thank you for making something so special.",
+      name: "Kim R.",
+      text: "Hi Nikki! He really enjoyed the kit and reached out to his grandma to show what he received. He was very thankful that we were thinking of him and that you put it all together for him. I am too! Thank you so much for the time and effort you spend putting this together for Jack and for other people too!",
       rating: 5,
     },
     {
