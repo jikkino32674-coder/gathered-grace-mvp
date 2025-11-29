@@ -6,6 +6,7 @@ import ValuePropsSection from "@/components/ValuePropsSection";
 import ProductCard from "@/components/ProductCard";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import StorySection from "@/components/StorySection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import EmailCaptureSection from "@/components/EmailCaptureSection";
 import ContactSection from "@/components/ContactSection";
@@ -136,6 +137,8 @@ const Index = () => {
         <HowItWorksSection />
         
         <StorySection />
+        
+        <TestimonialsSection />
         
         <FAQSection />
         
