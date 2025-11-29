@@ -9,6 +9,12 @@ const TestimonialsSection = () => {
       rating: 5,
     },
     {
+      name: "Jodi W.",
+      giftedFor: "Gift for real estate agent at house closing",
+      text: "I wore my house hustler custom shirt today! Thank you again! Everyone at the office loved it!",
+      rating: 5,
+    },
+    {
       name: "Kim R.",
       giftedFor: "Male cousin going through cancer treatment",
       text: "Hi Nikki! He really enjoyed the kit and reached out to his grandma to show what he received. He was very thankful that we were thinking of him and that you put it all together for him. I am too! Thank you so much for the time and effort you spent putting this together for Jack and for other people too!",
@@ -18,12 +24,6 @@ const TestimonialsSection = () => {
       name: "Sally M.",
       giftedFor: "Sister in Law needing encouragement",
       text: "The kit was put together really pretty and neat little things to brighten her day!",
-      rating: 5,
-    },
-    {
-      name: "Jodi W.",
-      giftedFor: "Gift for real estate agent at house closing",
-      text: "I wore my house hustler custom shirt today! Thank you again! Everyone at the office loved it!",
       rating: 5,
     },
   ];
