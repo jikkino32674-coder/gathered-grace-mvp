@@ -126,8 +126,11 @@ const RestoreKitDetails = () => {
                     <strong>Sustainability:</strong> We prioritize environmental care by using reclaimed fabric scraps from sewing artisans—giving beautiful materials a second life.
                   </p>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground mb-2">
                   <strong>Balm:</strong> Made using jojoba oil, shea butter, and beeswax.
+                </p>
+                <p className="text-muted-foreground">
+                  <strong>Notebook and Pen:</strong> Hardcover notebook with lay flat design, perfect for journaling and reflection. Includes a quality pen.
                 </p>
               </div>
 
