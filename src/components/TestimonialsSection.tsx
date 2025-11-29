@@ -13,8 +13,8 @@ const TestimonialsSection = () => {
       rating: 5,
     },
     {
-      name: "Michael T.",
-      text: "Bought the Reflect Kit for my wife's birthday. The quality of everything is exceptional - the handmade items feel so personal and luxurious. She uses the eye pillow every night now.",
+      name: "Sally M.",
+      text: "The kit was put together really pretty and neat little things to brighten her day!",
       rating: 5,
     },
   ];
