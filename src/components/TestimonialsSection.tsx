@@ -20,6 +20,12 @@ const TestimonialsSection = () => {
       text: "The kit was put together really pretty and neat little things to brighten her day!",
       rating: 5,
     },
+    {
+      name: "Jodi W.",
+      giftedFor: "Gift for real estate agent at house closing",
+      text: "I wore my house hustler custom shirt today! Thank you again! Everyone at the office loved it!",
+      rating: 5,
+    },
   ];
 
   return (
