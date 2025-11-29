@@ -57,8 +57,8 @@ const Index = () => {
       description: "Includes a lavender eye pillow, soothing balm, notepad, and pen — an invitation to unwind, breathe deeply, and put thoughts to paper.",
       perfectFor: "journaling, reflection, or nurturing mindfulness.",
       href: "/products/reflect-kit",
-      bgColor: "#f3f0f8",
-      borderColor: "#e0dae8",
+      bgColor: "#e8f0e8",
+      borderColor: "#d0ddd0",
     },
     {
       emoji: "💛",
@@ -68,8 +68,8 @@ const Index = () => {
       description: "Includes a lavender eye pillow, soothing balm, notepad, pen, and a custom gift — a complete collection to nurture rest and renewal.",
       perfectFor: "meaningful care, recovery, or special occasions.",
       href: "/products/restore-kit",
-      bgColor: "#fff8f0",
-      borderColor: "#f0e8dc",
+      bgColor: "#e8f0e8",
+      borderColor: "#d0ddd0",
     },
   ];
 
