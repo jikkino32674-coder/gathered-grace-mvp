@@ -40,28 +40,28 @@ const TestimonialsSection = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}
-              className="bg-background rounded-2xl p-6 shadow-soft border border-border/50 hover:shadow-elevated transition-all duration-300"
+              className="bg-background rounded-2xl p-5 shadow-soft border border-border/50 hover:shadow-elevated transition-all duration-300"
             >
               <div className="flex gap-1 mb-2">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star 
                     key={i} 
-                    className="w-5 h-5 fill-primary text-primary" 
+                    className="w-4 h-4 fill-primary text-primary" 
                     aria-hidden="true"
                   />
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground/80 italic mb-4">
+              <p className="text-xs text-muted-foreground/80 italic mb-3">
                 {testimonial.giftedFor}
               </p>
-              <p className="text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-3 leading-relaxed">
                 "{testimonial.text}"
               </p>
-              <p className="font-medium text-foreground">
+              <p className="font-medium text-foreground text-sm">
                 — {testimonial.name}
               </p>
             </div>
