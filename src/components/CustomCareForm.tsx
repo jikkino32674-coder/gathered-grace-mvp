@@ -35,6 +35,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
     budget: "",
     custom_fabric: "no",
     fabric_theme: "",
+    special_requests: "",
     sender_name: "",
     sender_email: "",
     website: "", // honeypot
@@ -74,6 +75,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               budget: formData.budget || null,
               custom_fabric: formData.custom_fabric,
               fabric_theme: formData.fabric_theme || null,
+              special_requests: formData.special_requests || null,
             },
           })
           .select();
@@ -388,6 +390,18 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
                 />
               </div>
             )}
+
+            <div>
+              <Label htmlFor="special_requests">Additional requests or customizations (optional)</Label>
+              <Textarea
+                id="special_requests"
+                name="special_requests"
+                rows={3}
+                placeholder="Want to remove an item, swap something out, or request something special? Let us know here..."
+                value={formData.special_requests}
+                onChange={(e) => updateField("special_requests", e.target.value)}
+              />
+            </div>
           </fieldset>
 
           {/* Sender Info */}
