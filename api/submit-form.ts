@@ -20,11 +20,21 @@ interface FormData {
   comforts?: string;
   card_message?: string;
   name_on_card: string;
-  budget: string;
+  budget?: string;
   sender_name: string;
   sender_email: string;
   website?: string;
   source_page?: string;
+  form_type?: string;
+  // Build Custom Kit fields
+  items_eye_pillow?: boolean;
+  items_balm?: boolean;
+  items_journal?: boolean;
+  items_custom_gift?: boolean;
+  custom_gift_details?: string;
+  custom_fabric?: string;
+  fabric_theme?: string;
+  special_requests?: string;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -82,6 +92,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const encodedData = Buffer.from(JSON.stringify(formData)).toString('base64');
     const csvDownloadUrl = `${baseUrl}/api/download-csv?data=${encodedData}`;
 
+    // Determine email title based on form type
+    const isCustomBuild = formData.form_type === 'build_custom';
+    const emailTitle = isCustomBuild ? '🎨 New Build Your Own Kit Quote Request' : '🎁 New Gathered Grace Gift Order';
+
     // Format the email content
     const emailHtml = `
       <!DOCTYPE html>
@@ -103,9 +117,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎁 New Gathered Grace Gift Order</h1>
-              <p>You have received a new custom care gift form submission.</p>
+              <h1>${emailTitle}</h1>
+              <p>You have received a new ${isCustomBuild ? 'Build Your Own Kit quote request' : 'custom care gift form submission'}.</p>
             </div>
+
+            ${isCustomBuild ? `
+            <div class="section">
+              <div class="section-title">📦 Selected Items</div>
+              ${formData.items_eye_pillow ? '<div class="field">✓ Lavender Eye Pillow</div>' : ''}
+              ${formData.items_balm ? '<div class="field">✓ Handmade Balm</div>' : ''}
+              ${formData.items_journal ? '<div class="field">✓ Journal and Pen Set</div>' : ''}
+              ${formData.items_custom_gift ? '<div class="field">✓ Custom Gift</div>' : ''}
+              ${formData.custom_gift_details ? `
+              <div class="field">
+                <div class="label">Custom Gift Details:</div>
+                <div class="value">${formData.custom_gift_details}</div>
+              </div>
+              ` : ''}
+              ${formData.custom_fabric === 'yes' ? `
+              <div class="field">
+                <div class="label">Custom Fabric Theme:</div>
+                <div class="value">${formData.fabric_theme || 'Not specified'}</div>
+              </div>
+              ` : ''}
+            </div>
+            ` : ''}
 
             <div class="section">
               <div class="section-title">👤 Sender Information</div>
@@ -160,10 +196,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <div class="value">${formData.comforts}</div>
               </div>
               ` : ''}
+              ${formData.budget ? `
               <div class="field">
                 <div class="label">Budget for Custom Gift:</div>
                 <div class="value">${formData.budget}</div>
               </div>
+              ` : ''}
+              ${formData.special_requests ? `
+              <div class="field">
+                <div class="label">Special Requests:</div>
+                <div class="value">${formData.special_requests}</div>
+              </div>
+              ` : ''}
             </div>
 
             ${formData.card_message ? `
@@ -201,8 +245,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `;
 
     const emailText = `
-New Gathered Grace Gift Order
+${isCustomBuild ? 'New Build Your Own Kit Quote Request' : 'New Gathered Grace Gift Order'}
 
+${isCustomBuild && (formData.items_eye_pillow || formData.items_balm || formData.items_journal || formData.items_custom_gift) ? `
+SELECTED ITEMS
+${formData.items_eye_pillow ? '✓ Lavender Eye Pillow' : ''}
+${formData.items_balm ? '✓ Handmade Balm' : ''}
+${formData.items_journal ? '✓ Journal and Pen Set' : ''}
+${formData.items_custom_gift ? '✓ Custom Gift' : ''}
+${formData.custom_gift_details ? `Custom Gift Details: ${formData.custom_gift_details}` : ''}
+${formData.custom_fabric === 'yes' ? `Custom Fabric Theme: ${formData.fabric_theme || 'Not specified'}` : ''}
+
+` : ''}
 SENDER INFORMATION
 Name: ${formData.sender_name}
 Email: ${formData.sender_email}
@@ -217,7 +271,8 @@ GIFT DETAILS
 ${formData.occasion ? `Occasion: ${formData.occasion}` : ''}
 ${formData.season ? `Season/Situation: ${formData.season}` : ''}
 ${formData.comforts ? `Comforts: ${formData.comforts}` : ''}
-Budget: ${formData.budget}
+${formData.budget ? `Budget: ${formData.budget}` : ''}
+${formData.special_requests ? `Special Requests: ${formData.special_requests}` : ''}
 
 ${formData.card_message ? `
 CARD MESSAGE
@@ -264,7 +319,9 @@ Download CSV: ${csvDownloadUrl}
       from: fromEmail,
       to: recipientEmail,
       replyTo: formData.sender_email,
-      subject: `🎁 New Gift Order from ${formData.sender_name} - ${formData.recipient_name}`,
+      subject: isCustomBuild 
+        ? `🎨 Build Your Own Kit Quote Request from ${formData.sender_name}`
+        : `🎁 New Gift Order from ${formData.sender_name} - ${formData.recipient_name}`,
       html: emailHtml,
       text: emailText,
     });
