@@ -124,6 +124,39 @@ const Index = () => {
                 </a>
               </article>
             ))}
+            
+            {/* Build Your Own Kit Option */}
+            <article 
+              style={{ 
+                background: "#e8f0e8", 
+                border: "1px solid #d0ddd0", 
+                borderRadius: '16px', 
+                padding: '20px' 
+              }}
+            >
+              <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
+                <span aria-hidden="true">🎨 </span>
+                <strong>Build Your Own</strong>
+              </h3>
+              <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>Custom Quote</em>
+              <p style={{ margin: '0 0 16px' }}>Want something unique? Choose exactly what goes in your kit and we'll create a custom quote for you.</p>
+              <a 
+                href="/build-custom"
+                style={{ 
+                  display: 'inline-block', 
+                  textDecoration: 'none', 
+                  background: '#2f3a34', 
+                  color: '#fff', 
+                  padding: '10px 14px', 
+                  borderRadius: '12px', 
+                  boxShadow: '0 2px 0 rgba(0,0,0,.08)' 
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
+                onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
+              >
+                Build Your Own →
+              </a>
+            </article>
           </div>
 
           <div style={{ height: '8px' }}></div>
