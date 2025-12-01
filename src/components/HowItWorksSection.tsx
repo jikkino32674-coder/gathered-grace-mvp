@@ -5,7 +5,7 @@ const HowItWorksSection = () => {
     {
       number: "01",
       title: "Choose Your Gift",
-      description: "Choose from our three curated care kits.",
+      description: "Choose from our curated care kits.",
       icon: Gift,
       color: "rose",
     },
