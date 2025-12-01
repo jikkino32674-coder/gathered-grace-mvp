@@ -34,7 +34,7 @@ const ContactSection = () => {
             aria-label="Visit our Facebook"
             asChild
           >
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/GatheredGraceGifts/" target="_blank" rel="noopener noreferrer">
               <Facebook className="w-4 h-4" />
               Facebook
             </a>
