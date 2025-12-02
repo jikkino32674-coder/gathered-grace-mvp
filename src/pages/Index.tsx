@@ -160,11 +160,11 @@ const Index = () => {
           <div style={{ height: '8px' }}></div>
 
           <style>{`
-            @media (min-width: 720px) {
-              .gg-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+            @media (min-width: 640px) {
+              .gg-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
             }
-            @media (min-width: 1024px) {
-              .gg-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+            @media (min-width: 900px) {
+              .gg-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
             }
           `}</style>
         </section>

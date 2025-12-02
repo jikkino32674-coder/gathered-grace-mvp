@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
-import heroGiftBox from "@/assets/hero-gift-box.png";
 import heroNotebook from "@/assets/hero-notebook.png";
 import heroLotionBar from "@/assets/hero-lotion-bar.png";
 
@@ -44,15 +43,6 @@ const Hero = () => {
               plugins={[plugin.current]}
             >
               <CarouselContent>
-                <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[300px]">
-                    <img 
-                      src={heroGiftBox} 
-                      alt="Gathered Grace gift box with lavender eye pillow, balm, and heartfelt message card" 
-                      className="w-full h-auto"
-                    />
-                  </div>
-                </CarouselItem>
                 <CarouselItem>
                   <div className="flex items-center justify-center min-h-[300px]">
                     <img 
