@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (process.env.STRIPE_SECRET_KEY) {
     try {
       const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: '2024-06-20',
+        apiVersion: '2024-09-30.acacia',
         timeout: 30000,
         maxNetworkRetries: 3,
       });
