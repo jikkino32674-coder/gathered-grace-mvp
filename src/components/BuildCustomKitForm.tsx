@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -543,7 +544,16 @@ const BuildCustomKitForm = () => {
         </div>
       )}
 
-      <div className="flex justify-center">
+      <div className="flex flex-col sm:flex-row justify-center gap-4">
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          className="min-w-[200px]"
+          asChild
+        >
+          <Link to="/">Cancel</Link>
+        </Button>
         <Button
           type="submit"
           disabled={isSubmitting}
