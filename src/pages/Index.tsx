@@ -93,11 +93,10 @@ const Index = () => {
             {kits.map((kit) => (
               <article 
                 key={kit.title}
+                className="relative group rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group-hover:border-foreground/20"
                 style={{ 
                   background: kit.bgColor, 
                   border: `1px solid ${kit.borderColor}`, 
-                  borderRadius: '16px', 
-                  padding: '20px' 
                 }}
               >
                 <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
@@ -127,11 +126,10 @@ const Index = () => {
             
             {/* Build Your Own Kit Option */}
             <article 
+              className="relative group rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2 group-hover:border-foreground/20"
               style={{ 
                 background: "#e8f0e8", 
                 border: "1px solid #d0ddd0", 
-                borderRadius: '16px', 
-                padding: '20px' 
               }}
             >
               <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
