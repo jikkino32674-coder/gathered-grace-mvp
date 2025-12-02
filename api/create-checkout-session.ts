@@ -33,12 +33,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    const stripeKey = process.env.STRIPE_SECRET_KEY.trim();
+    const stripe = new Stripe(stripeKey, {
       typescript: true,
     });
 
-    console.log('🔑 Stripe initialized with key length:', process.env.STRIPE_SECRET_KEY.length);
-    console.log('🔑 Key prefix:', process.env.STRIPE_SECRET_KEY.substring(0, 8) + '...');
+    console.log('🔑 Stripe initialized with key length:', stripeKey.length);
+    console.log('🔑 Key prefix:', stripeKey.substring(0, 8) + '...');
 
     const {
       kitType,
