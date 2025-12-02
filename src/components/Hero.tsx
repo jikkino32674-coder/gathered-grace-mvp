@@ -8,6 +8,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 import heroNotebook from "@/assets/hero-notebook.png";
 import heroLotionBar from "@/assets/hero-lotion-bar.png";
+import heroGiftBox from "@/assets/hero-gift-box.png";
 
 const Hero = () => {
   const plugin = useRef(
@@ -44,20 +45,29 @@ const Hero = () => {
             >
               <CarouselContent>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[300px]">
+                  <div className="flex items-center justify-center aspect-[4/3] overflow-hidden">
                     <img 
                       src={heroNotebook} 
                       alt="Cozy scene with notebook, candle, tea, and lavender" 
-                      className="w-full h-auto"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
                 <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[300px]">
+                  <div className="flex items-center justify-center aspect-[4/3] overflow-hidden">
                     <img 
                       src={heroLotionBar} 
                       alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
-                      className="w-full h-auto"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="flex items-center justify-center aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={heroGiftBox} 
+                      alt="Beautifully wrapped gift box" 
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </CarouselItem>
