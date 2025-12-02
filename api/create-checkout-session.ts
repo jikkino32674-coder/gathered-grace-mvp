@@ -50,6 +50,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       items_custom_gift,
     } = req.body;
 
+    console.log('📥 Received checkout request:', {
+      kitType,
+      basePrice,
+      customFabric,
+      customBudget,
+      items_eye_pillow,
+      items_balm,
+      items_journal,
+      items_custom_gift,
+    });
+
     if (!kitType) {
       return res.status(400).json({ error: 'Missing required field: kitType' });
     }
@@ -120,6 +131,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       // Add custom budget as a tip/donation line item - ALWAYS add if custom gift is selected
+      console.log('💰 Custom budget check:', { items_custom_gift, customBudget });
       if (items_custom_gift && customBudget) {
         // Parse budget range to get the amount
         let budgetAmount = 0;
@@ -128,9 +140,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         else if (customBudget === '$30-$50') budgetAmount = 4000; // $40 (middle of range)
         else if (customBudget === '$50+') budgetAmount = 5000; // $50 (minimum)
 
+        console.log('💰 Parsed budget amount:', budgetAmount, 'from:', customBudget);
+
         if (budgetAmount > 0) {
           // Add as a custom line item (tip/bonus for custom gift)
-          lineItems.push({
+          const budgetLineItem = {
             price_data: {
               currency: 'usd',
               product_data: {
@@ -140,9 +154,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               unit_amount: budgetAmount,
             },
             quantity: 1,
-          });
+          };
+          lineItems.push(budgetLineItem);
           amount += budgetAmount;
+          console.log('✅ Added custom budget line item:', budgetLineItem);
+          console.log('💰 New total amount:', amount);
+        } else {
+          console.warn('⚠️ Budget amount is 0, not adding to line items');
         }
+      } else {
+        console.log('ℹ️ Custom budget not added - items_custom_gift:', items_custom_gift, 'customBudget:', customBudget);
       }
     } else {
       // For standard kits (rest/reflect), use kit price IDs
@@ -178,6 +199,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const host = req.headers.host || 'momgatheredgrace.vercel.app';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
+
+    console.log('📋 Final line items before creating session:', JSON.stringify(lineItems, null, 2));
+    console.log('💰 Total amount (cents):', amount, '($' + (amount / 100).toFixed(2) + ')');
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create({

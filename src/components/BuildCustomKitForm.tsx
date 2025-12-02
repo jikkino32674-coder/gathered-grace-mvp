@@ -177,8 +177,11 @@ const BuildCustomKitForm = () => {
       if (data.ok) {
         console.log('✅ Form submitted successfully');
         
-        // If custom budget is selected, create a Stripe checkout session
-        if (formData.custom_gift_budget && formData.items_custom_gift) {
+        // Always create a Stripe checkout session if items are selected
+        // Custom budget will be added if custom gift is selected with a budget
+        const hasSelectedItems = formData.items_eye_pillow || formData.items_balm || formData.items_journal || formData.items_custom_gift;
+        
+        if (hasSelectedItems) {
           try {
             const checkoutEndpoint = '/api/create-checkout-session';
             
@@ -189,7 +192,11 @@ const BuildCustomKitForm = () => {
             if (formData.items_journal) basePrice += 1800; // $18
             if (formData.custom_fabric === "yes") basePrice += 500; // $5
             
-            console.log('💳 Creating checkout session with base price:', basePrice);
+            console.log('💳 Creating checkout session');
+            console.log('   Base price:', basePrice);
+            console.log('   Custom gift selected:', formData.items_custom_gift);
+            console.log('   Custom budget:', formData.custom_gift_budget);
+            console.log('   Custom fabric:', formData.custom_fabric);
             
             const checkoutResponse = await fetch(checkoutEndpoint, {
               method: "POST",
@@ -198,7 +205,7 @@ const BuildCustomKitForm = () => {
                 kitType: 'build_custom',
                 basePrice: basePrice,
                 customFabric: formData.custom_fabric === "yes",
-                customBudget: formData.custom_gift_budget,
+                customBudget: formData.custom_gift_budget || null, // Send budget even if empty
                 items_eye_pillow: formData.items_eye_pillow,
                 items_balm: formData.items_balm,
                 items_journal: formData.items_journal,
@@ -221,6 +228,7 @@ const BuildCustomKitForm = () => {
             });
 
             console.log('💳 Checkout data:', checkoutData);
+            console.log('💳 Checkout URL:', checkoutData.url);
 
             if (checkoutData.url) {
               console.log('🔗 Redirecting to Stripe checkout:', checkoutData.url);
@@ -239,6 +247,8 @@ const BuildCustomKitForm = () => {
             setShowSuccess(true);
           }
         } else {
+          // No items selected - just show success message
+          console.log('ℹ️ No items selected, showing success message');
           setFormData(initialFormData);
           setShowSuccess(true);
         }
