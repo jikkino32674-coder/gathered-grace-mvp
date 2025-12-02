@@ -12,10 +12,21 @@ interface FormData {
   comforts?: string;
   card_message?: string;
   name_on_card: string;
-  budget: string;
+  budget?: string;
   sender_name: string;
   sender_email: string;
   source_page?: string;
+  form_type?: string;
+  // Build Custom Kit fields
+  items_eye_pillow?: boolean;
+  items_balm?: boolean;
+  items_journal?: boolean;
+  items_custom_gift?: boolean;
+  custom_gift_details?: string;
+  custom_fabric?: string;
+  fabric_theme?: string;
+  special_requests?: string;
+  custom_gift_budget?: string;
 }
 
 // Helper function to escape CSV fields
@@ -33,6 +44,7 @@ function generateCSV(formData: FormData): string {
   const rows = [
     // Header row
     [
+      'Form Type',
       'Sender Name',
       'Sender Email',
       'Recipient Name',
@@ -47,12 +59,21 @@ function generateCSV(formData: FormData): string {
       'Budget',
       'Card Message',
       'Name on Card',
+      'Eye Pillow',
+      'Balm',
+      'Journal',
+      'Custom Gift',
+      'Custom Gift Details',
+      'Custom Fabric',
+      'Fabric Theme',
+      'Special Requests',
       'Source Page',
       'Submission Date',
     ].join(','),
     
     // Data row
     [
+      escapeCsvField(formData.form_type || 'standard'),
       escapeCsvField(formData.sender_name),
       escapeCsvField(formData.sender_email),
       escapeCsvField(formData.recipient_name),
@@ -64,9 +85,17 @@ function generateCSV(formData: FormData): string {
       escapeCsvField(formData.occasion || ''),
       escapeCsvField(formData.season || ''),
       escapeCsvField(formData.comforts || ''),
-      escapeCsvField(formData.budget),
+      escapeCsvField(formData.budget || formData.custom_gift_budget || ''),
       escapeCsvField(formData.card_message || ''),
-      escapeCsvField(formData.name_on_card),
+      escapeCsvField(formData.name_on_card || ''),
+      escapeCsvField(formData.items_eye_pillow ? 'Yes' : 'No'),
+      escapeCsvField(formData.items_balm ? 'Yes' : 'No'),
+      escapeCsvField(formData.items_journal ? 'Yes' : 'No'),
+      escapeCsvField(formData.items_custom_gift ? 'Yes' : 'No'),
+      escapeCsvField(formData.custom_gift_details || ''),
+      escapeCsvField(formData.custom_fabric || ''),
+      escapeCsvField(formData.fabric_theme || ''),
+      escapeCsvField(formData.special_requests || ''),
       escapeCsvField(formData.source_page || ''),
       escapeCsvField(new Date().toISOString()),
     ].join(','),

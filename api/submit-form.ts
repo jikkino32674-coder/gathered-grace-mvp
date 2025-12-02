@@ -35,6 +35,7 @@ interface FormData {
   custom_fabric?: string;
   fabric_theme?: string;
   special_requests?: string;
+  custom_gift_budget?: string;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -196,10 +197,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 <div class="value">${formData.comforts}</div>
               </div>
               ` : ''}
-              ${formData.budget ? `
+              ${formData.budget || formData.custom_gift_budget ? `
               <div class="field">
                 <div class="label">Budget for Custom Gift:</div>
-                <div class="value">${formData.budget}</div>
+                <div class="value">${formData.budget || formData.custom_gift_budget}</div>
               </div>
               ` : ''}
               ${formData.special_requests ? `
@@ -271,7 +272,7 @@ GIFT DETAILS
 ${formData.occasion ? `Occasion: ${formData.occasion}` : ''}
 ${formData.season ? `Season/Situation: ${formData.season}` : ''}
 ${formData.comforts ? `Comforts: ${formData.comforts}` : ''}
-${formData.budget ? `Budget: ${formData.budget}` : ''}
+${formData.budget || formData.custom_gift_budget ? `Budget: ${formData.budget || formData.custom_gift_budget}` : ''}
 ${formData.special_requests ? `Special Requests: ${formData.special_requests}` : ''}
 
 ${formData.card_message ? `
