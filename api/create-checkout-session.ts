@@ -6,9 +6,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2025-11-17.clover',
-    })
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
   : null;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
