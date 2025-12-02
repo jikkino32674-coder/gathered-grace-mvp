@@ -72,10 +72,30 @@ const BuildCustomKitForm = () => {
     e.preventDefault();
     
     // Honeypot check
-    if (formData.website) return;
+    if (formData.website) {
+      console.warn('⚠️ Honeypot field filled - likely spam');
+      return;
+    }
+    
+    // Validate required fields
+    if (!formData.recipient_name || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.sender_name || !formData.sender_email) {
+      console.error('❌ Missing required fields');
+      setError(true);
+      alert('Please fill in all required fields (marked with *)');
+      return;
+    }
+    
+    // Check if at least one item is selected
+    if (!formData.items_eye_pillow && !formData.items_balm && !formData.items_journal && !formData.items_custom_gift) {
+      console.error('❌ No items selected');
+      setError(true);
+      alert('Please select at least one item for your custom kit.');
+      return;
+    }
     
     setIsSubmitting(true);
     setError(false);
+    console.log('📤 Submitting form...', { recipient_name: formData.recipient_name, sender_email: formData.sender_email });
 
     try {
       // Save to Supabase (optional - non-blocking)
@@ -139,9 +159,22 @@ const BuildCustomKitForm = () => {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json().catch(() => ({ ok: false, error: 'Failed to parse response' }));
+      console.log('📡 API Response status:', response.status);
 
-      if (response.ok && data.ok) {
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => 'Unknown error');
+        console.error('❌ API Error Response:', errorText);
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
+      }
+
+      const data = await response.json().catch((parseErr) => {
+        console.error('❌ Failed to parse JSON response:', parseErr);
+        throw new Error('Invalid response from server');
+      });
+
+      console.log('📦 API Response data:', data);
+
+      if (data.ok) {
         console.log('✅ Form submitted successfully');
         
         // If custom budget is selected, create a Stripe checkout session
@@ -155,6 +188,8 @@ const BuildCustomKitForm = () => {
             if (formData.items_balm) basePrice += 1500; // $15
             if (formData.items_journal) basePrice += 1800; // $18
             if (formData.custom_fabric === "yes") basePrice += 500; // $5
+            
+            console.log('💳 Creating checkout session with base price:', basePrice);
             
             const checkoutResponse = await fetch(checkoutEndpoint, {
               method: "POST",
@@ -172,31 +207,52 @@ const BuildCustomKitForm = () => {
               }),
             });
 
-            const checkoutData = await checkoutResponse.json().catch(() => ({ error: 'Failed to parse checkout response' }));
+            console.log('💳 Checkout response status:', checkoutResponse.status);
 
-            if (checkoutResponse.ok && checkoutData.url) {
-              // Redirect to Stripe checkout
+            if (!checkoutResponse.ok) {
+              const checkoutErrorText = await checkoutResponse.text().catch(() => 'Unknown error');
+              console.error('❌ Checkout API Error:', checkoutErrorText);
+              throw new Error(`Checkout error: ${checkoutResponse.status} - ${checkoutErrorText}`);
+            }
+
+            const checkoutData = await checkoutResponse.json().catch((parseErr) => {
+              console.error('❌ Failed to parse checkout response:', parseErr);
+              throw new Error('Invalid checkout response');
+            });
+
+            console.log('💳 Checkout data:', checkoutData);
+
+            if (checkoutData.url) {
+              console.log('🔗 Redirecting to Stripe checkout:', checkoutData.url);
               window.location.href = checkoutData.url;
               return;
             } else {
-              console.warn('⚠️ Could not create checkout session, showing success message instead');
+              console.warn('⚠️ No checkout URL returned, showing success message instead');
+              setFormData(initialFormData);
+              setShowSuccess(true);
             }
-          } catch (checkoutErr) {
-            console.warn('⚠️ Error creating checkout session:', checkoutErr);
-            // Continue to show success message even if checkout fails
+          } catch (checkoutErr: any) {
+            console.error('⚠️ Error creating checkout session:', checkoutErr);
+            const errorMsg = checkoutErr.message || 'Could not create checkout session';
+            alert(`Error creating checkout: ${errorMsg}. Your form was submitted successfully - we'll contact you with a quote.`);
+            setFormData(initialFormData);
+            setShowSuccess(true);
           }
+        } else {
+          setFormData(initialFormData);
+          setShowSuccess(true);
         }
-        
-        // Reset form data after successful submission
-        setFormData(initialFormData);
-        setShowSuccess(true);
       } else {
-        console.error('Form submission error:', data);
+        const errorMsg = data.error || data.message || 'Unknown error';
+        console.error('❌ Form submission failed:', errorMsg);
         setError(true);
+        alert(`Error: ${errorMsg}. Please try again or contact us directly.`);
       }
-    } catch (err) {
-      console.error('Error submitting form:', err);
+    } catch (err: any) {
+      console.error('❌ Form submission error:', err);
+      const errorMessage = err.message || 'Network error. Please check your internet connection and try again.';
       setError(true);
+      alert(`Error submitting form: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }

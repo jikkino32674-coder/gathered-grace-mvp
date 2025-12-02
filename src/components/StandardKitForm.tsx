@@ -57,10 +57,22 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
     e.preventDefault();
     
     // Honeypot check
-    if (formData.website) return;
+    if (formData.website) {
+      console.warn('⚠️ Honeypot field filled - likely spam');
+      return;
+    }
+    
+    // Validate required fields
+    if (!formData.recipient_name || !formData.address || !formData.city || !formData.state || !formData.zip || !formData.sender_name || !formData.sender_email) {
+      console.error('❌ Missing required fields');
+      setError(true);
+      alert('Please fill in all required fields (marked with *)');
+      return;
+    }
     
     setIsSubmitting(true);
     setError(false);
+    console.log('📤 Submitting form...', { recipient_name: formData.recipient_name, sender_email: formData.sender_email });
 
     try {
       // Save to Supabase as B2C lead (optional - continue even if this fails)
@@ -114,9 +126,22 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json().catch(() => ({ ok: false, error: 'Failed to parse response' }));
+      console.log('📡 API Response status:', response.status);
 
-      if (response.ok && data.ok) {
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => 'Unknown error');
+        console.error('❌ API Error Response:', errorText);
+        throw new Error(`Server error: ${response.status} - ${errorText}`);
+      }
+
+      const data = await response.json().catch((parseErr) => {
+        console.error('❌ Failed to parse JSON response:', parseErr);
+        throw new Error('Invalid response from server');
+      });
+
+      console.log('📦 API Response data:', data);
+
+      if (data.ok) {
         console.log('✅ Form submitted successfully');
         onOpenChange(false);
         // Redirect to Stripe payment link
@@ -124,14 +149,19 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
         const finalPaymentLink = formData.custom_fabric === "yes" && customFabricPaymentLink
           ? customFabricPaymentLink
           : paymentLink;
+        console.log('🔗 Redirecting to:', finalPaymentLink);
         window.location.href = finalPaymentLink;
       } else {
-        console.error('❌ Form submission failed:', data.error || response.statusText);
+        const errorMsg = data.error || data.message || 'Unknown error';
+        console.error('❌ Form submission failed:', errorMsg);
         setError(true);
+        alert(`Error: ${errorMsg}. Please try again or contact us directly.`);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('❌ Form submission error:', err);
+      const errorMessage = err.message || 'Network error. Please check your internet connection and try again.';
       setError(true);
+      alert(`Error submitting form: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -406,8 +436,8 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
             </div>
 
             {error && (
-              <div className="bg-destructive/10 text-destructive px-4 py-3 rounded">
-                There was an error submitting your request. Please try again.
+              <div className="bg-destructive/10 text-destructive px-4 py-3 rounded border border-destructive/20" role="alert">
+                <strong>Error submitting form.</strong> Please check that all required fields are filled and try again. If the problem persists, please email us at gatheredgrace.giving@gmail.com
               </div>
             )}
 
