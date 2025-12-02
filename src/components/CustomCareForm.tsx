@@ -142,14 +142,59 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
 
       if (data.ok) {
         console.log('✅ Form submitted successfully');
-        onOpenChange(false);
-        // Redirect to Stripe payment link for Restore Kit
-        // If custom fabric is selected, use the custom fabric payment link
-        const finalPaymentLink = formData.custom_fabric === "yes" && STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
-          ? STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
-          : STRIPE_PRODUCTS.RESTORE_KIT.paymentLink;
-        console.log('🔗 Redirecting to:', finalPaymentLink);
-        window.location.href = finalPaymentLink;
+        
+        // Create dynamic Stripe checkout session with budget added
+        try {
+          const checkoutEndpoint = '/api/create-checkout-session';
+          
+          console.log('💳 Creating Restore Kit checkout session');
+          console.log('   Budget selected:', formData.budget);
+          console.log('   Custom fabric:', formData.custom_fabric);
+          
+          const checkoutResponse = await fetch(checkoutEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              kitType: 'restore',
+              customFabric: formData.custom_fabric === "yes",
+              customBudget: formData.budget, // $10, $20, $40, $50, $75, $100+
+              formData: formData,
+            }),
+          });
+
+          console.log('💳 Checkout response status:', checkoutResponse.status);
+
+          if (!checkoutResponse.ok) {
+            const checkoutErrorText = await checkoutResponse.text().catch(() => 'Unknown error');
+            console.error('❌ Checkout API Error:', checkoutErrorText);
+            throw new Error(`Checkout error: ${checkoutResponse.status} - ${checkoutErrorText}`);
+          }
+
+          const checkoutData = await checkoutResponse.json().catch((parseErr) => {
+            console.error('❌ Failed to parse checkout response:', parseErr);
+            throw new Error('Invalid checkout response');
+          });
+
+          console.log('💳 Checkout data:', checkoutData);
+
+          if (checkoutData.url) {
+            console.log('🔗 Redirecting to Stripe checkout:', checkoutData.url);
+            onOpenChange(false);
+            window.location.href = checkoutData.url;
+            return;
+          } else {
+            throw new Error('No checkout URL returned');
+          }
+        } catch (checkoutErr: any) {
+          console.error('⚠️ Error creating checkout session:', checkoutErr);
+          // Fallback to static payment link if checkout session fails
+          const finalPaymentLink = formData.custom_fabric === "yes" && STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
+            ? STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
+            : STRIPE_PRODUCTS.RESTORE_KIT.paymentLink;
+          console.log('⚠️ Falling back to static payment link:', finalPaymentLink);
+          onOpenChange(false);
+          window.location.href = finalPaymentLink;
+        }
       } else {
         const errorMsg = data.error || data.message || 'Unknown error';
         console.error('❌ Form submission failed:', errorMsg);

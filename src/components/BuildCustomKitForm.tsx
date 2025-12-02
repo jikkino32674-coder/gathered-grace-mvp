@@ -175,83 +175,11 @@ const BuildCustomKitForm = () => {
       console.log('📦 API Response data:', data);
 
       if (data.ok) {
-        console.log('✅ Form submitted successfully');
-        
-        // Always create a Stripe checkout session if items are selected
-        // Custom budget will be added if custom gift is selected with a budget
-        const hasSelectedItems = formData.items_eye_pillow || formData.items_balm || formData.items_journal || formData.items_custom_gift;
-        
-        if (hasSelectedItems) {
-          try {
-            const checkoutEndpoint = '/api/create-checkout-session';
-            
-            // Calculate base price based on selected items
-            let basePrice = 0;
-            if (formData.items_eye_pillow) basePrice += 2200; // $22
-            if (formData.items_balm) basePrice += 1500; // $15
-            if (formData.items_journal) basePrice += 1800; // $18
-            if (formData.custom_fabric === "yes") basePrice += 500; // $5
-            
-            console.log('💳 Creating checkout session');
-            console.log('   Base price:', basePrice);
-            console.log('   Custom gift selected:', formData.items_custom_gift);
-            console.log('   Custom budget:', formData.custom_gift_budget);
-            console.log('   Custom fabric:', formData.custom_fabric);
-            
-            const checkoutResponse = await fetch(checkoutEndpoint, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                kitType: 'build_custom',
-                basePrice: basePrice,
-                customFabric: formData.custom_fabric === "yes",
-                customBudget: formData.custom_gift_budget || null, // Send budget even if empty
-                items_eye_pillow: formData.items_eye_pillow,
-                items_balm: formData.items_balm,
-                items_journal: formData.items_journal,
-                items_custom_gift: formData.items_custom_gift,
-                formData: formData,
-              }),
-            });
-
-            console.log('💳 Checkout response status:', checkoutResponse.status);
-
-            if (!checkoutResponse.ok) {
-              const checkoutErrorText = await checkoutResponse.text().catch(() => 'Unknown error');
-              console.error('❌ Checkout API Error:', checkoutErrorText);
-              throw new Error(`Checkout error: ${checkoutResponse.status} - ${checkoutErrorText}`);
-            }
-
-            const checkoutData = await checkoutResponse.json().catch((parseErr) => {
-              console.error('❌ Failed to parse checkout response:', parseErr);
-              throw new Error('Invalid checkout response');
-            });
-
-            console.log('💳 Checkout data:', checkoutData);
-            console.log('💳 Checkout URL:', checkoutData.url);
-
-            if (checkoutData.url) {
-              console.log('🔗 Redirecting to Stripe checkout:', checkoutData.url);
-              window.location.href = checkoutData.url;
-              return;
-            } else {
-              console.warn('⚠️ No checkout URL returned, showing success message instead');
-              setFormData(initialFormData);
-              setShowSuccess(true);
-            }
-          } catch (checkoutErr: any) {
-            console.error('⚠️ Error creating checkout session:', checkoutErr);
-            const errorMsg = checkoutErr.message || 'Could not create checkout session';
-            alert(`Error creating checkout: ${errorMsg}. Your form was submitted successfully - we'll contact you with a quote.`);
-            setFormData(initialFormData);
-            setShowSuccess(true);
-          }
-        } else {
-          // No items selected - just show success message
-          console.log('ℹ️ No items selected, showing success message');
-          setFormData(initialFormData);
-          setShowSuccess(true);
-        }
+        console.log('✅ Form submitted successfully - showing quote confirmation');
+        // Build Your Own Kit is QUOTE ONLY - no Stripe redirect
+        // We just show success message and they'll get a personalized quote via email
+        setFormData(initialFormData);
+        setShowSuccess(true);
       } else {
         const errorMsg = data.error || data.message || 'Unknown error';
         console.error('❌ Form submission failed:', errorMsg);

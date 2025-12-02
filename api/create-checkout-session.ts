@@ -69,8 +69,58 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let amount = 0; // in cents
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
+    // Handle Restore Kit with dynamic budget
+    if (kitType === 'restore') {
+      // Base Restore Kit price: $69 (or $74 with custom fabric)
+      const baseKitPrice = customFabric ? 7400 : 6900; // $74 or $69 in cents
+      
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: customFabric ? 'Restore Kit + Custom Fabric' : 'Restore Kit',
+            description: 'Includes lavender eye pillow, soothing balm, notepad, pen, and a custom gift',
+          },
+          unit_amount: baseKitPrice,
+        },
+        quantity: 1,
+      });
+      amount += baseKitPrice;
+
+      console.log('💰 Restore Kit base price:', baseKitPrice, 'cents ($' + (baseKitPrice / 100).toFixed(2) + ')');
+
+      // Add custom budget as additional line item
+      if (customBudget) {
+        let budgetAmount = 0;
+        // Parse budget values: $10, $20, $40, $50, $75, $100+
+        if (customBudget === '$10') budgetAmount = 1000;
+        else if (customBudget === '$20') budgetAmount = 2000;
+        else if (customBudget === '$40') budgetAmount = 4000;
+        else if (customBudget === '$50') budgetAmount = 5000;
+        else if (customBudget === '$75') budgetAmount = 7500;
+        else if (customBudget === '$100+') budgetAmount = 10000;
+
+        console.log('💰 Custom budget selected:', customBudget, '=', budgetAmount, 'cents');
+
+        if (budgetAmount > 0) {
+          lineItems.push({
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Custom Gift Budget',
+                description: `Additional budget for personalized custom gift (${customBudget})`,
+              },
+              unit_amount: budgetAmount,
+            },
+            quantity: 1,
+          });
+          amount += budgetAmount;
+          console.log('✅ Added custom budget line item:', budgetAmount);
+        }
+      }
+    }
     // For build_custom, build line items from individual selections
-    if (kitType === 'build_custom') {
+    else if (kitType === 'build_custom') {
       // Add individual items based on selections
       if (items_eye_pillow) {
         lineItems.push({
@@ -203,13 +253,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('📋 Final line items before creating session:', JSON.stringify(lineItems, null, 2));
     console.log('💰 Total amount (cents):', amount, '($' + (amount / 100).toFixed(2) + ')');
 
+    // Determine cancel URL based on kit type
+    const cancelUrl = kitType === 'restore' 
+      ? `${baseUrl}/products/restore-kit?canceled=true`
+      : `${baseUrl}/build-custom?canceled=true`;
+
     // Create checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
       success_url: `${baseUrl}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/build-custom-kit?canceled=true`,
+      cancel_url: cancelUrl,
       metadata: {
         kit_type: kitType,
         custom_fabric: customFabric ? 'yes' : 'no',
