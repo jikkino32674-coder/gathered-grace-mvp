@@ -37,10 +37,11 @@ const BuildCustomKitForm = () => {
     zip: "",
     recipient_email: "",
     
-    // About the gift
+    // About the custom gift
     occasion: "",
     occasion_other: "",
     comforts: "",
+    custom_gift_budget: "",
     
     // Card message
     card_message: "",
@@ -94,6 +95,7 @@ const BuildCustomKitForm = () => {
               state: formData.state,
               zip: formData.zip,
               occasion: formData.occasion === "Other" ? formData.occasion_other : formData.occasion,
+              custom_gift_budget: formData.custom_gift_budget || null,
               comforts: formData.comforts || null,
               card_message: formData.card_message || null,
               name_on_card: formData.name_on_card,
@@ -419,9 +421,9 @@ const BuildCustomKitForm = () => {
         </div>
       </Card>
 
-      {/* About the Gift */}
+      {/* About the Custom Gift */}
       <Card className="p-6 space-y-4">
-        <h2 className="font-semibold text-xl mb-4">About the Gift</h2>
+        <h2 className="font-semibold text-xl mb-4">About the Custom Gift</h2>
         
         <div>
           <Label htmlFor="occasion">Occasion / Reason</Label>
@@ -449,6 +451,21 @@ const BuildCustomKitForm = () => {
             />
           </div>
         )}
+
+        <div>
+          <Label htmlFor="custom_gift_budget">Preferred budget for custom gift</Label>
+          <Select value={formData.custom_gift_budget} onValueChange={(value) => updateField("custom_gift_budget", value)}>
+            <SelectTrigger id="custom_gift_budget">
+              <SelectValue placeholder="Select a budget range..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="$10-$20">$10 - $20</SelectItem>
+              <SelectItem value="$20-$30">$20 - $30</SelectItem>
+              <SelectItem value="$30-$50">$30 - $50</SelectItem>
+              <SelectItem value="$50+">$50+</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
         <div>
           <Label htmlFor="comforts">What comforts or uplifts them most?</Label>
