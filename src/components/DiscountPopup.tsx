@@ -63,6 +63,7 @@ const DiscountPopup = ({ open, onOpenChange }: DiscountPopupProps) => {
     setIsSubmitting(true);
 
     try {
+      // First, save to database
       const { data, error } = await supabase
         .from('b2c_leads')
         .insert({
@@ -87,6 +88,33 @@ const DiscountPopup = ({ open, onOpenChange }: DiscountPopupProps) => {
         });
       } else {
         console.log('Discount popup lead saved successfully:', data);
+
+        // Send the discount email
+        try {
+          const emailResponse = await fetch('/api/send-discount-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: trimmedEmail,
+              name: trimmedName || undefined,
+            }),
+          });
+
+          const emailResult = await emailResponse.json();
+
+          if (!emailResponse.ok) {
+            console.error('Error sending discount email:', emailResult);
+            // Don't show error to user - they're still in the system
+          } else {
+            console.log('Discount email sent successfully:', emailResult);
+          }
+        } catch (emailError) {
+          console.error('Error calling email API:', emailError);
+          // Don't show error to user - they're still in the system
+        }
+
         toast({
           title: "Welcome! 🎉",
           description: "Check your email for your 10% off code: WELCOME10",
