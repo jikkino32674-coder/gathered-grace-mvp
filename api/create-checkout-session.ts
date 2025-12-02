@@ -5,10 +5,6 @@ if (!process.env.STRIPE_SECRET_KEY) {
   console.warn('⚠️ WARNING: STRIPE_SECRET_KEY is not set in environment variables');
 }
 
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? new Stripe(process.env.STRIPE_SECRET_KEY)
-  : null;
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Handle OPTIONS request for CORS preflight
   if (req.method === 'OPTIONS') {
@@ -29,12 +25,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   try {
-    if (!stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('❌ STRIPE_SECRET_KEY is missing in handler');
       return res.status(500).json({ 
         error: 'Stripe not configured',
         message: 'STRIPE_SECRET_KEY environment variable is missing',
       });
     }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      typescript: true,
+    });
+
+    console.log('🔑 Stripe initialized with key length:', process.env.STRIPE_SECRET_KEY.length);
+    console.log('🔑 Key prefix:', process.env.STRIPE_SECRET_KEY.substring(0, 8) + '...');
 
     const {
       kitType,
