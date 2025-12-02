@@ -281,9 +281,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (error: any) {
     console.error('Error creating checkout session:', error);
+    console.error('Error details:', {
+      type: error.type,
+      code: error.code,
+      statusCode: error.statusCode,
+      raw: error.raw,
+      message: error.message,
+      stack: error.stack
+    });
     return res.status(500).json({
       error: 'Failed to create checkout session',
       message: error.message,
+      code: error.code,
+      type: error.type,
     });
   }
 }
