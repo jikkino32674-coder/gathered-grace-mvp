@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,52 +11,62 @@ import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
+const initialFormData = {
+  // Selected items
+  items_eye_pillow: false,
+  items_balm: false,
+  items_journal: false,
+  items_custom_gift: false,
+  
+  // Custom gift details
+  custom_gift_details: "",
+  
+  // Custom fabric
+  custom_fabric: "no",
+  fabric_theme: "",
+  
+  // Recipient info
+  recipient_name: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  recipient_email: "",
+  
+  // About the custom gift
+  occasion: "",
+  occasion_other: "",
+  comforts: "",
+  custom_gift_budget: "",
+  
+  // Card message
+  card_message: "",
+  name_on_card: "Include my name",
+  
+  // Sender info
+  sender_name: "",
+  sender_email: "",
+  
+  // Special requests
+  special_requests: "",
+  
+  // Honeypot
+  website: "",
+};
+
 const BuildCustomKitForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [formData, setFormData] = useState({
-    // Selected items
-    items_eye_pillow: false,
-    items_balm: false,
-    items_journal: false,
-    items_custom_gift: false,
-    
-    // Custom gift details
-    custom_gift_details: "",
-    
-    // Custom fabric
-    custom_fabric: "no",
-    fabric_theme: "",
-    
-    // Recipient info
-    recipient_name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    recipient_email: "",
-    
-    // About the custom gift
-    occasion: "",
-    occasion_other: "",
-    comforts: "",
-    custom_gift_budget: "",
-    
-    // Card message
-    card_message: "",
-    name_on_card: "Include my name",
-    
-    // Sender info
-    sender_name: "",
-    sender_email: "",
-    
-    // Special requests
-    special_requests: "",
-    
-    // Honeypot
-    website: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+
+  // Reset form when component mounts (page loads/refreshes)
+  useEffect(() => {
+    setFormData(initialFormData);
+    setShowSuccess(false);
+    setError(false);
+    setIsSubmitting(false);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,7 +147,7 @@ const BuildCustomKitForm = () => {
         // If custom budget is selected, create a Stripe checkout session
         if (formData.custom_gift_budget && formData.items_custom_gift) {
           try {
-            const checkoutEndpoint = import.meta.env.VITE_API_URL || '/api/create-checkout-session';
+            const checkoutEndpoint = '/api/create-checkout-session';
             
             // Calculate base price based on selected items
             let basePrice = 0;
@@ -177,6 +187,8 @@ const BuildCustomKitForm = () => {
           }
         }
         
+        // Reset form data after successful submission
+        setFormData(initialFormData);
         setShowSuccess(true);
       } else {
         console.error('Form submission error:', data);
@@ -216,7 +228,7 @@ const BuildCustomKitForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8" autoComplete="off">
       {/* Honeypot field */}
       <input
         type="text"

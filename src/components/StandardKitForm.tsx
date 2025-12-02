@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,27 +19,39 @@ interface StandardKitFormProps {
   customFabricPaymentLink?: string;
 }
 
+const initialFormData = {
+  recipient_name: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  recipient_email: "",
+  occasion: "",
+  custom_fabric: "no",
+  fabric_theme: "",
+  card_message: "",
+  name_on_card: "Include my name",
+  sender_name: "",
+  sender_email: "",
+  website: "", // honeypot
+};
+
 const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabricPaymentLink }: StandardKitFormProps) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [formData, setFormData] = useState({
-    recipient_name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    recipient_email: "",
-    occasion: "",
-    custom_fabric: "no",
-    fabric_theme: "",
-    card_message: "",
-    name_on_card: "Include my name",
-    sender_name: "",
-    sender_email: "",
-    website: "", // honeypot
-  });
+  const [formData, setFormData] = useState(initialFormData);
+
+  // Reset form when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setFormData(initialFormData);
+      setShowSuccess(false);
+      setError(false);
+      setIsSubmitting(false);
+    }
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,7 +162,7 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
             {/* Honeypot field */}
             <input
               type="text"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,29 +16,41 @@ interface CustomCareFormProps {
   onOpenChange: (open: boolean) => void;
 }
 
+const initialFormData = {
+  recipient_name: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  recipient_email: "",
+  occasion: "",
+  comforts: "",
+  card_message: "",
+  name_on_card: "Include my name",
+  budget: "",
+  custom_fabric: "no",
+  fabric_theme: "",
+  sender_name: "",
+  sender_email: "",
+  website: "", // honeypot
+};
+
 const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [formData, setFormData] = useState({
-    recipient_name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    recipient_email: "",
-    occasion: "",
-    comforts: "",
-    card_message: "",
-    name_on_card: "Include my name",
-    budget: "",
-    custom_fabric: "no",
-    fabric_theme: "",
-    sender_name: "",
-    sender_email: "",
-    website: "", // honeypot
-  });
+  const [formData, setFormData] = useState(initialFormData);
+
+  // Reset form when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setFormData(initialFormData);
+      setShowSuccess(false);
+      setError(false);
+      setIsSubmitting(false);
+    }
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,7 +156,7 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" autoComplete="off">
           {/* Recipient Details */}
           <fieldset className="space-y-4">
             <legend className="font-semibold text-lg mb-2">Recipient Details</legend>
