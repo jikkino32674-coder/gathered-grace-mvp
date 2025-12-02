@@ -133,6 +133,46 @@ const BuildCustomKitForm = () => {
 
       if (response.ok && data.ok) {
         console.log('✅ Form submitted successfully');
+        
+        // If custom budget is selected, create a Stripe checkout session
+        if (formData.custom_gift_budget && formData.items_custom_gift) {
+          try {
+            const checkoutEndpoint = import.meta.env.VITE_API_URL || '/api/create-checkout-session';
+            
+            // Calculate base price based on selected items
+            let basePrice = 0;
+            if (formData.items_eye_pillow) basePrice += 2200; // $22
+            if (formData.items_balm) basePrice += 1500; // $15
+            if (formData.items_journal) basePrice += 1800; // $18
+            if (formData.custom_fabric === "yes") basePrice += 500; // $5
+            
+            const checkoutResponse = await fetch(checkoutEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                kitType: 'build_custom',
+                basePrice: basePrice,
+                customFabric: formData.custom_fabric === "yes",
+                customBudget: formData.custom_gift_budget,
+                formData: formData,
+              }),
+            });
+
+            const checkoutData = await checkoutResponse.json().catch(() => ({ error: 'Failed to parse checkout response' }));
+
+            if (checkoutResponse.ok && checkoutData.url) {
+              // Redirect to Stripe checkout
+              window.location.href = checkoutData.url;
+              return;
+            } else {
+              console.warn('⚠️ Could not create checkout session, showing success message instead');
+            }
+          } catch (checkoutErr) {
+            console.warn('⚠️ Error creating checkout session:', checkoutErr);
+            // Continue to show success message even if checkout fails
+          }
+        }
+        
         setShowSuccess(true);
       } else {
         console.error('Form submission error:', data);

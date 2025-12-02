@@ -16,9 +16,10 @@ interface StandardKitFormProps {
   onOpenChange: (open: boolean) => void;
   kitName: string;
   paymentLink: string;
+  customFabricPaymentLink?: string;
 }
 
-const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardKitFormProps) => {
+const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabricPaymentLink }: StandardKitFormProps) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -107,7 +108,11 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink }: StandardK
         console.log('✅ Form submitted successfully');
         onOpenChange(false);
         // Redirect to Stripe payment link
-        window.location.href = paymentLink;
+        // If custom fabric is selected, use the custom fabric payment link
+        const finalPaymentLink = formData.custom_fabric === "yes" && customFabricPaymentLink
+          ? customFabricPaymentLink
+          : paymentLink;
+        window.location.href = finalPaymentLink;
       } else {
         console.error('❌ Form submission failed:', data.error || response.statusText);
         setError(true);

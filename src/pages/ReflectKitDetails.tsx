@@ -164,6 +164,7 @@ const ReflectKitDetails = () => {
         onOpenChange={setFormOpen}
         kitName="Reflect Kit"
         paymentLink={STRIPE_PRODUCTS.REFLECT_KIT.paymentLink}
+        customFabricPaymentLink={STRIPE_PRODUCTS.REFLECT_KIT.customFabricPaymentLink}
       />
     </div>
   );

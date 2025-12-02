@@ -107,7 +107,11 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
         console.log('✅ Form submitted successfully');
         onOpenChange(false);
         // Redirect to Stripe payment link for Gathered Grace Gift Box
-        window.location.href = STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.paymentLink;
+        // If custom fabric is selected, use the custom fabric payment link
+        const finalPaymentLink = formData.custom_fabric === "yes" && STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.customFabricPaymentLink
+          ? STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.customFabricPaymentLink
+          : STRIPE_PRODUCTS.GATHERED_GRACE_GIFT_BOX.paymentLink;
+        window.location.href = finalPaymentLink;
       } else {
         console.error('Form submission error:', data);
         setError(true);

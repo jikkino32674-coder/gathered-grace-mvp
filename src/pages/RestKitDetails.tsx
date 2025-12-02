@@ -149,6 +149,7 @@ const RestKitDetails = () => {
         onOpenChange={setFormOpen}
         kitName="Rest Kit"
         paymentLink={STRIPE_PRODUCTS.REST_KIT.paymentLink}
+        customFabricPaymentLink={STRIPE_PRODUCTS.REST_KIT.customFabricPaymentLink}
       />
     </div>
   );
