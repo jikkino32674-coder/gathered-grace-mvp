@@ -19,7 +19,7 @@ const HowItWorksSection = () => {
     {
       number: "03",
       title: "We pack & send",
-      description: "Thoughtfully assembled, beautifully wrapped, and shipped with care.",
+      description: "Thoughtfully assembled, beautifully wrapped, and shipped with care—complimentary US shipping included.",
       icon: Package,
       color: "gold",
     },
