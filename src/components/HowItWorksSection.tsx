@@ -12,7 +12,7 @@ const HowItWorksSection = () => {
     {
       number: "02",
       title: "Personalize",
-      description: "Each kit includes a message card—write your own note, or let us craft one for you. The Restore Kit also includes a custom item lovingly chosen for the recipient based on what you tell us.",
+      description: "Each kit includes a message card—write your own note, or let us craft one for you. For the Restore Kit or Build Your Own Kit, our dedicated team will find the perfect custom gift based on what you share about your recipient.",
       icon: Heart,
       color: "sage",
     },
