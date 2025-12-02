@@ -44,63 +44,133 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       customFabric = false,
       customBudget,
       formData,
+      items_eye_pillow,
+      items_balm,
+      items_journal,
+      items_custom_gift,
     } = req.body;
 
-    if (!kitType || !basePrice) {
-      return res.status(400).json({ error: 'Missing required fields: kitType and basePrice' });
+    if (!kitType) {
+      return res.status(400).json({ error: 'Missing required field: kitType' });
     }
 
     // Calculate total amount
-    let amount = basePrice; // in cents
+    let amount = 0; // in cents
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-    // Add base kit product
-    const productId = kitType === 'rest' ? 'prod_rest_kit' : 'prod_reflect_kit';
-    const priceId = kitType === 'rest' 
-      ? process.env.STRIPE_REST_KIT_PRICE_ID || 'price_rest_kit'
-      : process.env.STRIPE_REFLECT_KIT_PRICE_ID || 'price_reflect_kit';
-
-    lineItems.push({
-      price: priceId,
-      quantity: 1,
-    });
-
-    // Add $5 custom fabric upcharge if selected
-    if (customFabric) {
-      const customFabricPriceId = kitType === 'rest'
-        ? process.env.STRIPE_REST_KIT_CUSTOM_FABRIC_PRICE_ID || 'price_rest_kit_custom_fabric'
-        : process.env.STRIPE_REFLECT_KIT_CUSTOM_FABRIC_PRICE_ID || 'price_reflect_kit_custom_fabric';
-      
-      lineItems.push({
-        price: customFabricPriceId,
-        quantity: 1,
-      });
-      amount += 500; // $5 in cents
-    }
-
-    // Add custom budget as a tip or additional line item for Build Custom Kit
-    if (customBudget && kitType === 'build_custom') {
-      // Parse budget range to get a suggested amount
-      let budgetAmount = 0;
-      if (customBudget === '$10-$20') budgetAmount = 1500; // $15
-      else if (customBudget === '$20-$30') budgetAmount = 2500; // $25
-      else if (customBudget === '$30-$50') budgetAmount = 4000; // $40
-      else if (customBudget === '$50+') budgetAmount = 5000; // $50
-
-      if (budgetAmount > 0) {
-        // Add as a custom line item (tip/bonus for custom gift)
+    // For build_custom, build line items from individual selections
+    if (kitType === 'build_custom') {
+      // Add individual items based on selections
+      if (items_eye_pillow) {
         lineItems.push({
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Custom Gift Budget',
-              description: `Budget for personalized custom gift (${customBudget})`,
+              name: 'Lavender Eye Pillow',
             },
-            unit_amount: budgetAmount,
+            unit_amount: 2200, // $22
           },
           quantity: 1,
         });
-        amount += budgetAmount;
+        amount += 2200;
+      }
+
+      if (items_balm) {
+        lineItems.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Handmade Balm',
+            },
+            unit_amount: 1500, // $15
+          },
+          quantity: 1,
+        });
+        amount += 1500;
+      }
+
+      if (items_journal) {
+        lineItems.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Journal and Pen Set',
+            },
+            unit_amount: 1800, // $18
+          },
+          quantity: 1,
+        });
+        amount += 1800;
+      }
+
+      // Add $5 custom fabric upcharge if selected
+      if (customFabric && items_eye_pillow) {
+        lineItems.push({
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Custom Fabric Upcharge',
+              description: 'Custom themed fabric for eye pillow',
+            },
+            unit_amount: 500, // $5
+          },
+          quantity: 1,
+        });
+        amount += 500;
+      }
+
+      // Add custom budget as a tip/donation line item - ALWAYS add if custom gift is selected
+      if (items_custom_gift && customBudget) {
+        // Parse budget range to get the amount
+        let budgetAmount = 0;
+        if (customBudget === '$10-$20') budgetAmount = 1500; // $15 (middle of range)
+        else if (customBudget === '$20-$30') budgetAmount = 2500; // $25 (middle of range)
+        else if (customBudget === '$30-$50') budgetAmount = 4000; // $40 (middle of range)
+        else if (customBudget === '$50+') budgetAmount = 5000; // $50 (minimum)
+
+        if (budgetAmount > 0) {
+          // Add as a custom line item (tip/bonus for custom gift)
+          lineItems.push({
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Custom Gift Budget',
+                description: `Budget for personalized custom gift (${customBudget})`,
+              },
+              unit_amount: budgetAmount,
+            },
+            quantity: 1,
+          });
+          amount += budgetAmount;
+        }
+      }
+    } else {
+      // For standard kits (rest/reflect), use kit price IDs
+      if (!basePrice) {
+        return res.status(400).json({ error: 'Missing required field: basePrice for standard kits' });
+      }
+
+      const priceId = kitType === 'rest' 
+        ? process.env.STRIPE_REST_KIT_PRICE_ID || 'price_rest_kit'
+        : process.env.STRIPE_REFLECT_KIT_PRICE_ID || 'price_reflect_kit';
+
+      lineItems.push({
+        price: priceId,
+        quantity: 1,
+      });
+      amount = basePrice;
+
+      // Add $5 custom fabric upcharge if selected
+      if (customFabric) {
+        const customFabricPriceId = kitType === 'rest'
+          ? process.env.STRIPE_REST_KIT_CUSTOM_FABRIC_PRICE_ID || 'price_rest_kit_custom_fabric'
+          : process.env.STRIPE_REFLECT_KIT_CUSTOM_FABRIC_PRICE_ID || 'price_reflect_kit_custom_fabric';
+        
+        lineItems.push({
+          price: customFabricPriceId,
+          quantity: 1,
+        });
+        amount += 500; // $5 in cents
       }
     }
 

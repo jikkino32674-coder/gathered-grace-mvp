@@ -154,6 +154,10 @@ const BuildCustomKitForm = () => {
                 basePrice: basePrice,
                 customFabric: formData.custom_fabric === "yes",
                 customBudget: formData.custom_gift_budget,
+                items_eye_pillow: formData.items_eye_pillow,
+                items_balm: formData.items_balm,
+                items_journal: formData.items_journal,
+                items_custom_gift: formData.items_custom_gift,
                 formData: formData,
               }),
             });

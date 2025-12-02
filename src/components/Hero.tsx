@@ -9,7 +9,6 @@ import { useRef } from "react";
 import heroGiftBox from "@/assets/hero-gift-box.png";
 import heroNotebook from "@/assets/hero-notebook.png";
 import heroLotionBar from "@/assets/hero-lotion-bar.png";
-import heroEyePillow from "@/assets/hero-eye-pillow.png";
 
 const Hero = () => {
   const plugin = useRef(
@@ -68,15 +67,6 @@ const Hero = () => {
                     <img 
                       src={heroLotionBar} 
                       alt="Handmade lotion bar enjoyed outdoors in natural sunlight" 
-                      className="w-full h-auto"
-                    />
-                  </div>
-                </CarouselItem>
-                <CarouselItem>
-                  <div className="flex items-center justify-center min-h-[300px]">
-                    <img 
-                      src={heroEyePillow} 
-                      alt="Lavender eye pillow with herbal tea and dried lavender on wooden tray" 
                       className="w-full h-auto"
                     />
                   </div>

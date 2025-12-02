@@ -8,6 +8,8 @@ export const STRIPE_PAYMENT_LINKS = {
   REST_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/fZu5kD7hL09k3EE5LK1RC05",
   REFLECT_KIT: "https://buy.stripe.com/14A4gzdG91do7UU3DC1RC06",
   REFLECT_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/bJe00jfOhe0a0ss3DC1RC07",
+  RESTORE_KIT: "https://buy.stripe.com/00w4gz59D4pA7UUeig1RC08",
+  RESTORE_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/00w3cv59De0aeji6PO1RC09",
   GATHERED_GRACE_GIFT_BOX_CUSTOM_FABRIC: "https://buy.stripe.com/4gMfZhgSl6xIeji1vu1RC00", // TODO: Create separate link if needed
 } as const;
 
@@ -62,6 +64,16 @@ export const STRIPE_PRODUCTS = {
     paymentLink: STRIPE_PAYMENT_LINKS.REFLECT_KIT,
     customFabricPaymentLink: STRIPE_PAYMENT_LINKS.REFLECT_KIT_CUSTOM_FABRIC,
     customFabricPrice: "$54",
+  },
+  RESTORE_KIT: {
+    id: "prod_TWmDQMnaEaYuMb",
+    priceId: "price_1SZieyHB58d6ZKt6v4qMDKpF",
+    customFabricPriceId: "price_1SZif0HB58d6ZKt6XXzQFZeW",
+    name: "Restore Kit",
+    price: "$69",
+    paymentLink: STRIPE_PAYMENT_LINKS.RESTORE_KIT,
+    customFabricPaymentLink: STRIPE_PAYMENT_LINKS.RESTORE_KIT_CUSTOM_FABRIC,
+    customFabricPrice: "$74",
   },
 } as const;
 
