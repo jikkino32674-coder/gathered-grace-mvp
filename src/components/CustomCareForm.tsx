@@ -187,13 +187,10 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
           }
         } catch (checkoutErr: any) {
           console.error('⚠️ Error creating checkout session:', checkoutErr);
-          // Fallback to static payment link if checkout session fails
-          const finalPaymentLink = formData.custom_fabric === "yes" && STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
-            ? STRIPE_PRODUCTS.RESTORE_KIT.customFabricPaymentLink
-            : STRIPE_PRODUCTS.RESTORE_KIT.paymentLink;
-          console.log('⚠️ Falling back to static payment link:', finalPaymentLink);
+          const errorMsg = checkoutErr.message || 'Could not create checkout session';
+          alert(`Error creating checkout: ${errorMsg}. Your form was submitted successfully - we'll contact you with payment details.`);
           onOpenChange(false);
-          window.location.href = finalPaymentLink;
+          setShowSuccess(true);
         }
       } else {
         const errorMsg = data.error || data.message || 'Unknown error';
