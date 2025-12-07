@@ -262,6 +262,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       : `${baseUrl}/build-custom?canceled=true`;
 
     // Create checkout session
+    // Note: We do NOT collect shipping address here because users already provided it in the form
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
@@ -275,9 +276,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         form_data: JSON.stringify(formData || {}),
       },
       customer_email: formData?.sender_email || undefined,
-      shipping_address_collection: {
-        allowed_countries: ['US'],
-      },
     });
 
     return res.status(200).json({
