@@ -249,7 +249,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Get base URL
-    const host = req.headers.host || 'momgatheredgrace.vercel.app';
+    const host = req.headers.host || 'gatheredgrace.us';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
 

@@ -85,7 +85,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('📧 Sending to email:', recipientEmail);
 
     // Get the base URL for CSV download link
-    const host = req.headers.host || 'momgatheredgrace.vercel.app';
+    const host = req.headers.host || 'gatheredgrace.us';
     const protocol = req.headers['x-forwarded-proto'] || 'https';
     const baseUrl = `${protocol}://${host}`;
     

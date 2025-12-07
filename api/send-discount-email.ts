@@ -207,7 +207,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </div>
 
               <div class="cta">
-                <a href="https://momgatheredgrace.vercel.app/shop" class="cta-button">Start Shopping</a>
+                <a href="https://gatheredgrace.us/shop" class="cta-button">Start Shopping</a>
               </div>
 
               <div class="message" style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e0e0e0;">
@@ -219,7 +219,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               <p><strong>Gathered Grace</strong></p>
               <p>Thoughtful gifts for meaningful connection</p>
               <p style="margin-top: 15px;">
-                <a href="https://momgatheredgrace.vercel.app">Visit our website</a>
+                <a href="https://gatheredgrace.us">Visit our website</a>
               </p>
               <p style="margin-top: 20px; font-size: 11px; color: #999;">
                 You're receiving this email because you signed up for our newsletter.
@@ -244,14 +244,14 @@ At Gathered Grace, we believe in the power of thoughtful care and meaningful con
 
 Use code WELCOME10 at checkout to receive 10% off your first purchase. Whether you're choosing a curated care kit or building a custom gift, we're here to help you create something truly special.
 
-Start shopping: https://momgatheredgrace.vercel.app/shop
+Start shopping: https://gatheredgrace.us/shop
 
 Questions or need help choosing the perfect gift? We're here for you. Simply reply to this email.
 
 ---
 Gathered Grace
 Thoughtful gifts for meaningful connection
-https://momgatheredgrace.vercel.app
+https://gatheredgrace.us
     `.trim();
 
     // Send email using Resend
