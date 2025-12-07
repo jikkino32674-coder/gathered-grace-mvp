@@ -4,7 +4,62 @@ A modern e-commerce website for Gathered Grace, offering thoughtfully curated gi
 
 ## 🌐 Live Site
 
-**Production URL**: https://momgatheredgrace.vercel.app
+**Production URL**: https://gatheredgrace.us
+**Vercel URL**: https://momgatheredgrace.vercel.app
+
+## ✅ Project Status: PRODUCTION READY
+
+This project is fully functional and ready for customers! All systems are operational:
+
+- ✅ Custom domain configured (gatheredgrace.us)
+- ✅ SSL certificate active
+- ✅ Payment processing via Stripe
+- ✅ Email notifications working
+- ✅ Form submissions saving to database
+- ✅ Discount popup with email capture
+- ✅ All product pages live
+- ✅ Mobile responsive design
+
+## 🛍️ Products & Features
+
+### Product Catalog
+
+1. **Rest Kit** ($39 / $44 with custom fabric)
+   - Lavender eye pillow
+   - Handmade balm
+   - Note card
+   - Uses Stripe Payment Links
+
+2. **Reflect Kit** ($49 / $54 with custom fabric)
+   - Journal & pen set
+   - Lavender eye pillow
+   - Uses Stripe Payment Links
+
+3. **Restore Kit** ($69 / $74 with custom fabric)
+   - All items from Rest Kit
+   - Custom gift based on budget ($10-$100+)
+   - Uses dynamic Stripe Checkout Sessions
+
+4. **Build Your Own Kit** (Custom pricing)
+   - Select individual items
+   - Quote-based (no immediate payment)
+   - Custom budget for personalized gifts
+
+5. **Individual Items**
+   - Lavender Eye Pillow ($22)
+   - Handmade Balm ($15)
+   - Journal & Pen Set ($18)
+   - Gathered Grace Gift Box ($68)
+
+### Key Features
+
+- **Custom Fabric Option**: +$5 for themed fabric on eye pillows
+- **Personalized Cards**: Optional messages with sender name or anonymous
+- **Shipping Address Collection**: Collected in forms, NOT on Stripe checkout
+- **Email Notifications**: Instant notifications for all orders
+- **Database Storage**: All form data saved to Supabase
+- **Discount Popup**: Welcome popup with 10% off code
+- **Newsletter Signup**: Email capture throughout the site
 
 ## 🛠️ Tech Stack
 
@@ -21,16 +76,20 @@ A modern e-commerce website for Gathered Grace, offering thoughtfully curated gi
 ### Backend & Infrastructure
 - **Vercel** - Hosting and serverless functions
   - Serverless API routes (`/api/*`)
-  - Automatic deployments
+  - Automatic deployments from GitHub
   - Edge network distribution
-- **Vercel Serverless Functions** - Backend API endpoints
-  - Form submission handling
-  - Email sending via Resend
-  - CSV generation
+  - Custom domain: gatheredgrace.us
+
+### Payment Processing
+- **Stripe** - Payment processing
+  - Payment Links for standard kits
+  - Checkout Sessions for custom kits
+  - Secure card payments
+  - NO duplicate shipping address collection
 
 ### Database & Storage
 - **Supabase** - PostgreSQL database
-  - `b2c_leads` table for form submissions
+  - `b2c_leads` table for all form submissions
   - Email signups storage
   - Audience/lead management
   - Project: `vyoxzaztjutzsnzajdvr`
@@ -38,50 +97,45 @@ A modern e-commerce website for Gathered Grace, offering thoughtfully curated gi
 ### Email Service
 - **Resend** - Transactional email service
   - Form submission notifications
-  - HTML email templates
+  - HTML email templates with branding
   - CSV download links in emails
+  - Discount welcome emails
   - Account: `gatheredgrace.giving@gmail.com`
-
-### Form Submissions
-- **Custom Care Gift Form** - Main product form
-  - Saves to Supabase (`b2c_leads` table)
-  - Sends email notification via Resend
-  - Includes CSV download button
-  - Stores full form data in metadata JSON
-- **Email Signup Form** - Newsletter subscription
-  - Saves to Supabase
-  - Lead type: `email_signup`
-- **Discount Popup** - Welcome discount code
-  - Saves to Supabase
-  - Lead type: `discount_popup`
-
-### Google Sheets Integration
-- **Status**: Not currently active
-- **Previous Setup**: Google Apps Script endpoint was previously configured
-- **Current Approach**: Form data is stored in Supabase database and can be exported via CSV downloads from emails
-- **Future**: Can be re-enabled if needed for direct Google Sheets integration
 
 ## 📋 Project Structure
 
 ```
 momgatheredgrace/
-├── api/                    # Vercel serverless functions
-│   ├── submit-form.ts     # Form submission API (sends emails)
-│   └── download-csv.ts    # CSV download endpoint
+├── api/                           # Vercel serverless functions
+│   ├── submit-form.ts            # Form submission API (sends emails)
+│   ├── send-discount-email.ts    # Sends welcome discount emails
+│   ├── create-checkout-session.ts # Dynamic Stripe checkout for Restore Kit
+│   └── download-csv.ts           # CSV download endpoint
 ├── src/
-│   ├── components/        # React components
-│   │   ├── CustomCareForm.tsx    # Main gift form
-│   │   ├── EmailCaptureSection.tsx  # Newsletter signup
-│   │   ├── DiscountPopup.tsx       # Discount code popup
-│   │   └── ui/            # shadcn-ui components
-│   ├── pages/             # Page components
+│   ├── components/
+│   │   ├── StandardKitForm.tsx          # Rest & Reflect kit forms
+│   │   ├── CustomCareForm.tsx           # Restore kit form
+│   │   ├── BuildCustomKitForm.tsx       # Build your own kit form
+│   │   ├── EmailCaptureSection.tsx      # Newsletter signup
+│   │   ├── DiscountPopup.tsx            # Welcome discount popup
+│   │   └── ui/                          # shadcn-ui components
+│   ├── pages/                     # Page components
+│   │   ├── Home.tsx
+│   │   ├── RestKitDetails.tsx
+│   │   ├── ReflectKitDetails.tsx
+│   │   ├── RestoreKitDetails.tsx (Custom Care)
+│   │   ├── BuildCustomKit.tsx
+│   │   └── [product pages]
+│   ├── config/
+│   │   └── stripe.ts             # Stripe payment links configuration
 │   ├── lib/
-│   │   ├── supabase.ts    # Supabase client
-│   │   └── utils.ts       # Utility functions
-│   └── main.tsx           # App entry point
-├── public/                # Static assets
-├── vercel.json            # Vercel configuration
-└── package.json           # Dependencies
+│   │   ├── supabase.ts           # Supabase client
+│   │   └── utils.ts              # Utility functions
+│   └── main.tsx                  # App entry point
+├── public/                        # Static assets
+├── index.html                     # HTML template with SEO meta tags
+├── vercel.json                    # Vercel configuration
+└── package.json                   # Dependencies
 ```
 
 ## 🚀 Getting Started
@@ -95,7 +149,7 @@ momgatheredgrace/
 
 ```bash
 # Clone the repository
-git clone <YOUR_GIT_URL>
+git clone https://github.com/jikkino32674-coder/gathered-grace-mvp
 cd momgatheredgrace
 
 # Install dependencies
@@ -121,6 +175,9 @@ FORM_RECIPIENT_EMAIL=gatheredgrace.giving@gmail.com
 # Email address to send from (must be verified in Resend)
 RESEND_FROM_EMAIL=Gathered Grace <onboarding@resend.dev>
 
+# Stripe Secret Key (for checkout sessions)
+STRIPE_SECRET_KEY=sk_live_your_stripe_key
+
 # Supabase is configured in src/lib/supabase.ts
 # No environment variables needed (uses public anon key)
 ```
@@ -137,34 +194,70 @@ npm install -g vercel
 vercel dev
 ```
 
+## 💳 Payment Flow
+
+### How Payments Work
+
+1. **Standard Kits (Rest/Reflect)**:
+   - User fills out form with shipping address
+   - Form saves to database
+   - Email sent to you with order details
+   - User redirected to Stripe Payment Link
+   - ⚠️ **Stripe does NOT ask for shipping again** (we already collected it)
+
+2. **Restore Kit (Custom Care)**:
+   - User fills out form with shipping address & budget
+   - Form saves to database
+   - Email sent to you with order details
+   - Dynamic Stripe Checkout Session created
+   - User pays (base kit price + custom budget)
+   - ⚠️ **No duplicate shipping address collection**
+
+3. **Build Your Own Kit**:
+   - User selects items & fills out form
+   - Form saves to database
+   - Email sent to you with quote request
+   - NO payment collected (quote-based)
+
+### Payment Links Configuration
+
+Located in `src/config/stripe.ts`:
+
+```typescript
+STRIPE_PAYMENT_LINKS = {
+  REST_KIT: "https://buy.stripe.com/...",
+  REFLECT_KIT: "https://buy.stripe.com/...",
+  RESTORE_KIT: "https://buy.stripe.com/...",
+  // ... etc
+}
+```
+
 ## 📧 Form Submission System
 
 ### How It Works
 
-When a user submits the Custom Care Gift Form:
+When a user submits any form:
 
-1. **Frontend** (`CustomCareForm.tsx`)
-   - Validates form data
-   - Saves to Supabase database (`b2c_leads` table)
-   - Submits to Vercel API endpoint
+1. **Frontend Validation**
+   - Required fields checked
+   - Honeypot spam protection
+   - Email format validation
 
-2. **Backend API** (`/api/submit-form.ts`)
-   - Receives form data
-   - Sends HTML email via Resend
-   - Includes CSV download link
-   - Returns success/error response
+2. **Database Save** (Supabase)
+   - All form data saved to `b2c_leads` table
+   - Includes full metadata (shipping, preferences, etc.)
+   - Non-blocking (continues even if Supabase fails)
 
-3. **Database** (Supabase)
-   - Stores all form submissions
-   - Stores email signups
-   - Stores discount popup leads
-   - All data in `b2c_leads` table
-
-4. **Email** (Resend)
-   - Sends notification to `gatheredgrace.giving@gmail.com`
-   - Beautifully formatted HTML email
-   - Includes CSV download button
+3. **Email Notification** (Resend)
+   - Beautiful HTML email sent to gatheredgrace.giving@gmail.com
+   - Includes all form details
+   - CSV download button for easy import
    - Plain text fallback
+
+4. **Payment Redirect**
+   - Standard kits → Stripe Payment Link
+   - Restore Kit → Dynamic Checkout Session
+   - Build Custom → Success message (no payment)
 
 ### Database Schema
 
@@ -173,22 +266,22 @@ When a user submits the Custom Care Gift Form:
 | Column | Type | Description |
 |--------|------|-------------|
 | `id` | bigint | Primary key |
-| `email` | text | Sender email |
-| `full_name` | text | Sender name |
-| `lead_type` | text | `custom_care_form`, `email_signup`, or `discount_popup` |
+| `email` | text | Customer email |
+| `full_name` | text | Customer name |
+| `lead_type` | text | Form type (e.g., `rest_kit_form`, `email_signup`) |
 | `source_page` | text | URL where form was submitted |
-| `website_type` | text | `b2c` |
-| `metadata` | jsonb | Form data (address, recipient info, preferences, etc.) |
+| `website_type` | text | Always `b2c` |
+| `metadata` | jsonb | All form data (shipping, preferences, etc.) |
 | `created_at` | timestamp | Submission timestamp |
 
-### Email Features
+### Lead Types
 
-- ✅ Beautiful HTML formatting
-- ✅ CSV download button (for Google Sheets import)
-- ✅ All form data included
-- ✅ Source page tracking
-- ✅ Timestamp
-- ✅ Plain text fallback
+- `rest_kit_form` - Rest Kit orders
+- `reflect_kit_form` - Reflect Kit orders
+- `custom_care_form` - Restore Kit orders
+- `build_custom` - Build Your Own Kit quotes
+- `email_signup` - Newsletter subscriptions
+- `discount_popup` - Discount code captures
 
 ## 🔧 Configuration
 
@@ -200,6 +293,7 @@ Set these in your Vercel project dashboard (Settings → Environment Variables):
 RESEND_API_KEY=re_your_api_key_here
 FORM_RECIPIENT_EMAIL=gatheredgrace.giving@gmail.com
 RESEND_FROM_EMAIL=Gathered Grace <onboarding@resend.dev>
+STRIPE_SECRET_KEY=sk_live_your_stripe_key
 ```
 
 ### Supabase Configuration
@@ -212,18 +306,38 @@ Supabase is configured in `src/lib/supabase.ts`:
 
 View your data at: https://supabase.com/dashboard/project/vyoxzaztjutzsnzajdvr
 
+### Stripe Configuration
+
+Payment links are configured in `src/config/stripe.ts`:
+- All product payment links
+- Custom fabric variants
+- Product metadata
+
+Manage in Stripe Dashboard: https://dashboard.stripe.com
+
 ## 📦 Deployment
 
-### Vercel Deployment
+### Automatic Deployment
 
-The site is deployed on Vercel and automatically deploys when code is pushed to the repository.
+The site automatically deploys when you push to GitHub:
 
-**Manual Deployment**:
 ```bash
-npx vercel --prod
+git add .
+git commit -m "Your changes"
+git push origin main
 ```
 
-**Deployment URL**: https://momgatheredgrace.vercel.app
+Vercel will automatically:
+1. Build the project
+2. Deploy to production
+3. Update both gatheredgrace.us and momgatheredgrace.vercel.app
+
+### Manual Deployment
+
+```bash
+# Deploy to production
+npx vercel --prod
+```
 
 ### Build Commands
 
@@ -238,155 +352,158 @@ npm run build
 npm run preview
 ```
 
-## 📊 Database & Analytics
+## 📊 Viewing Orders & Data
 
 ### Supabase Dashboard
 
-- **URL**: https://supabase.com/dashboard/project/vyoxzaztjutzsnzajdvr
-- **Table Editor**: View all form submissions
-- **Authentication**: Configured with anon key
-- **Storage**: All form data stored in `b2c_leads` table
-
-### Viewing Form Submissions
-
-1. Go to Supabase Dashboard
+1. Go to https://supabase.com/dashboard/project/vyoxzaztjutzsnzajdvr
 2. Navigate to **Table Editor** → `b2c_leads`
-3. Filter by `lead_type`:
-   - `custom_care_form` - Gift form submissions
-   - `email_signup` - Newsletter signups
-   - `discount_popup` - Discount code leads
+3. Filter by `lead_type` to see different form submissions
+4. Export data as needed
 
-### Exporting Data
+### Email Notifications
 
-- **CSV Download**: Click the CSV button in email notifications
-- **Supabase Export**: Use Supabase dashboard to export data
-- **Google Sheets**: Import CSV files downloaded from emails
+Every order sends an email to `gatheredgrace.giving@gmail.com` with:
+- Customer details
+- Shipping address
+- Product preferences
+- Custom fabric choices
+- Budget selections
+- Card messages
+- CSV download button
 
-## 🔌 Google Sheets Integration
+### CSV Export
 
-### Status: Not Active
+Click the "Download CSV" button in any order email to:
+- Download form data as CSV
+- Import into Google Sheets
+- Track orders in spreadsheets
 
-Google Sheets integration via Google Apps Script is **not currently active**. The previous setup included a Google Apps Script endpoint, but the current implementation uses:
+## 🎨 Customization
 
-1. **Supabase Database** - Primary storage for all form submissions
-2. **Email Notifications** - Resend emails with CSV download links
-3. **CSV Export** - Download form data as CSV from emails
+### Adding New Products
 
-### Previous Setup (Inactive)
+1. Create product in Stripe Dashboard
+2. Add payment link to `src/config/stripe.ts`
+3. Create product detail page in `src/pages/`
+4. Add to navigation/home page
 
-- Google Apps Script endpoint was previously configured
-- Endpoint URL was: `https://script.google.com/macros/s/AKfycby2zEiokF8aNFXZSOVaXNJFUEhUjqGHo-PEPgR-_ttQflwgwMiNeH86afPWhe13EuE1/exec`
-- Code references may still exist in the codebase but are not actively used
+### Updating Prices
 
-### Current Workflow
+1. Update prices in Stripe Dashboard
+2. Update display prices in `src/config/stripe.ts`
+3. Update any hardcoded prices on product pages
 
-1. Form submitted → Saved to Supabase
-2. Email sent → Contains CSV download link
-3. CSV downloaded → Imported to Google Sheets manually (if needed)
+### Modifying Forms
 
-### Future Integration
-
-If you want to re-enable Google Sheets integration:
-- Update the form submission handler to include Google Apps Script endpoint
-- Or integrate Google Sheets API directly in Vercel serverless function
-- Contact developer for implementation
-
-## 🧪 Testing
-
-### Test Form Submission
-
-```bash
-# Test API endpoint
-curl -X POST https://momgatheredgrace.vercel.app/api/submit-form \
-  -H "Content-Type: application/json" \
-  -d '{
-    "sender_name": "Test User",
-    "sender_email": "test@example.com",
-    "recipient_name": "Test Recipient",
-    "address": "123 Test St",
-    "city": "Test City",
-    "state": "CA",
-    "zip": "12345",
-    "budget": "$50",
-    "name_on_card": "Include my name"
-  }'
-```
-
-### Test CSV Download
-
-Visit: `https://momgatheredgrace.vercel.app/api/download-csv?data=<base64_encoded_data>`
-
-## 📝 Scripts
-
-```bash
-# Development
-npm run dev          # Start Vercel dev server
-npm run build        # Production build
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-
-# Deployment
-npx vercel           # Deploy to Vercel (preview)
-npx vercel --prod    # Deploy to production
-```
+Form components are in `src/components/`:
+- `StandardKitForm.tsx` - Rest & Reflect kits
+- `CustomCareForm.tsx` - Restore kit
+- `BuildCustomKitForm.tsx` - Build your own kit
 
 ## 🔍 Troubleshooting
 
-### Form Submissions Not Saving
+### Forms Not Submitting
 
-- Check browser console for Supabase errors
-- Verify Supabase connection in `src/lib/supabase.ts`
-- Check Supabase dashboard for new records
+- Check browser console for errors
+- Verify all required fields are filled
+- Check Vercel function logs
+- Verify Supabase connection
 
 ### Emails Not Sending
 
-- Verify `RESEND_API_KEY` is set in Vercel environment variables
-- Check Resend dashboard for sent emails
-- Verify `FORM_RECIPIENT_EMAIL` is correct
+- Check Resend dashboard: https://resend.com/emails
+- Verify `RESEND_API_KEY` in Vercel settings
+- Check `FORM_RECIPIENT_EMAIL` is correct
 - Check Vercel function logs for errors
 
-### CSV Download Not Working
+### Payment Issues
 
-- Verify API endpoint is deployed: `/api/download-csv`
-- Check that form data is properly encoded in email link
-- Test CSV endpoint directly with sample data
+- Verify Stripe payment links are active
+- Check `STRIPE_SECRET_KEY` is set correctly
+- Test payment links directly in Stripe
+- Check Stripe Dashboard for test mode vs live mode
 
 ### Database Issues
 
 - Check Supabase dashboard for connection status
-- Verify table structure matches code expectations
+- Verify `b2c_leads` table exists
 - Check browser console for Supabase errors
 - Ensure Supabase project is active
 
+## ✅ Pre-Launch Checklist
+
+Before sharing your site with customers:
+
+- [x] Custom domain configured (gatheredgrace.us)
+- [x] SSL certificate active
+- [x] All environment variables set in Vercel
+- [x] Stripe payment links working
+- [x] Test order placed successfully
+- [x] Email notifications working
+- [x] Supabase database saving orders
+- [x] All product pages accessible
+- [x] Mobile responsive design tested
+- [x] Discount popup functional
+- [ ] ⏳ DNS propagation complete (~2 hours from domain purchase)
+- [ ] Test complete order flow end-to-end
+- [ ] Verify you receive order emails
+- [ ] Test CSV download from email
+- [ ] Check order appears in Supabase
+
+## 🚦 Going Live
+
+### When DNS Propagation is Complete
+
+1. **Test the site**: Visit https://gatheredgrace.us
+2. **Place a test order**: Go through complete checkout
+3. **Verify email**: Check gatheredgrace.giving@gmail.com
+4. **Check database**: Confirm order in Supabase
+5. **Test payment**: Complete a real payment (refund yourself after)
+
+### Share Your Site
+
+Once everything is working:
+- Share https://gatheredgrace.us on social media
+- Add to email signatures
+- Update business cards
+- Add to Google My Business
+
 ## 📚 Documentation
 
-- [Form Setup Guide](./FORM_SETUP.md) - Detailed form submission setup
+- [Stripe Products Setup](./STRIPE_PRODUCTS_SETUP.md) - Detailed Stripe configuration
+- [Stripe Setup Guide](./STRIPE_SETUP.md) - Payment link setup
+- [Form Setup Guide](./FORM_SETUP.md) - Form submission details
 - [Resend Setup Guide](./RESEND_SETUP.md) - Email service configuration
 - [Vercel Documentation](https://vercel.com/docs)
 - [Supabase Documentation](https://supabase.com/docs)
-- [Resend Documentation](https://resend.com/docs)
+- [Stripe Documentation](https://stripe.com/docs)
 
-## 🤝 Contributing
+## 🛡️ Security Notes
 
-1. Clone the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+- React2Shell vulnerability: ✅ **Not affected** (you use Vite, not Next.js)
+- All API keys stored securely in Vercel environment variables
+- Supabase uses Row Level Security (RLS)
+- Stripe handles all payment data (PCI compliant)
+- Honeypot spam protection on all forms
+- HTTPS enforced on all pages
+
+## 🤝 Support
+
+For issues or questions:
+- Check the troubleshooting section above
+- Review the documentation files
+- Check Vercel logs: https://vercel.com/realkdcs-projects/momgatheredgrace/logs
+- Check Supabase dashboard
+- Check Stripe dashboard
+- Check Resend email logs
 
 ## 📄 License
 
 Private project - All rights reserved
 
-## 🆘 Support
-
-For issues or questions:
-- Check the troubleshooting section above
-- Review the documentation files
-- Check Vercel/Supabase/Resend dashboards
-- Contact the development team
-
 ---
 
-**Last Updated**: November 2025
-**Version**: 1.0.0
+**Last Updated**: December 7, 2024
+**Version**: 1.0.0 (Production Ready)
+**Domain**: https://gatheredgrace.us
