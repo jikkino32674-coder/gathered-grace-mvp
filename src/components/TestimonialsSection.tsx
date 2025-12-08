@@ -42,10 +42,12 @@ const TestimonialsSection = () => {
               key={index}
               className="bg-background rounded-2xl p-5 shadow-soft border border-border/50 hover:shadow-elevated transition-all duration-300"
             >
-              <Heart 
-                className="w-5 h-5 fill-primary text-primary animate-pulse" 
-                aria-hidden="true"
-              />
+              <div className="flex justify-center mb-3">
+                <Heart 
+                  className="w-5 h-5 fill-rose-400 text-rose-400 animate-pulse" 
+                  aria-hidden="true"
+                />
+              </div>
               <p className="text-xs text-muted-foreground/80 italic mb-3">
                 {testimonial.giftedFor}
               </p>
