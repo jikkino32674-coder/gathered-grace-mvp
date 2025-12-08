@@ -71,6 +71,30 @@ const Hero = () => {
                     />
                   </div>
                 </CarouselItem>
+                <CarouselItem>
+                  <div className="flex flex-col items-center justify-center aspect-[4/3] bg-[#e8f0e8] p-8 text-center">
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">For any occasion</h3>
+                    <p className="text-muted-foreground text-base md:text-lg max-w-xs">Celebration, healing, thank you, or simply because.</p>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="flex flex-col items-center justify-center aspect-[4/3] bg-[#e8f0e8] p-8 text-center">
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">Personal and Intentional</h3>
+                    <p className="text-muted-foreground text-base md:text-lg max-w-xs">Each box is thoughtfully gathered with care — complete with a personal message and a hand-selected gift, when chosen.</p>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="flex flex-col items-center justify-center aspect-[4/3] bg-[#e8f0e8] p-8 text-center">
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">Natural & Gentle</h3>
+                    <p className="text-muted-foreground text-base md:text-lg max-w-xs">Handmade lavender eye pillow with flax seed and dried lavender. Unscented balm that is artisan-crafted using natural emollients.</p>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="flex flex-col items-center justify-center aspect-[4/3] bg-[#e8f0e8] p-8 text-center">
+                    <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">Small-batch</h3>
+                    <p className="text-muted-foreground text-base md:text-lg max-w-xs">Assembled with care, packed by hand, and sent with love.</p>
+                  </div>
+                </CarouselItem>
               </CarouselContent>
             </Carousel>
           </div>
