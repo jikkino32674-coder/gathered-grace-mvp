@@ -41,6 +41,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   // Reset form when dialog closes
   useEffect(() => {
@@ -49,6 +51,8 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
       setShowSuccess(false);
       setError(false);
       setIsSubmitting(false);
+      setRedirectUrl(null);
+      setIsRedirecting(false);
     }
   }, [open]);
 
@@ -179,8 +183,23 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
 
           if (checkoutData.url) {
             console.log('🔗 Redirecting to Stripe checkout:', checkoutData.url);
-            onOpenChange(false);
-            window.location.href = checkoutData.url;
+            const stripeUrl = checkoutData.url;
+            
+            // Store URL for fallback and show redirecting state
+            setRedirectUrl(stripeUrl);
+            setIsRedirecting(true);
+            setIsSubmitting(false);
+            
+            // Use setTimeout to ensure redirect happens after state updates
+            // This helps with Chromebook and other strict browser policies
+            setTimeout(() => {
+              try {
+                console.log('🔗 Attempting redirect with window.location.assign...');
+                window.location.assign(stripeUrl);
+              } catch (redirectErr) {
+                console.error('⚠️ Redirect failed, fallback link available:', redirectErr);
+              }
+            }, 150);
             return;
           } else {
             throw new Error('No checkout URL returned');
@@ -219,7 +238,22 @@ const CustomCareForm = ({ open, onOpenChange }: CustomCareFormProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        {!showSuccess ? (
+        {isRedirecting && redirectUrl ? (
+          <div className="text-center py-8 space-y-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <p className="text-lg font-medium">Redirecting to payment...</p>
+            <p className="text-sm text-muted-foreground">
+              If you're not redirected automatically,{" "}
+              <a 
+                href={redirectUrl} 
+                className="text-primary underline hover:text-primary/80"
+                onClick={() => console.log('🔗 Manual redirect clicked')}
+              >
+                click here to continue to payment
+              </a>
+            </p>
+          </div>
+        ) : !showSuccess ? (
           <>
             <DialogHeader>
               <DialogTitle className="font-serif text-2xl">Gathered Grace — Custom Care Gift</DialogTitle>
