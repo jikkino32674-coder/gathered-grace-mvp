@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -6,25 +6,21 @@ const TestimonialsSection = () => {
       name: "Anne H.",
       giftedFor: "Mother going through cancer treatment",
       text: "Thank you so much for the basket you put together. So sweet! She was so surprised when she received it and so appreciative! Thank you!!!",
-      rating: 5,
     },
     {
       name: "Jodi W.",
       giftedFor: "Gift for real estate agent at house closing",
       text: "I wore my house hustler custom shirt today! Thank you again! Everyone at the office loved it!",
-      rating: 5,
     },
     {
       name: "Kim R.",
       giftedFor: "Male cousin going through cancer treatment",
       text: "Hi Nikki! He really enjoyed the kit and reached out to his grandma to show what he received. He was very thankful that we were thinking of him and that you put it all together for him. I am too! Thank you so much for the time and effort you spent putting this together for Jack and for other people too!",
-      rating: 5,
     },
     {
       name: "Sally M.",
       giftedFor: "Sister in Law needing encouragement",
       text: "The kit was put together really pretty and neat little things to brighten her day!",
-      rating: 5,
     },
   ];
 
@@ -46,15 +42,10 @@ const TestimonialsSection = () => {
               key={index}
               className="bg-background rounded-2xl p-5 shadow-soft border border-border/50 hover:shadow-elevated transition-all duration-300"
             >
-              <div className="flex gap-1 mb-2">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star 
-                    key={i} 
-                    className="w-4 h-4 fill-primary text-primary" 
-                    aria-hidden="true"
-                  />
-                ))}
-              </div>
+              <Heart 
+                className="w-5 h-5 fill-primary text-primary animate-pulse" 
+                aria-hidden="true"
+              />
               <p className="text-xs text-muted-foreground/80 italic mb-3">
                 {testimonial.giftedFor}
               </p>
