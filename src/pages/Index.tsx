@@ -169,7 +169,7 @@ const Index = () => {
           `}</style>
         </section>
 
-        <HowItWorksSection />
+        <TestimonialsSection />
         
         {/* Decorative Divider */}
         <div className="py-12 bg-background overflow-hidden">
@@ -184,7 +184,7 @@ const Index = () => {
         
         <StorySection />
         
-        <TestimonialsSection />
+        <HowItWorksSection />
         
         <FAQSection />
         
