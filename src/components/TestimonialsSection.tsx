@@ -44,8 +44,9 @@ const TestimonialsSection = () => {
             >
               <div className="flex items-center gap-2 mb-3">
                 <Heart 
-                  className="w-4 h-4 fill-rose-400 text-rose-400 flex-shrink-0 animate-pulse" 
-                  strokeWidth={0}
+                  className="w-4 h-4 flex-shrink-0 animate-pulse" 
+                  fill="#fb7185"
+                  color="#fb7185"
                   aria-hidden="true"
                 />
                 <p className="text-xs text-muted-foreground/80 italic">
