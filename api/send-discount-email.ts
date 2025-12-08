@@ -234,7 +234,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
               <div class="message">
                 <p>Thank you for joining our community! We're thrilled to welcome you to Gathered Grace.</p>
-                <p>We believe in the power of thoughtful care and meaningful connection. Each gift we create is designed to bring comfort, rest, and encouragement—whether for someone you love or for yourself.</p>
+                <p>We believe in the power of thoughtful care and meaningful connection. Each gift we create is designed to bring comfort, rest, and encouragement, whether for someone you love or for yourself.</p>
               </div>
 
               <div class="discount-box">
@@ -244,7 +244,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </div>
 
               <div class="message">
-                <p><strong>Ready to shop?</strong> Choose from our curated care kits—Rest, Reflect, or Restore—or explore individual items like our handmade lavender eye pillows, healing balm, and thoughtful journals.</p>
+                <p><strong>Ready to shop?</strong> Choose from our curated care kits (Rest, Reflect, or Restore) or explore individual items like our handmade lavender eye pillows, healing balm, and thoughtful journals.</p>
                 <p>Simply enter <strong>WELCOME10</strong> at checkout to save 10% on your first order.</p>
               </div>
 
