@@ -23,7 +23,7 @@ const ContactSection = () => {
             aria-label="Visit our Instagram"
             asChild
           >
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/nikkijo74?igsh=NWd5dHZqMnU2NGp4" target="_blank" rel="noopener noreferrer">
               <Instagram className="w-4 h-4" />
               Instagram
             </a>
