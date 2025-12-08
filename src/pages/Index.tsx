@@ -83,6 +83,8 @@ const Index = () => {
         
         <ValuePropsSection />
         
+        <HowItWorksSection />
+        
         <section id="products" className="py-16 md:py-20 bg-background" aria-label="Gathered Grace Kits" style={{ maxWidth: '960px', margin: '0 auto', padding: '32px 20px' }}>
           <header style={{ textAlign: 'center', marginBottom: '28px' }}>
             <h2 style={{ margin: '0 0 8px', fontSize: '28px', letterSpacing: '.2px' }} className="font-serif">Gathered Grace Kits</h2>
@@ -183,8 +185,6 @@ const Index = () => {
         </div>
         
         <StorySection />
-        
-        <HowItWorksSection />
         
         <FAQSection />
         
