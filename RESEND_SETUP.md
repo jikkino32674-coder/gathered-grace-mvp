@@ -34,11 +34,14 @@ Set up email forwarding in Gmail:
 3. Add `gatheredgrace.giving@gmail.com` as a forwarding address
 4. Emails sent to `indieplantmarketing@gmail.com` will automatically forward to `gatheredgrace.giving@gmail.com`
 
-## Current Configuration
+## Current Configuration ✅
 
 - **API Key**: Set ✅
-- **Recipient Email**: Currently set to `indieplantmarketing@gmail.com` (due to Resend test mode limitations)
-- **From Email**: `Gathered Grace <onboarding@resend.dev>`
+- **Domain Verified**: `gatheredgrace.us` is verified in Resend ✅
+- **From Email**: `Gathered Grace <noreply@gatheredgrace.us>` ✅
+- **Recipient Email**: `gatheredgrace.giving@gmail.com` ✅
+
+**All emails now come from your verified domain, which significantly improves deliverability and reduces spam issues!**
 
 ## After Upgrading/Verifying Domain
 
