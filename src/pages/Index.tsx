@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ValuePropsSection from "@/components/ValuePropsSection";
+
 import ProductCard from "@/components/ProductCard";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import StorySection from "@/components/StorySection";
@@ -80,8 +80,6 @@ const Index = () => {
       
       <main className="flex-1">
         <Hero />
-        
-        <ValuePropsSection />
         
         <HowItWorksSection />
         
