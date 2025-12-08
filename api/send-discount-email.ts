@@ -91,60 +91,71 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               overflow: hidden;
             }
             .header {
-              background: linear-gradient(135deg, #8b5a5a 0%, #6a0505 100%);
+              background: linear-gradient(135deg, #8b7355 0%, #6a5444 100%);
               color: white;
-              padding: 40px 30px;
+              padding: 50px 30px;
               text-align: center;
             }
             .header h1 {
               margin: 0 0 10px 0;
-              font-size: 28px;
-              font-weight: normal;
+              font-size: 32px;
+              font-weight: 300;
+              letter-spacing: 1px;
             }
             .header p {
               margin: 0;
-              font-size: 16px;
+              font-size: 18px;
               opacity: 0.95;
+              font-weight: 300;
             }
             .content {
               padding: 40px 30px;
             }
             .greeting {
-              font-size: 18px;
-              margin-bottom: 20px;
-              color: #6a0505;
+              font-size: 20px;
+              margin-bottom: 25px;
+              color: #6a5444;
+              font-weight: 500;
             }
             .message {
               margin-bottom: 25px;
               line-height: 1.8;
             }
             .discount-box {
-              background: linear-gradient(135deg, #f5e6e6 0%, #fef3f3 100%);
-              border-left: 4px solid #6a0505;
-              padding: 25px;
-              margin: 30px 0;
+              background: linear-gradient(135deg, #faf7f5 0%, #f5efe8 100%);
+              border: 2px dashed #8b7355;
+              padding: 35px 25px;
+              margin: 35px 0;
               text-align: center;
-              border-radius: 4px;
+              border-radius: 12px;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             }
             .discount-label {
-              font-size: 14px;
+              font-size: 13px;
               text-transform: uppercase;
-              letter-spacing: 1px;
-              color: #666;
-              margin-bottom: 10px;
+              letter-spacing: 2px;
+              color: #8b7355;
+              margin-bottom: 15px;
+              font-weight: 600;
             }
             .discount-code {
-              font-size: 32px;
-              font-weight: bold;
-              color: #6a0505;
-              letter-spacing: 2px;
-              margin: 10px 0;
+              font-size: 40px;
+              font-weight: 700;
+              color: #6a5444;
+              letter-spacing: 3px;
+              margin: 15px 0;
               font-family: 'Courier New', monospace;
+              background: white;
+              padding: 15px 25px;
+              border-radius: 8px;
+              display: inline-block;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             }
             .discount-description {
-              font-size: 14px;
+              font-size: 16px;
               color: #666;
-              margin-top: 10px;
+              margin-top: 15px;
+              font-weight: 500;
             }
             .cta {
               text-align: center;
@@ -152,17 +163,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             }
             .cta-button {
               display: inline-block;
-              padding: 15px 40px;
-              background-color: #6a0505;
+              padding: 18px 50px;
+              background: linear-gradient(135deg, #8b7355 0%, #6a5444 100%);
               color: white !important;
               text-decoration: none;
-              border-radius: 5px;
-              font-size: 16px;
-              font-weight: 500;
-              transition: background-color 0.3s;
+              border-radius: 50px;
+              font-size: 18px;
+              font-weight: 600;
+              letter-spacing: 0.5px;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 15px rgba(106, 84, 68, 0.3);
             }
             .cta-button:hover {
-              background-color: #8b0a0a;
+              background: linear-gradient(135deg, #9d8464 0%, #7a6454 100%);
+              box-shadow: 0 6px 20px rgba(106, 84, 68, 0.4);
+              transform: translateY(-2px);
             }
             .footer {
               background-color: #f9f9f9;
@@ -176,8 +191,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               margin: 5px 0;
             }
             .footer a {
-              color: #6a0505;
+              color: #8b7355;
               text-decoration: none;
+              font-weight: 500;
+            }
+            .footer a:hover {
+              color: #6a5444;
+              text-decoration: underline;
+            }
+            /* Mobile responsive */
+            @media only screen and (max-width: 600px) {
+              .container {
+                margin: 20px auto;
+              }
+              .header h1 {
+                font-size: 24px;
+              }
+              .discount-code {
+                font-size: 32px;
+                padding: 12px 20px;
+              }
+              .cta-button {
+                padding: 16px 40px;
+                font-size: 16px;
+              }
             }
           </style>
         </head>
@@ -192,8 +229,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               <div class="greeting">${greeting},</div>
 
               <div class="message">
-                <p>Thank you for joining our community! We're delighted to welcome you.</p>
-                <p>At Gathered Grace, we believe in the power of thoughtful care and meaningful connection. Each gift we create is designed to bring comfort, rest, and encouragement to those you care about.</p>
+                <p>Thank you for joining our community! We're thrilled to welcome you to Gathered Grace.</p>
+                <p>We believe in the power of thoughtful care and meaningful connection. Each gift we create is designed to bring comfort, rest, and encouragement—whether for someone you love or for yourself.</p>
               </div>
 
               <div class="discount-box">
@@ -203,11 +240,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </div>
 
               <div class="message">
-                <p>Use this code at checkout to receive 10% off your first purchase. Whether you're choosing a curated care kit or building a custom gift, we're here to help you create something truly special.</p>
+                <p><strong>Ready to shop?</strong> Choose from our curated care kits—Rest, Reflect, or Restore—or explore individual items like our handmade lavender eye pillows, healing balm, and thoughtful journals.</p>
+                <p>Simply enter <strong>WELCOME10</strong> at checkout to save 10% on your first order.</p>
               </div>
 
               <div class="cta">
-                <a href="https://gatheredgrace.us/shop" class="cta-button">Start Shopping</a>
+                <a href="https://gatheredgrace.us?discount=WELCOME10" class="cta-button">Shop Now & Save 10%</a>
+              </div>
+
+              <div class="message" style="text-align: center; font-size: 14px; color: #999; margin-top: 15px;">
+                <p>Or copy code: <strong style="color: #6a0505;">WELCOME10</strong> to use later</p>
               </div>
 
               <div class="message" style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e0e0e0;">
