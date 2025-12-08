@@ -1,16 +1,17 @@
 // Stripe Payment Links Configuration
+// All links now support promotion codes (WELCOME10, etc.)
 export const STRIPE_PAYMENT_LINKS = {
-  GATHERED_GRACE_GIFT_BOX: "https://buy.stripe.com/4gMfZhgSl6xIeji1vu1RC00",
-  LAVENDER_EYE_PILLOW: "https://buy.stripe.com/28EdR9gSl5tEcba3DC1RC01",
-  HANDMADE_BALM: "https://buy.stripe.com/00wcN5dG93lwcba0rq1RC02",
-  JOURNAL_PEN_SET: "https://buy.stripe.com/5kQdR9eKd7BMdfeb641RC03",
-  REST_KIT: "https://buy.stripe.com/fZu4gzdG93lw0ssa201RC04",
-  REST_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/fZu5kD7hL09k3EE5LK1RC05",
-  REFLECT_KIT: "https://buy.stripe.com/14A4gzdG91do7UU3DC1RC06",
-  REFLECT_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/bJe00jfOhe0a0ss3DC1RC07",
-  RESTORE_KIT: "https://buy.stripe.com/00w4gz59D4pA7UUeig1RC08",
-  RESTORE_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/00w3cv59De0aeji6PO1RC09",
-  GATHERED_GRACE_GIFT_BOX_CUSTOM_FABRIC: "https://buy.stripe.com/4gMfZhgSl6xIeji1vu1RC00", // TODO: Create separate link if needed
+  GATHERED_GRACE_GIFT_BOX: "https://buy.stripe.com/5kQ6oH45z9JUcba7TS1RC0n",
+  LAVENDER_EYE_PILLOW: "https://buy.stripe.com/4gM3cvgSl5tE7UU4HG1RC0m",
+  HANDMADE_BALM: "https://buy.stripe.com/cNi8wPdG9aNYejica81RC0l",
+  JOURNAL_PEN_SET: "https://buy.stripe.com/28EcN5cC58FQ0ssb641RC0k",
+  REST_KIT: "https://buy.stripe.com/bJecN57hL09k5MMgqo1RC0j",
+  REST_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/4gMaEX31v09k4II4HG1RC0i",
+  REFLECT_KIT: "https://buy.stripe.com/bJe3cv0Tn9JU5MM4HG1RC0h",
+  REFLECT_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/6oU3cv9pTe0a5MMdec1RC0g",
+  RESTORE_KIT: "https://buy.stripe.com/cNi3cv59D5tEfnmca81RC0f",
+  RESTORE_KIT_CUSTOM_FABRIC: "https://buy.stripe.com/14AeVd8lP09k8YYa201RC0e",
+  GATHERED_GRACE_GIFT_BOX_CUSTOM_FABRIC: "https://buy.stripe.com/5kQ6oH45z9JUcba7TS1RC0n", // Using same link as main gift box
 } as const;
 
 // Product information
