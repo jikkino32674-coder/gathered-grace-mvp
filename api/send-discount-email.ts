@@ -64,8 +64,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log('📧 Sending discount email to:', email);
 
-    // Create personalized greeting
-    const greeting = name ? `Hi ${name}` : 'Hello';
+    // Create personalized greeting (use first name only if full name provided)
+    let greeting = 'Hello';
+    if (name) {
+      const firstName = name.trim().split(' ')[0]; // Get first word as first name
+      greeting = `Hi ${firstName}`;
+    }
 
     // Email HTML content
     const emailHtml = `
@@ -249,7 +253,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               </div>
 
               <div class="message" style="text-align: center; font-size: 14px; color: #999; margin-top: 15px;">
-                <p>Or copy code: <strong style="color: #6a0505;">WELCOME10</strong> to use later</p>
+                <p>Or copy code: <strong style="color: #6a5444;">WELCOME10</strong> to use later</p>
               </div>
 
               <div class="message" style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e0e0e0;">
