@@ -83,8 +83,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           product_data: {
             name: customFabric ? 'Restore Kit + Custom Fabric' : 'Restore Kit',
             description: 'Includes lavender eye pillow, soothing balm, notepad, pen, and a custom gift',
+            tax_code: 'txcd_99999999',
           },
           unit_amount: baseKitPrice,
+          tax_behavior: 'exclusive' as const,
         },
         quantity: 1,
       });
@@ -112,8 +114,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               product_data: {
                 name: 'Custom Gift Budget',
                 description: `Additional budget for personalized custom gift (${customBudget})`,
+                tax_code: 'txcd_99999999',
               },
               unit_amount: budgetAmount,
+              tax_behavior: 'exclusive' as const,
             },
             quantity: 1,
           });
@@ -131,8 +135,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             currency: 'usd',
             product_data: {
               name: 'Lavender Eye Pillow',
+              tax_code: 'txcd_99999999',
             },
             unit_amount: 2200, // $22
+            tax_behavior: 'exclusive' as const,
           },
           quantity: 1,
         });
@@ -145,8 +151,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             currency: 'usd',
             product_data: {
               name: 'Handmade Balm',
+              tax_code: 'txcd_99999999',
             },
             unit_amount: 1500, // $15
+            tax_behavior: 'exclusive' as const,
           },
           quantity: 1,
         });
@@ -159,8 +167,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             currency: 'usd',
             product_data: {
               name: 'Journal and Pen Set',
+              tax_code: 'txcd_99999999',
             },
             unit_amount: 1800, // $18
+            tax_behavior: 'exclusive' as const,
           },
           quantity: 1,
         });
@@ -175,8 +185,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             product_data: {
               name: 'Custom Fabric Upcharge',
               description: 'Custom themed fabric for eye pillow',
+              tax_code: 'txcd_99999999',
             },
             unit_amount: 500, // $5
+            tax_behavior: 'exclusive' as const,
           },
           quantity: 1,
         });
@@ -203,8 +215,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               product_data: {
                 name: 'Custom Gift Budget',
                 description: `Budget for personalized custom gift (${customBudget})`,
+                tax_code: 'txcd_99999999',
               },
               unit_amount: budgetAmount,
+              tax_behavior: 'exclusive' as const,
             },
             quantity: 1,
           };
@@ -269,6 +283,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mode: 'payment',
       success_url: `${baseUrl}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl,
+      automatic_tax: {
+        enabled: true,
+      },
       metadata: {
         kit_type: kitType,
         custom_fabric: customFabric ? 'yes' : 'no',

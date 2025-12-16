@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+import { addB2CLead } from "@/lib/firebase";
 
 interface DiscountPopupProps {
   open: boolean;
@@ -64,26 +64,23 @@ const DiscountPopup = ({ open, onOpenChange }: DiscountPopupProps) => {
 
     try {
       // First, save to database
-      const { data, error } = await supabase
-        .from('b2c_leads')
-        .insert({
-          email: trimmedEmail,
-          full_name: trimmedName || null,
-          lead_type: 'discount_popup',
-          source_page: window.location.href,
-          website_type: 'b2c',
-          metadata: {
-            discount_code: 'WELCOME10',
-            discount_percent: 10,
-          },
-        })
-        .select();
+      const { data, error } = await addB2CLead({
+        email: trimmedEmail,
+        full_name: trimmedName || null,
+        lead_type: 'discount_popup',
+        source_page: window.location.href,
+        website_type: 'b2c',
+        metadata: {
+          discount_code: 'WELCOME10',
+          discount_percent: 10,
+        },
+      });
 
       if (error) {
         console.error('Error saving discount lead:', error);
         toast({
           title: "Error",
-          description: error.message || "Something went wrong. Please try again.",
+          description: "Something went wrong. Please try again.",
           variant: "destructive",
         });
       } else {

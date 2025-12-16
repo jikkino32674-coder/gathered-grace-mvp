@@ -25,3 +25,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Firebase service account keys (DO NOT COMMIT)
+serviceAccountKey.json

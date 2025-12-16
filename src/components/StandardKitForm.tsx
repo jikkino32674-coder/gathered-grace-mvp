@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Check } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { addB2CLead } from "@/lib/firebase";
 import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 interface StandardKitFormProps {
@@ -75,40 +75,37 @@ const StandardKitForm = ({ open, onOpenChange, kitName, paymentLink, customFabri
     console.log('📤 Submitting form...', { recipient_name: formData.recipient_name, sender_email: formData.sender_email });
 
     try {
-      // Save to Supabase as B2C lead (optional - continue even if this fails)
+      // Save to Firestore as B2C lead (optional - continue even if this fails)
       try {
-        const supabaseResult = await supabase
-          .from('b2c_leads')
-          .insert({
-            email: formData.sender_email.trim(),
-            full_name: formData.sender_name.trim(),
-            lead_type: `${kitName.toLowerCase()}_form`,
-            source_page: window.location.href,
-            website_type: 'b2c',
-            metadata: {
-              recipient_name: formData.recipient_name,
-              recipient_email: formData.recipient_email || null,
-              address: formData.address,
-              city: formData.city,
-              state: formData.state,
-              zip: formData.zip,
-              occasion: formData.occasion || null,
-              custom_fabric: formData.custom_fabric,
-              fabric_theme: formData.fabric_theme || null,
-              card_message: formData.card_message || null,
-              name_on_card: formData.name_on_card,
-              kit_type: kitName,
-            },
-          })
-          .select();
+        const firestoreResult = await addB2CLead({
+          email: formData.sender_email.trim(),
+          full_name: formData.sender_name.trim(),
+          lead_type: `${kitName.toLowerCase()}_form`,
+          source_page: window.location.href,
+          website_type: 'b2c',
+          metadata: {
+            recipient_name: formData.recipient_name,
+            recipient_email: formData.recipient_email || null,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zip: formData.zip,
+            occasion: formData.occasion || null,
+            custom_fabric: formData.custom_fabric,
+            fabric_theme: formData.fabric_theme || null,
+            card_message: formData.card_message || null,
+            name_on_card: formData.name_on_card,
+            kit_type: kitName,
+          },
+        });
 
-        if (supabaseResult.error) {
-          console.error('⚠️ Error saving to Supabase (non-blocking):', supabaseResult.error);
+        if (firestoreResult.error) {
+          console.error('⚠️ Error saving to Firestore (non-blocking):', firestoreResult.error);
         } else {
-          console.log('✅ Form data saved to Supabase database:', supabaseResult.data?.[0]?.id);
+          console.log('✅ Form data saved to Firestore database:', firestoreResult.data?.id);
         }
-      } catch (supabaseErr) {
-        console.error('⚠️ Supabase error (non-blocking):', supabaseErr);
+      } catch (firestoreErr) {
+        console.error('⚠️ Firestore error (non-blocking):', firestoreErr);
       }
 
       // Submit to Vercel API endpoint (sends email notification via Resend)

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+import { addB2CLead } from "@/lib/firebase";
 import { Heart, CheckCircle } from "lucide-react";
 
 const EmailCaptureSection = () => {
@@ -47,23 +47,20 @@ const EmailCaptureSection = () => {
     console.log('Submitting email signup:', trimmedEmail);
 
     try {
-      const { data, error } = await supabase
-        .from('b2c_leads')
-        .insert({
-          email: trimmedEmail,
-          lead_type: 'email_signup',
-          source_page: window.location.href,
-          website_type: 'b2c',
-        })
-        .select();
+      const { data, error } = await addB2CLead({
+        email: trimmedEmail,
+        lead_type: 'email_signup',
+        source_page: window.location.href,
+        website_type: 'b2c',
+      });
 
-      console.log('Supabase response:', { data, error });
+      console.log('Firebase response:', { data, error });
 
       if (error) {
         console.error('Error saving email:', error);
         toast({
           title: "Error",
-          description: error.message || "Something went wrong. Please try again.",
+          description: "Something went wrong. Please try again.",
           variant: "destructive",
         });
       } else {
@@ -74,7 +71,7 @@ const EmailCaptureSection = () => {
           description: "You'll be the first to know about new releases.",
         });
         setEmail("");
-        
+
         // Hide success message after 3 seconds
         setTimeout(() => {
           setShowSuccess(false);

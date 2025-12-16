@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { addB2CLead } from "@/lib/firebase";
 
 const initialFormData = {
   // Selected items
@@ -98,49 +98,46 @@ const BuildCustomKitForm = () => {
     console.log('📤 Submitting form...', { recipient_name: formData.recipient_name, sender_email: formData.sender_email });
 
     try {
-      // Save to Supabase (optional - non-blocking)
+      // Save to Firestore (optional - non-blocking)
       try {
-        const supabaseResult = await supabase
-          .from('b2c_leads')
-          .insert({
-            email: formData.sender_email.trim(),
-            full_name: formData.sender_name.trim(),
-            lead_type: 'build_custom_kit',
-            source_page: window.location.href,
-            website_type: 'b2c',
-            metadata: {
-              selected_items: {
-                eye_pillow: formData.items_eye_pillow,
-                balm: formData.items_balm,
-                journal: formData.items_journal,
-                custom_gift: formData.items_custom_gift,
-              },
-              custom_gift_details: formData.custom_gift_details || null,
-              custom_fabric: formData.custom_fabric,
-              fabric_theme: formData.fabric_theme || null,
-              recipient_name: formData.recipient_name,
-              recipient_email: formData.recipient_email || null,
-              address: formData.address,
-              city: formData.city,
-              state: formData.state,
-              zip: formData.zip,
-              occasion: formData.occasion === "Other" ? formData.occasion_other : formData.occasion,
-              custom_gift_budget: formData.custom_gift_budget || null,
-              comforts: formData.comforts || null,
-              card_message: formData.card_message || null,
-              name_on_card: formData.name_on_card,
-              special_requests: formData.special_requests || null,
+        const firestoreResult = await addB2CLead({
+          email: formData.sender_email.trim(),
+          full_name: formData.sender_name.trim(),
+          lead_type: 'build_custom_kit',
+          source_page: window.location.href,
+          website_type: 'b2c',
+          metadata: {
+            selected_items: {
+              eye_pillow: formData.items_eye_pillow,
+              balm: formData.items_balm,
+              journal: formData.items_journal,
+              custom_gift: formData.items_custom_gift,
             },
-          })
-          .select();
+            custom_gift_details: formData.custom_gift_details || null,
+            custom_fabric: formData.custom_fabric,
+            fabric_theme: formData.fabric_theme || null,
+            recipient_name: formData.recipient_name,
+            recipient_email: formData.recipient_email || null,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zip: formData.zip,
+            occasion: formData.occasion === "Other" ? formData.occasion_other : formData.occasion,
+            custom_gift_budget: formData.custom_gift_budget || null,
+            comforts: formData.comforts || null,
+            card_message: formData.card_message || null,
+            name_on_card: formData.name_on_card,
+            special_requests: formData.special_requests || null,
+          },
+        });
 
-        if (supabaseResult.error) {
-          console.error('⚠️ Error saving to Supabase (non-blocking):', supabaseResult.error);
+        if (firestoreResult.error) {
+          console.error('⚠️ Error saving to Firestore (non-blocking):', firestoreResult.error);
         } else {
-          console.log('✅ Form data saved to Supabase database:', supabaseResult.data?.[0]?.id);
+          console.log('✅ Form data saved to Firestore database:', firestoreResult.data?.id);
         }
-      } catch (supabaseErr) {
-        console.error('⚠️ Supabase error (non-blocking):', supabaseErr);
+      } catch (firestoreErr) {
+        console.error('⚠️ Firestore error (non-blocking):', firestoreErr);
       }
 
       // Submit to API endpoint (sends email)
