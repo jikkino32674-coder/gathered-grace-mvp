@@ -199,8 +199,8 @@ const Index = () => {
                     <span aria-hidden="true">🌸 </span>
                     <strong>Calming Lavender Eye Pillow — $22</strong>
                   </h3>
-                  <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>For quiet and rest</em>
-                  <p style={{ margin: '0 0 16px' }}>A handmade lavender eye pillow for rest and relaxation, stress relief, a calming sensory experience.</p>
+                  <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>For moments of quiet and rest</em>
+                  <p style={{ margin: '0 0 16px' }}>A handmade lavender eye pillow for rest and relaxation, stress relief, or a calming sensory experience.</p>
                   <div className="flex gap-3">
                     <a 
                       href={STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink}
