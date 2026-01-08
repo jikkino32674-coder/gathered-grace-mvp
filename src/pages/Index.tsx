@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, Flower2 } from "lucide-react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 
@@ -195,8 +195,8 @@ const Index = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
-                    <span aria-hidden="true">🌸 </span>
+                  <h3 style={{ margin: '0 0 6px', fontSize: '20px' }} className="flex items-center gap-1">
+                    <Flower2 className="w-5 h-5 text-purple-400" aria-hidden="true" />
                     <strong>Calming Lavender Eye Pillow — $22</strong>
                   </h3>
                   <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>For moments of quiet and rest</em>
