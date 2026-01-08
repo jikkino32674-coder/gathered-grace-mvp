@@ -8,10 +8,15 @@ import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 import lavenderPillowSingle from "@/assets/lavender-pillow-single.png";
 import lavenderPillowVariety from "@/assets/lavender-pillow-variety.png";
 import { STRIPE_PRODUCTS } from "@/config/stripe";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Textarea } from "@/components/ui/textarea";
 
 const LavenderEyePillowDetails = () => {
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [wantsCustomFabric, setWantsCustomFabric] = useState<string>("no");
+  const [fabricTheme, setFabricTheme] = useState<string>("");
   
   const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -123,12 +128,40 @@ const LavenderEyePillowDetails = () => {
                 </p>
               </div>
 
-              <div className="border-t pt-4 space-y-3">
-                <div className="ml-4 space-y-2">
-                  <p className="text-muted-foreground">
-                    <strong>Fabric Options:</strong> Eye pillows are premade in assorted fabrics. If you'd like us to choose a fabric within a specific theme (such as birds, florals, or sports), a custom selection is available for an additional $5. Please include your preferred fabric or print in the Notes section of the custom form.
-                  </p>
-                  <p className="text-muted-foreground">
+              <div className="border-t pt-4 space-y-4">
+                <div className="space-y-3">
+                  <Label className="text-base font-medium">Do you want a custom themed fabric? (+$5)</Label>
+                  <RadioGroup
+                    value={wantsCustomFabric}
+                    onValueChange={setWantsCustomFabric}
+                    className="flex gap-4"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="no" id="fabric-no" />
+                      <Label htmlFor="fabric-no" className="cursor-pointer">No, assorted is fine</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="yes" id="fabric-yes" />
+                      <Label htmlFor="fabric-yes" className="cursor-pointer">Yes, custom theme</Label>
+                    </div>
+                  </RadioGroup>
+                  
+                  {wantsCustomFabric === "yes" && (
+                    <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <Label htmlFor="fabric-theme">Preferred fabric theme (e.g., birds, florals, sports)</Label>
+                      <Textarea
+                        id="fabric-theme"
+                        placeholder="Describe your preferred fabric theme or pattern..."
+                        value={fabricTheme}
+                        onChange={(e) => setFabricTheme(e.target.value)}
+                        className="min-h-[80px]"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p>
                     <strong>Sustainability:</strong> We prioritize environmental care by using reclaimed fabric scraps from sewing artisans—giving beautiful materials a second life.
                   </p>
                 </div>
@@ -139,9 +172,14 @@ const LavenderEyePillowDetails = () => {
                   variant="rose" 
                   size="lg" 
                   className="flex-1"
-                  onClick={() => window.location.href = STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink}
+                  onClick={() => {
+                    const paymentLink = wantsCustomFabric === "yes" 
+                      ? STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.customFabricPaymentLink 
+                      : STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink;
+                    window.location.href = paymentLink;
+                  }}
                 >
-                  Buy Now
+                  Buy Now — {wantsCustomFabric === "yes" ? STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.customFabricPrice : STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.price}
                 </Button>
               </div>
             </div>

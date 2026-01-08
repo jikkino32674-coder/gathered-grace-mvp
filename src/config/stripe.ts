@@ -3,6 +3,7 @@
 export const STRIPE_PAYMENT_LINKS = {
   GATHERED_GRACE_GIFT_BOX: "https://buy.stripe.com/5kQ6oH45z9JUcba7TS1RC0n",
   LAVENDER_EYE_PILLOW: "https://buy.stripe.com/4gM3cvgSl5tE7UU4HG1RC0m",
+  LAVENDER_EYE_PILLOW_CUSTOM_FABRIC: "https://buy.stripe.com/4gM3cvgSl5tE7UU4HG1RC0m", // TODO: Replace with actual custom fabric payment link
   HANDMADE_BALM: "https://buy.stripe.com/cNi8wPdG9aNYejica81RC0l",
   JOURNAL_PEN_SET: "https://buy.stripe.com/28EcN5cC58FQ0ssb641RC0k",
   REST_KIT: "https://buy.stripe.com/bJecN57hL09k5MMgqo1RC0j",
@@ -31,6 +32,8 @@ export const STRIPE_PRODUCTS = {
     name: "Handmade Lavender Eye Pillow",
     price: "$22",
     paymentLink: STRIPE_PAYMENT_LINKS.LAVENDER_EYE_PILLOW,
+    customFabricPaymentLink: STRIPE_PAYMENT_LINKS.LAVENDER_EYE_PILLOW_CUSTOM_FABRIC,
+    customFabricPrice: "$27",
   },
   HANDMADE_BALM: {
     id: "prod_TO8faz5COGN3sQ",
