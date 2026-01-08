@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
 import lavenderPillowSingle from "@/assets/lavender-pillow-single.png";
 import lavenderPillowVariety from "@/assets/lavender-pillow-variety.png";
+import reflectKitEyepillowUse from "@/assets/reflect-kit-eyepillow-use.png";
 import { STRIPE_PRODUCTS } from "@/config/stripe";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -88,7 +89,7 @@ const LavenderEyePillowDetails = () => {
                 />
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div 
                   className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft cursor-pointer transition-transform hover:scale-[1.02]"
                   onClick={() => handleImageClick(lavenderPillowSingle)}
@@ -106,6 +107,16 @@ const LavenderEyePillowDetails = () => {
                   <img 
                     src={lavenderPillowVariety} 
                     alt="Lavender Eye Pillow fabric variety"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div 
+                  className="aspect-square rounded-xl overflow-hidden border border-border/60 shadow-soft cursor-pointer transition-transform hover:scale-[1.02]"
+                  onClick={() => handleImageClick(reflectKitEyepillowUse)}
+                >
+                  <img 
+                    src={reflectKitEyepillowUse} 
+                    alt="Person relaxing with lavender eye pillow"
                     className="w-full h-full object-cover"
                   />
                 </div>
