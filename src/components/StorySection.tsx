@@ -11,14 +11,8 @@ const StorySection = () => {
         </div>
         <div className="grid md:grid-cols-5 gap-8 items-center">
           <div className="md:col-span-3">
-            <p className="text-muted-foreground mb-4">
-              Gathered Grace was created during a time when a loved one was in cancer treatment, inspiring a desire to offer comfort in meaningful, tangible ways. I looked for something that felt soft, supportive, and truly heartfelt. When I couldn't find it, I created it.
-            </p>
-            <h3 className="font-serif text-3xl text-foreground mb-4">
-              Gracefully gathered, given in love.
-            </h3>
             <p className="text-muted-foreground">
-              Now, Gathered Grace is a small, heart-forward studio crafting thoughtful gifts for any season of life. Each piece is chosen with intention—gentle to the senses, useful, and made to be received with warmth.
+              I'm Nikki, the heart behind Gathered Grace. Born and raised in the Midwest, I've always been shaped by a deep appreciation for community, simplicity, and showing up for people in quiet, meaningful ways. I'm a Mom to two grown boys, a dog lover with two always-underfoot companions, and someone who believes that care is often found in the small, thoughtful details.
             </p>
           </div>
           <div className="md:col-span-2 flex justify-center">
