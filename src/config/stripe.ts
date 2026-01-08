@@ -3,7 +3,7 @@
 export const STRIPE_PAYMENT_LINKS = {
   GATHERED_GRACE_GIFT_BOX: "https://buy.stripe.com/5kQ6oH45z9JUcba7TS1RC0n",
   LAVENDER_EYE_PILLOW: "https://buy.stripe.com/4gM3cvgSl5tE7UU4HG1RC0m",
-  LAVENDER_EYE_PILLOW_CUSTOM_FABRIC: "https://buy.stripe.com/4gM3cvgSl5tE7UU4HG1RC0m", // TODO: Replace with actual custom fabric payment link
+  LAVENDER_EYE_PILLOW_CUSTOM_FABRIC: "https://buy.stripe.com/cNi28r59D1dogrq4HG1RC0o",
   HANDMADE_BALM: "https://buy.stripe.com/cNi8wPdG9aNYejica81RC0l",
   JOURNAL_PEN_SET: "https://buy.stripe.com/28EcN5cC58FQ0ssb641RC0k",
   REST_KIT: "https://buy.stripe.com/bJecN57hL09k5MMgqo1RC0j",
