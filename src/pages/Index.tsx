@@ -18,6 +18,8 @@ import DiscountPopup from "@/components/DiscountPopup";
 import restKitImage from "@/assets/rest-kit.jpg";
 import reflectKitImage from "@/assets/reflect-kit.jpg";
 import restoreKitImage from "@/assets/restore-kit.jpg";
+import lavenderEyePillowImage from "@/assets/lavender-eye-pillow.png";
+import { STRIPE_PRODUCTS } from "@/config/stripe";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -165,6 +167,82 @@ const Index = () => {
             }
             @media (min-width: 900px) {
               .gg-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+            }
+          `}</style>
+        </section>
+
+        {/* Featured Gifts Section */}
+        <section className="py-16 md:py-20 bg-background" aria-label="Featured Gifts" style={{ maxWidth: '960px', margin: '0 auto', padding: '32px 20px' }}>
+          <header style={{ textAlign: 'center', marginBottom: '28px' }}>
+            <h2 style={{ margin: '0 0 8px', fontSize: '28px', letterSpacing: '.2px' }} className="font-serif">Featured Gifts</h2>
+            <p style={{ margin: 0, opacity: .85 }}>Individual items for thoughtful giving.</p>
+          </header>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }} className="featured-gifts-grid">
+            <article 
+              className="relative group rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
+              style={{ 
+                background: "#e8f0e8", 
+                border: "1px solid #d0ddd0", 
+              }}
+            >
+              <div className="flex flex-col md:flex-row gap-5">
+                <div className="w-full md:w-48 aspect-[4/3] md:aspect-square rounded-xl overflow-hidden flex-shrink-0">
+                  <img 
+                    src={lavenderEyePillowImage} 
+                    alt="Calming Lavender Eye Pillow"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 style={{ margin: '0 0 6px', fontSize: '20px' }}>
+                    <span aria-hidden="true">🌸 </span>
+                    <strong>Calming Lavender Eye Pillow — $22</strong>
+                  </h3>
+                  <em style={{ display: 'block', margin: '0 0 10px', opacity: .8 }}>For quiet and rest</em>
+                  <p style={{ margin: '0 0 16px' }}>A handmade lavender eye pillow for rest and relaxation, stress relief, a calming sensory experience.</p>
+                  <div className="flex gap-3">
+                    <a 
+                      href={STRIPE_PRODUCTS.LAVENDER_EYE_PILLOW.paymentLink}
+                      style={{ 
+                        display: 'inline-block', 
+                        textDecoration: 'none', 
+                        background: '#2f3a34', 
+                        color: '#fff', 
+                        padding: '10px 14px', 
+                        borderRadius: '12px', 
+                        boxShadow: '0 2px 0 rgba(0,0,0,.08)' 
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.filter = 'brightness(1.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.filter = 'brightness(1)'}
+                    >
+                      Buy Now
+                    </a>
+                    <a 
+                      href="/products/lavender-eye-pillow"
+                      style={{ 
+                        display: 'inline-block', 
+                        textDecoration: 'none', 
+                        background: 'transparent', 
+                        color: '#2f3a34', 
+                        padding: '10px 14px', 
+                        borderRadius: '12px', 
+                        border: '1px solid #2f3a34'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(47, 58, 52, 0.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                    >
+                      Details
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <style>{`
+            @media (min-width: 640px) {
+              .featured-gifts-grid { grid-template-columns: 1fr !important; }
             }
           `}</style>
         </section>
