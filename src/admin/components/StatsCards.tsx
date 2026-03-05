@@ -8,12 +8,16 @@ interface StatsCardsProps {
 }
 
 export function StatsCards({ stats, loading }: StatsCardsProps) {
+  const shipped = stats?.byStatus?.shipped ?? 0;
+  const delivered = stats?.byStatus?.delivered ?? 0;
+  const processing = stats?.byStatus?.processing ?? 0;
+
   const cards = [
     {
       title: 'Total Orders',
       value: stats?.totalOrders ?? 0,
       icon: Package,
-      description: `${stats?.totalLeads ?? 0} total leads`,
+      description: `${processing} processing, ${shipped + delivered} fulfilled`,
     },
     {
       title: 'New Orders',
@@ -28,10 +32,10 @@ export function StatsCards({ stats, loading }: StatsCardsProps) {
       description: `${stats?.last30Days ?? 0} in last 30 days`,
     },
     {
-      title: 'Email Signups',
-      value: (stats?.byType?.email_signup ?? 0) + (stats?.byType?.discount_popup ?? 0),
+      title: 'Contacts',
+      value: stats?.totalContacts ?? 0,
       icon: Mail,
-      description: 'Newsletter & discount',
+      description: 'Email signups & discount',
     },
   ];
 

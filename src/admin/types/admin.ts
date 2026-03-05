@@ -81,6 +81,7 @@ export interface LeadsFilters {
 export interface AdminStats {
   totalLeads: number;
   totalOrders: number;
+  totalContacts: number;
   byType: Record<string, number>;
   byStatus: Record<OrderStatus, number>;
   last7Days: number;

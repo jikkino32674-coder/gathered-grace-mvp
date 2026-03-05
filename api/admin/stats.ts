@@ -21,9 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const snapshot = await adminDb.collection('b2c_leads')
-      .orderBy('created_at', 'desc')
-      .get();
+    const snapshot = await adminDb.collection('b2c_leads').get();
 
     const now = new Date();
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -38,13 +36,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const EXCLUDED_TYPES = ['test_firebase_connection'];
 
+    const CONTACT_TYPES = ['email_signup', 'discount_popup'];
+
     const byType: Record<string, number> = {};
+    // byStatus only counts ORDER types
     const byStatus: Record<string, number> = { new: 0, processing: 0, shipped: 0, delivered: 0 };
     let last7Days = 0;
     let last30Days = 0;
     let totalOrders = 0;
+    let totalContacts = 0;
 
-    // Daily counts for chart (last 14 days)
+    // Daily counts for chart (last 14 days) — orders only
     const dailyCounts: Record<string, number> = {};
     for (let i = 13; i >= 0; i--) {
       const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
@@ -63,10 +65,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (EXCLUDED_TYPES.includes(leadType)) return;
 
       byType[leadType] = (byType[leadType] || 0) + 1;
-      byStatus[status] = (byStatus[status] || 0) + 1;
+
+      if (CONTACT_TYPES.includes(leadType)) {
+        totalContacts++;
+      }
 
       if (ORDER_TYPES.includes(leadType)) {
         totalOrders++;
+        byStatus[status] = (byStatus[status] || 0) + 1;
 
         if (createdAt) {
           if (createdAt >= sevenDaysAgo) last7Days++;
@@ -78,33 +84,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           }
         }
 
-        // Only show orders in recent leads
-        if (recentLeads.length < 5) {
-          recentLeads.push({
-            id: doc.id,
-            email: data.email || '',
-            full_name: data.full_name || null,
-            lead_type: leadType,
-            status,
-            metadata: data.metadata || {},
-            created_at: createdAt?.toISOString() || null,
-          });
-        }
+        recentLeads.push({
+          id: doc.id,
+          email: data.email || '',
+          full_name: data.full_name || null,
+          lead_type: leadType,
+          status,
+          metadata: data.metadata || {},
+          created_at: createdAt?.toISOString() || null,
+        });
       }
     });
 
-    // Count non-excluded leads
+    // Sort recent leads by date and take top 5
+    recentLeads.sort((a, b) => {
+      const aDate = a.created_at || '';
+      const bDate = b.created_at || '';
+      return bDate > aDate ? 1 : bDate < aDate ? -1 : 0;
+    });
+    const topRecentLeads = recentLeads.slice(0, 5);
+
     const totalLeads = Object.values(byType).reduce((sum, count) => sum + count, 0);
 
     return res.status(200).json({
       totalLeads,
       totalOrders,
+      totalContacts,
       byType,
       byStatus,
       last7Days,
       last30Days,
       dailyCounts,
-      recentLeads,
+      recentLeads: topRecentLeads,
     });
   } catch (error: any) {
     console.error('Error fetching stats:', error);

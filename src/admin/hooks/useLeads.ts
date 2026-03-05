@@ -24,9 +24,9 @@ export function useUpdateStatus() {
 
   return useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) =>
-      adminFetch('/api/admin/update-status', {
-        method: 'PATCH',
-        body: JSON.stringify({ id, status }),
+      adminFetch('/api/admin/actions', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'update-status', id, status }),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-leads'] });
@@ -40,9 +40,9 @@ export function useUpdateTracking() {
 
   return useMutation({
     mutationFn: ({ id, tracking_number }: { id: string; tracking_number: string }) =>
-      adminFetch('/api/admin/update-tracking', {
-        method: 'PATCH',
-        body: JSON.stringify({ id, tracking_number }),
+      adminFetch('/api/admin/actions', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'update-tracking', id, tracking_number }),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-leads'] });
@@ -55,9 +55,9 @@ export function useUpdateNotes() {
 
   return useMutation({
     mutationFn: ({ id, notes }: { id: string; notes: string }) =>
-      adminFetch('/api/admin/update-notes', {
-        method: 'PATCH',
-        body: JSON.stringify({ id, notes }),
+      adminFetch('/api/admin/actions', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'update-notes', id, notes }),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-leads'] });
@@ -70,9 +70,9 @@ export function useDeleteLead() {
 
   return useMutation({
     mutationFn: ({ id }: { id: string }) =>
-      adminFetch('/api/admin/delete-lead', {
-        method: 'DELETE',
-        body: JSON.stringify({ id }),
+      adminFetch('/api/admin/actions', {
+        method: 'POST',
+        body: JSON.stringify({ action: 'delete', id }),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-leads'] });
