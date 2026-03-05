@@ -159,7 +159,7 @@ async function sendThankYouEmail({
     : `Your Gathered Grace order is confirmed!`;
 
   const recipientLine = recipientName
-    ? `<p>We're now preparing a beautiful <strong>${kitDisplayName}</strong> for <strong>${recipientName}</strong>. What a thoughtful gesture to reach out and support someone you care about.</p>`
+    ? `<p>We're now preparing a beautiful <strong>${kitDisplayName}</strong> for <strong>${recipientName}</strong>. We know it will bring them so much comfort and joy.</p>`
     : `<p>We're now preparing your <strong>${kitDisplayName}</strong> with care.</p>`;
 
   // Build order summary rows using table layout (Gmail-compatible)
