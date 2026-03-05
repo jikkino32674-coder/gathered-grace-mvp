@@ -8,6 +8,16 @@ const Footer = () => {
           <p>© {currentYear} Gathered Grace. All rights reserved.</p>
           <p className="md:text-right">Gracefully gathered, given in love.</p>
         </div>
+        <div className="mt-4 pt-4 border-t text-center" style={{ borderColor: '#c8d8c8' }}>
+          <a
+            href="https://greenloop.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors"
+          >
+            Powered by GreenLoop
+          </a>
+        </div>
       </div>
     </footer>
   );
