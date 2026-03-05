@@ -36,6 +36,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       'handmade_balm_form', 'journal_pen_form',
     ];
 
+    const EXCLUDED_TYPES = ['test_firebase_connection'];
+
     const byType: Record<string, number> = {};
     const byStatus: Record<string, number> = { new: 0, processing: 0, shipped: 0, delivered: 0 };
     let last7Days = 0;
@@ -57,38 +59,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const status = data.status || 'new';
       const createdAt = data.created_at?.toDate?.();
 
+      // Skip test/excluded entries entirely
+      if (EXCLUDED_TYPES.includes(leadType)) return;
+
       byType[leadType] = (byType[leadType] || 0) + 1;
       byStatus[status] = (byStatus[status] || 0) + 1;
 
       if (ORDER_TYPES.includes(leadType)) {
         totalOrders++;
-      }
 
-      if (createdAt) {
-        if (createdAt >= sevenDaysAgo) last7Days++;
-        if (createdAt >= thirtyDaysAgo) last30Days++;
+        if (createdAt) {
+          if (createdAt >= sevenDaysAgo) last7Days++;
+          if (createdAt >= thirtyDaysAgo) last30Days++;
 
-        const dateKey = createdAt.toISOString().split('T')[0];
-        if (dateKey in dailyCounts) {
-          dailyCounts[dateKey]++;
+          const dateKey = createdAt.toISOString().split('T')[0];
+          if (dateKey in dailyCounts) {
+            dailyCounts[dateKey]++;
+          }
         }
-      }
 
-      if (recentLeads.length < 5) {
-        recentLeads.push({
-          id: doc.id,
-          email: data.email || '',
-          full_name: data.full_name || null,
-          lead_type: leadType,
-          status,
-          metadata: data.metadata || {},
-          created_at: createdAt?.toISOString() || null,
-        });
+        // Only show orders in recent leads
+        if (recentLeads.length < 5) {
+          recentLeads.push({
+            id: doc.id,
+            email: data.email || '',
+            full_name: data.full_name || null,
+            lead_type: leadType,
+            status,
+            metadata: data.metadata || {},
+            created_at: createdAt?.toISOString() || null,
+          });
+        }
       }
     });
 
+    // Count non-excluded leads
+    const totalLeads = Object.values(byType).reduce((sum, count) => sum + count, 0);
+
     return res.status(200).json({
-      totalLeads: snapshot.size,
+      totalLeads,
       totalOrders,
       byType,
       byStatus,

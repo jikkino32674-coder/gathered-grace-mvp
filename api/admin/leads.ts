@@ -55,6 +55,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
     });
 
+    // Exclude test entries
+    leads = leads.filter(l => l.lead_type !== 'test_firebase_connection');
+
     // Filter by lead_type
     if (lead_type) {
       leads = leads.filter(l => l.lead_type === lead_type);
