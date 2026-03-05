@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { StatusBadge } from './StatusBadge';
-import { useUpdateStatus, useUpdateTracking, useUpdateNotes, useCreateInvoice } from '../hooks/useLeads';
+import { useUpdateStatus, useUpdateTracking, useUpdateNotes, useCreateInvoice, useDeleteLead } from '../hooks/useLeads';
 import { LEAD_TYPE_LABELS, CONTACT_LEAD_TYPES, type Lead, type OrderStatus } from '../types/admin';
 import { toast } from 'sonner';
 import { Loader2, FileText, Plus, Trash2 } from 'lucide-react';
@@ -41,6 +41,7 @@ export function OrderDetailPanel({ lead, open, onClose }: OrderDetailPanelProps)
   const updateTracking = useUpdateTracking();
   const updateNotes = useUpdateNotes();
   const createInvoice = useCreateInvoice();
+  const deleteLead = useDeleteLead();
 
   useEffect(() => {
     if (lead) {
@@ -431,6 +432,36 @@ export function OrderDetailPanel({ lead, open, onClose }: OrderDetailPanelProps)
               Last updated: {formatDate(lead.updated_at)}
             </p>
           )}
+
+          <Separator />
+
+          {/* Delete */}
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
+            onClick={() => {
+              if (window.confirm(`Delete this order from ${lead.email}? This cannot be undone.`)) {
+                deleteLead.mutate({ id: lead.id }, {
+                  onSuccess: () => {
+                    toast.success('Order deleted');
+                    onClose();
+                  },
+                  onError: (err: any) => {
+                    toast.error(err.message || 'Failed to delete');
+                  },
+                });
+              }
+            }}
+            disabled={deleteLead.isPending}
+          >
+            {deleteLead.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            ) : (
+              <Trash2 className="h-4 w-4 mr-2" />
+            )}
+            Delete Order
+          </Button>
         </div>
       </SheetContent>
     </Sheet>

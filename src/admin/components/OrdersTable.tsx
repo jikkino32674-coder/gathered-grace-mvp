@@ -16,8 +16,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
-import { useLeads } from '../hooks/useLeads';
+import { ChevronLeft, ChevronRight, Search, Trash2 } from 'lucide-react';
+import { useLeads, useDeleteLead } from '../hooks/useLeads';
 import { StatusBadge } from './StatusBadge';
 import { LEAD_TYPE_LABELS, ORDER_LEAD_TYPES, CONTACT_LEAD_TYPES, type Lead, type OrderStatus } from '../types/admin';
 
@@ -33,6 +33,7 @@ export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes
   const [leadType, setLeadType] = useState<string>('all');
   const [status, setStatus] = useState<string>('all');
   const [page, setPage] = useState(1);
+  const deleteLead = useDeleteLead();
 
   // Debounce search
   const handleSearchChange = (value: string) => {
@@ -129,13 +130,14 @@ export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Tracking</TableHead>
+              <TableHead className="w-10"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               Array.from({ length: 5 }).map((_, i) => (
                 <TableRow key={i}>
-                  {Array.from({ length: 6 }).map((_, j) => (
+                  {Array.from({ length: 7 }).map((_, j) => (
                     <TableCell key={j}>
                       <div className="h-4 w-full bg-muted animate-pulse rounded" />
                     </TableCell>
@@ -144,7 +146,7 @@ export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes
               ))
             ) : data?.leads.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                   No orders found
                 </TableCell>
               </TableRow>
@@ -174,6 +176,20 @@ export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}
+                  </TableCell>
+                  <TableCell>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`Delete this order from ${lead.email}? This cannot be undone.`)) {
+                          deleteLead.mutate({ id: lead.id });
+                        }
+                      }}
+                      className="p-1 rounded hover:bg-red-50 text-muted-foreground hover:text-red-600 transition-colors"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </TableCell>
                 </TableRow>
               ))

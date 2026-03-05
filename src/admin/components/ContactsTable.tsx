@@ -10,8 +10,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
-import { useLeads } from '../hooks/useLeads';
+import { ChevronLeft, ChevronRight, Search, Trash2 } from 'lucide-react';
+import { useLeads, useDeleteLead } from '../hooks/useLeads';
 import { LEAD_TYPE_LABELS } from '../types/admin';
 
 interface ContactsTableProps {
@@ -31,6 +31,8 @@ export function ContactsTable({ leadType }: ContactsTableProps) {
       setPage(1);
     }, 300);
   };
+
+  const deleteLead = useDeleteLead();
 
   const { data, isLoading } = useLeads({
     lead_type: leadType,
@@ -69,6 +71,7 @@ export function ContactsTable({ leadType }: ContactsTableProps) {
               <TableHead>Email</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Source</TableHead>
+              <TableHead className="w-10"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -84,7 +87,7 @@ export function ContactsTable({ leadType }: ContactsTableProps) {
               ))
             ) : data?.leads.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                   No contacts found
                 </TableCell>
               </TableRow>
@@ -101,6 +104,19 @@ export function ContactsTable({ leadType }: ContactsTableProps) {
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {lead.source_page || '—'}
+                  </TableCell>
+                  <TableCell>
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Delete ${lead.email}? This cannot be undone.`)) {
+                          deleteLead.mutate({ id: lead.id });
+                        }
+                      }}
+                      className="p-1 rounded hover:bg-red-50 text-muted-foreground hover:text-red-600 transition-colors"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </TableCell>
                 </TableRow>
               ))

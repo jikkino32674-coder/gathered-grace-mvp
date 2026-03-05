@@ -64,6 +64,22 @@ export function useUpdateNotes() {
   });
 }
 
+export function useDeleteLead() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id }: { id: string }) =>
+      adminFetch('/api/admin/delete-lead', {
+        method: 'DELETE',
+        body: JSON.stringify({ id }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-leads'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-stats'] });
+    },
+  });
+}
+
 export function useCreateInvoice() {
   const queryClient = useQueryClient();
 
