@@ -34,6 +34,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       'handmade_balm_form', 'journal_pen_form',
     ];
 
+    // Normalize lead_type: some leads have spaces instead of underscores
+    const normalizeType = (t: string) => t.replace(/ /g, '_');
+
     const EXCLUDED_TYPES = ['test_firebase_connection'];
 
     const CONTACT_TYPES = ['email_signup', 'discount_popup'];
@@ -57,7 +60,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     snapshot.docs.forEach(doc => {
       const data = doc.data();
-      const leadType = data.lead_type || 'unknown';
+      const rawLeadType = data.lead_type || 'unknown';
+      const leadType = normalizeType(rawLeadType);
       const status = data.status || 'new';
       const createdAt = data.created_at?.toDate?.();
 

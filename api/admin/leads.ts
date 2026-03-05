@@ -46,13 +46,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Fetch all docs and filter in-memory to avoid Firestore composite index requirements
     const snapshot = await adminDb.collection('b2c_leads').get();
 
+    // Normalize lead_type: some leads have spaces instead of underscores
+    const normalizeType = (t: string) => t.replace(/ /g, '_');
+
     let leads = snapshot.docs.map(doc => {
       const data = doc.data();
       return {
         id: doc.id,
         email: data.email || '',
         full_name: data.full_name || null,
-        lead_type: data.lead_type || '',
+        lead_type: normalizeType(data.lead_type || ''),
         source_page: data.source_page || '',
         website_type: data.website_type || '',
         metadata: data.metadata || {},

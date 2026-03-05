@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { DollarSign, TrendingUp, Wallet, ShoppingCart } from 'lucide-react';
+import { DollarSign, TrendingUp, Wallet, ShoppingCart, CalendarDays, X } from 'lucide-react';
 import { useStripeStats } from '../hooks/useStripeStats';
 
 const fmt = (amount: number) =>
@@ -30,28 +29,35 @@ export function RevenueKPIs() {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <CardTitle className="text-base">Revenue & KPIs</CardTitle>
-          <div className="flex items-center gap-2">
-            <Input
+          <div className="flex items-center gap-1.5 rounded-lg border bg-muted/40 px-2 py-1">
+            <CalendarDays className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+            <input
               type="date"
               value={startInput}
               onChange={(e) => setStartInput(e.target.value)}
-              className="h-8 w-[130px] text-xs"
+              className="h-7 w-[120px] rounded border-0 bg-background px-2 text-xs focus:outline-none focus:ring-1 focus:ring-ring"
             />
-            <span className="text-xs text-muted-foreground">to</span>
-            <Input
+            <span className="text-xs text-muted-foreground">—</span>
+            <input
               type="date"
               value={endInput}
               onChange={(e) => setEndInput(e.target.value)}
-              className="h-8 w-[130px] text-xs"
+              className="h-7 w-[120px] rounded border-0 bg-background px-2 text-xs focus:outline-none focus:ring-1 focus:ring-ring"
             />
-            <Button size="sm" variant="outline" className="h-8 text-xs" onClick={handleApplyRange}>
+            <Button
+              size="sm"
+              variant="default"
+              className="h-7 px-3 text-xs"
+              onClick={handleApplyRange}
+              disabled={!startInput || !endInput}
+            >
               Apply
             </Button>
             {customRange && (
-              <Button size="sm" variant="ghost" className="h-8 text-xs" onClick={handleClearRange}>
-                Clear
+              <Button size="sm" variant="ghost" className="h-7 w-7 p-0" onClick={handleClearRange}>
+                <X className="h-3.5 w-3.5" />
               </Button>
             )}
           </div>
@@ -104,9 +110,9 @@ export function RevenueKPIs() {
                   <span className="text-xs text-muted-foreground">Stripe Balance</span>
                 </div>
                 <p className="text-xl font-bold text-amber-700">{fmt(data.availableBalance)}</p>
-                {data.pendingBalance > 0 && (
-                  <p className="text-xs text-muted-foreground">{fmt(data.pendingBalance)} pending</p>
-                )}
+                <p className="text-xs text-muted-foreground">
+                  {data.pendingBalance > 0 ? `${fmt(data.pendingBalance)} pending` : 'Available'}
+                </p>
               </div>
             </div>
 
