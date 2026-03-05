@@ -32,25 +32,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const customStart = start ? Math.floor(new Date(start).getTime() / 1000) : null;
     const customEnd = end ? Math.floor(new Date(end).getTime() / 1000) : null;
 
-    // Fetch recent payments (using PaymentIntents — covers Checkout Sessions + invoices)
-    const [balance, payments7d, payments30d, paymentsAllTime, paymentsCustom] = await Promise.all([
+    // Fetch all paid invoices and balance in parallel
+    const [balance, allPaidInvoices] = await Promise.all([
       stripe.balance.retrieve(),
-      fetchPayments(sevenDaysAgo, now),
-      fetchPayments(thirtyDaysAgo, now),
-      fetchPayments(0, now),
-      customStart && customEnd ? fetchPayments(customStart, customEnd) : Promise.resolve(null),
+      fetchPaidInvoices(),
     ]);
 
-    // Calculate revenue
-    const revenue7d = sumPayments(payments7d);
-    const revenue30d = sumPayments(payments30d);
-    const revenueAllTime = sumPayments(paymentsAllTime);
-    const revenueCustom = paymentsCustom ? sumPayments(paymentsCustom) : null;
+    // Filter by time periods
+    const invoices7d = allPaidInvoices.filter(inv => (inv.status_transitions?.paid_at || 0) >= sevenDaysAgo);
+    const invoices30d = allPaidInvoices.filter(inv => (inv.status_transitions?.paid_at || 0) >= thirtyDaysAgo);
+    const invoicesCustom = customStart && customEnd
+      ? allPaidInvoices.filter(inv => {
+          const paidAt = inv.status_transitions?.paid_at || 0;
+          return paidAt >= customStart && paidAt <= customEnd;
+        })
+      : null;
+
+    // Calculate revenue (amount_paid is already in cents)
+    const revenue7d = sumInvoices(invoices7d);
+    const revenue30d = sumInvoices(invoices30d);
+    const revenueAllTime = sumInvoices(allPaidInvoices);
+    const revenueCustom = invoicesCustom ? sumInvoices(invoicesCustom) : null;
 
     // Calculate AOV
-    const aov7d = payments7d.length > 0 ? revenue7d / payments7d.length : 0;
-    const aov30d = payments30d.length > 0 ? revenue30d / payments30d.length : 0;
-    const aovAllTime = paymentsAllTime.length > 0 ? revenueAllTime / paymentsAllTime.length : 0;
+    const aov7d = invoices7d.length > 0 ? revenue7d / invoices7d.length : 0;
+    const aov30d = invoices30d.length > 0 ? revenue30d / invoices30d.length : 0;
+    const aovAllTime = allPaidInvoices.length > 0 ? revenueAllTime / allPaidInvoices.length : 0;
 
     // Stripe balance (available + pending)
     const availableBalance = balance.available.reduce((sum, b) => sum + b.amount, 0);
@@ -61,9 +68,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       revenue30d: revenue30d / 100,
       revenueAllTime: revenueAllTime / 100,
       revenueCustom: revenueCustom !== null ? revenueCustom / 100 : null,
-      orders7d: payments7d.length,
-      orders30d: payments30d.length,
-      ordersAllTime: paymentsAllTime.length,
+      orders7d: invoices7d.length,
+      orders30d: invoices30d.length,
+      ordersAllTime: allPaidInvoices.length,
       aov7d: Math.round(aov7d) / 100,
       aov30d: Math.round(aov30d) / 100,
       aovAllTime: Math.round(aovAllTime) / 100,
@@ -78,20 +85,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 }
 
-async function fetchPayments(startTs: number, endTs: number): Promise<Stripe.PaymentIntent[]> {
-  const payments: Stripe.PaymentIntent[] = [];
+async function fetchPaidInvoices(): Promise<Stripe.Invoice[]> {
+  const invoices: Stripe.Invoice[] = [];
   let hasMore = true;
   let startingAfter: string | undefined;
 
   while (hasMore) {
-    const list = await stripe.paymentIntents.list({
-      created: { gte: startTs, lte: endTs },
+    const list = await stripe.invoices.list({
+      status: 'paid',
       limit: 100,
       ...(startingAfter && { starting_after: startingAfter }),
     });
 
-    const succeeded = list.data.filter(p => p.status === 'succeeded');
-    payments.push(...succeeded);
+    invoices.push(...list.data);
 
     hasMore = list.has_more;
     if (list.data.length > 0) {
@@ -101,9 +107,9 @@ async function fetchPayments(startTs: number, endTs: number): Promise<Stripe.Pay
     }
   }
 
-  return payments;
+  return invoices;
 }
 
-function sumPayments(payments: Stripe.PaymentIntent[]): number {
-  return payments.reduce((sum, p) => sum + (p.amount_received || p.amount), 0);
+function sumInvoices(invoices: Stripe.Invoice[]): number {
+  return invoices.reduce((sum, inv) => sum + (inv.amount_paid || 0), 0);
 }
