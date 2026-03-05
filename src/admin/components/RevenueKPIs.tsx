@@ -73,14 +73,16 @@ export function RevenueKPIs() {
         ) : data ? (
           <div className="space-y-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* Revenue Last 7 Days */}
+              {/* Total Revenue */}
               <div className="rounded-lg border p-4">
                 <div className="flex items-center gap-2 mb-1">
                   <DollarSign className="h-4 w-4 text-green-600" />
-                  <span className="text-xs text-muted-foreground">Last 7 Days</span>
+                  <span className="text-xs text-muted-foreground">Total Revenue</span>
                 </div>
-                <p className="text-xl font-bold text-green-700">{fmt(data.revenue7d)}</p>
-                <p className="text-xs text-muted-foreground">{data.orders7d} orders</p>
+                <p className="text-xl font-bold text-green-700">{fmt(data.revenueAllTime)}</p>
+                <p className="text-xs text-muted-foreground">
+                  {data.ordersAllTime} orders all time
+                </p>
               </div>
 
               {/* Revenue Last 30 Days */}
@@ -90,7 +92,9 @@ export function RevenueKPIs() {
                   <span className="text-xs text-muted-foreground">Last 30 Days</span>
                 </div>
                 <p className="text-xl font-bold text-blue-700">{fmt(data.revenue30d)}</p>
-                <p className="text-xs text-muted-foreground">{data.orders30d} orders</p>
+                <p className="text-xs text-muted-foreground">
+                  {data.orders30d} orders · {fmt(data.revenue7d)} last 7d
+                </p>
               </div>
 
               {/* AOV */}
@@ -99,8 +103,8 @@ export function RevenueKPIs() {
                   <ShoppingCart className="h-4 w-4 text-purple-600" />
                   <span className="text-xs text-muted-foreground">Avg Order Value</span>
                 </div>
-                <p className="text-xl font-bold text-purple-700">{fmt(data.aov30d)}</p>
-                <p className="text-xs text-muted-foreground">30-day avg</p>
+                <p className="text-xl font-bold text-purple-700">{fmt(data.aovAllTime)}</p>
+                <p className="text-xs text-muted-foreground">All time average</p>
               </div>
 
               {/* Stripe Balance */}

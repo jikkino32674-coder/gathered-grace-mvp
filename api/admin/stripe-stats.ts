@@ -33,21 +33,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const customEnd = end ? Math.floor(new Date(end).getTime() / 1000) : null;
 
     // Fetch recent payments (using PaymentIntents — covers Checkout Sessions + invoices)
-    const [balance, payments7d, payments30d, paymentsCustom] = await Promise.all([
+    const [balance, payments7d, payments30d, paymentsAllTime, paymentsCustom] = await Promise.all([
       stripe.balance.retrieve(),
       fetchPayments(sevenDaysAgo, now),
       fetchPayments(thirtyDaysAgo, now),
+      fetchPayments(0, now),
       customStart && customEnd ? fetchPayments(customStart, customEnd) : Promise.resolve(null),
     ]);
 
     // Calculate revenue
     const revenue7d = sumPayments(payments7d);
     const revenue30d = sumPayments(payments30d);
+    const revenueAllTime = sumPayments(paymentsAllTime);
     const revenueCustom = paymentsCustom ? sumPayments(paymentsCustom) : null;
 
     // Calculate AOV
     const aov7d = payments7d.length > 0 ? revenue7d / payments7d.length : 0;
     const aov30d = payments30d.length > 0 ? revenue30d / payments30d.length : 0;
+    const aovAllTime = paymentsAllTime.length > 0 ? revenueAllTime / paymentsAllTime.length : 0;
 
     // Stripe balance (available + pending)
     const availableBalance = balance.available.reduce((sum, b) => sum + b.amount, 0);
@@ -56,11 +59,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({
       revenue7d: revenue7d / 100,
       revenue30d: revenue30d / 100,
+      revenueAllTime: revenueAllTime / 100,
       revenueCustom: revenueCustom !== null ? revenueCustom / 100 : null,
       orders7d: payments7d.length,
       orders30d: payments30d.length,
+      ordersAllTime: paymentsAllTime.length,
       aov7d: Math.round(aov7d) / 100,
       aov30d: Math.round(aov30d) / 100,
+      aovAllTime: Math.round(aovAllTime) / 100,
       availableBalance: availableBalance / 100,
       pendingBalance: pendingBalance / 100,
       totalBalance: (availableBalance + pendingBalance) / 100,

@@ -4,11 +4,14 @@ import { adminFetch } from '../lib/adminApi';
 export interface StripeStats {
   revenue7d: number;
   revenue30d: number;
+  revenueAllTime: number;
   revenueCustom: number | null;
   orders7d: number;
   orders30d: number;
+  ordersAllTime: number;
   aov7d: number;
   aov30d: number;
+  aovAllTime: number;
   availableBalance: number;
   pendingBalance: number;
   totalBalance: number;
