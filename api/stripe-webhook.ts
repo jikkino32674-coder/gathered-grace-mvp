@@ -162,184 +162,100 @@ async function sendThankYouEmail({
     ? `<p>We're now preparing a beautiful <strong>${kitDisplayName}</strong> for <strong>${recipientName}</strong>. What a thoughtful gesture to reach out and support someone you care about.</p>`
     : `<p>We're now preparing your <strong>${kitDisplayName}</strong> with care.</p>`;
 
-  const emailHtml = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <style>
-          body {
-            font-family: Georgia, serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-          }
-          .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-          }
-          .header {
-            background: linear-gradient(135deg, #8b7355 0%, #6a5444 100%);
-            color: white;
-            padding: 50px 30px;
-            text-align: center;
-          }
-          .header h1 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 300;
-            letter-spacing: 1px;
-          }
-          .header p {
-            margin: 0;
-            font-size: 16px;
-            opacity: 0.95;
-            font-weight: 300;
-          }
-          .content {
-            padding: 40px 30px;
-          }
-          .greeting {
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: #6a5444;
-            font-weight: 500;
-          }
-          .message {
-            margin-bottom: 20px;
-            line-height: 1.8;
-          }
-          .order-box {
-            background: #faf7f5;
-            border: 1px solid #e8e0d8;
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 8px;
-          }
-          .order-box h3 {
-            margin: 0 0 15px 0;
-            color: #6a5444;
-            font-size: 16px;
-          }
-          .order-detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #ede7e0;
-          }
-          .order-detail:last-child {
-            border-bottom: none;
-          }
-          .order-label {
-            color: #888;
-            font-size: 14px;
-          }
-          .order-value {
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-          }
-          .next-steps {
-            background: #f0f7f0;
-            border-left: 4px solid #7a9e7a;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 0 8px 8px 0;
-          }
-          .next-steps h3 {
-            margin: 0 0 10px 0;
-            color: #5a7e5a;
-            font-size: 15px;
-          }
-          .next-steps ol {
-            margin: 0;
-            padding-left: 20px;
-          }
-          .next-steps li {
-            margin-bottom: 8px;
-            font-size: 14px;
-          }
-          .footer {
-            background-color: #f9f9f9;
-            padding: 30px;
-            text-align: center;
-            font-size: 13px;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
-          }
-          .footer p { margin: 5px 0; }
-          .footer a { color: #8b7355; text-decoration: none; font-weight: 500; }
-          @media only screen and (max-width: 600px) {
-            .container { margin: 20px auto; }
-            .header h1 { font-size: 22px; }
-            .content { padding: 25px 20px; }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h1>Order Confirmed!</h1>
-            <p>Thank you for choosing Gathered Grace</p>
-          </div>
+  // Build order summary rows using table layout (Gmail-compatible)
+  let orderRows = `
+              <tr>
+                <td style="padding: 10px 0; border-bottom: 1px solid #ede7e0; color: #888; font-size: 14px; width: 80px; vertical-align: top;">Item</td>
+                <td style="padding: 10px 0; border-bottom: 1px solid #ede7e0; font-weight: 600; color: #333; font-size: 14px; text-align: right;">${kitDisplayName}</td>
+              </tr>`;
+  if (recipientName) {
+    orderRows += `
+              <tr>
+                <td style="padding: 10px 0; border-bottom: 1px solid #ede7e0; color: #888; font-size: 14px; width: 80px; vertical-align: top;">For</td>
+                <td style="padding: 10px 0; border-bottom: 1px solid #ede7e0; font-weight: 600; color: #333; font-size: 14px; text-align: right;">${recipientName}</td>
+              </tr>`;
+  }
+  if (amountPaid) {
+    orderRows += `
+              <tr>
+                <td style="padding: 10px 0; color: #888; font-size: 14px; width: 80px; vertical-align: top;">Total</td>
+                <td style="padding: 10px 0; font-weight: 600; color: #333; font-size: 14px; text-align: right;">${amountPaid}</td>
+              </tr>`;
+  }
 
-          <div class="content">
-            <div class="greeting">Hi ${senderFirstName},</div>
+  const emailHtml = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family: Georgia, serif; line-height: 1.6; color: #333; background-color: #f9f9f9; margin: 0; padding: 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9f9f9;">
+      <tr>
+        <td align="center" style="padding: 40px 20px;">
+          <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+            <!-- Header -->
+            <tr>
+              <td style="background: linear-gradient(135deg, #8b7355 0%, #6a5444 100%); background-color: #7a6349; color: white; padding: 50px 30px; text-align: center;">
+                <h1 style="margin: 0 0 10px 0; font-size: 28px; font-weight: 300; letter-spacing: 1px;">Order Confirmed!</h1>
+                <p style="margin: 0; font-size: 16px; opacity: 0.95; font-weight: 300;">Thank you for choosing Gathered Grace</p>
+              </td>
+            </tr>
 
-            <div class="message">
-              <p>Thank you so much for your order! It's such a thoughtful gesture to spread a little more kindness in the world, and we are honored to be a part of it.</p>
-              ${recipientLine}
-            </div>
+            <!-- Content -->
+            <tr>
+              <td style="padding: 40px 30px;">
+                <p style="font-size: 20px; margin: 0 0 25px 0; color: #6a5444; font-weight: 500;">Hi ${senderFirstName},</p>
 
-            <div class="order-box">
-              <h3>Order Summary</h3>
-              <div class="order-detail">
-                <span class="order-label">Item</span>
-                <span class="order-value">${kitDisplayName}</span>
-              </div>
-              ${recipientName ? `
-              <div class="order-detail">
-                <span class="order-label">For</span>
-                <span class="order-value">${recipientName}</span>
-              </div>` : ''}
-              ${amountPaid ? `
-              <div class="order-detail">
-                <span class="order-label">Total</span>
-                <span class="order-value">${amountPaid}</span>
-              </div>` : ''}
-            </div>
+                <p style="margin: 0 0 15px 0; line-height: 1.8;">Thank you so much for your order! It's such a thoughtful gesture to spread a little more kindness in the world, and we are honored to be a part of it.</p>
+                ${recipientLine}
 
-            <div class="next-steps">
-              <h3>What happens next?</h3>
-              <ol>
-                <li>We'll carefully prepare your gift with love and attention to detail</li>
-                <li>Once shipped, you'll receive an email with your tracking number</li>
-                <li>Your gift will be on its way to bring comfort and joy!</li>
-              </ol>
-            </div>
+                <!-- Order Summary Box -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #faf7f5; border: 1px solid #e8e0d8; border-radius: 8px; margin: 25px 0;">
+                  <tr>
+                    <td style="padding: 25px;">
+                      <h3 style="margin: 0 0 15px 0; color: #6a5444; font-size: 16px;">Order Summary</h3>
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                        ${orderRows}
+                      </table>
+                    </td>
+                  </tr>
+                </table>
 
-            <div class="message" style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
-              <p style="font-size: 14px; color: #666;">Questions about your order? Just reply to this email &mdash; we're always happy to help.</p>
-            </div>
-          </div>
+                <!-- Next Steps -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f0f7f0; border-left: 4px solid #7a9e7a; border-radius: 0 8px 8px 0; margin: 25px 0;">
+                  <tr>
+                    <td style="padding: 20px;">
+                      <h3 style="margin: 0 0 10px 0; color: #5a7e5a; font-size: 15px;">What happens next?</h3>
+                      <ol style="margin: 0; padding-left: 20px;">
+                        <li style="margin-bottom: 8px; font-size: 14px;">We'll carefully prepare your gift with love and attention to detail</li>
+                        <li style="margin-bottom: 8px; font-size: 14px;">Once shipped, you'll receive an email with your tracking number</li>
+                        <li style="margin-bottom: 0; font-size: 14px;">Your gift will be on its way to bring comfort and joy!</li>
+                      </ol>
+                    </td>
+                  </tr>
+                </table>
 
-          <div class="footer">
-            <p><strong>Gathered Grace</strong></p>
-            <p>Thoughtful gifts for meaningful connection</p>
-            <p style="margin-top: 15px;">
-              <a href="https://gatheredgrace.us">Visit our website</a>
-            </p>
-          </div>
-        </div>
-      </body>
-    </html>
-  `;
+                <p style="margin: 30px 0 0 0; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 14px; color: #666;">Questions about your order? Just reply to this email &mdash; we're always happy to help.</p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td style="background-color: #f9f9f9; padding: 30px; text-align: center; font-size: 13px; color: #666; border-top: 1px solid #e0e0e0;">
+                <p style="margin: 5px 0;"><strong>Gathered Grace</strong></p>
+                <p style="margin: 5px 0;">Thoughtful gifts for meaningful connection</p>
+                <p style="margin: 15px 0 5px 0;">
+                  <a href="https://gatheredgrace.us" style="color: #8b7355; text-decoration: none; font-weight: 500;">Visit our website</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
 
   const emailText = `
 Hi ${senderFirstName},
@@ -367,9 +283,11 @@ https://gatheredgrace.us
   `.trim();
 
   try {
+    const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || 'gatheredgrace.giving@gmail.com';
     const result = await resend.emails.send({
       from: fromEmail,
       to,
+      bcc: adminEmail,
       subject,
       html: emailHtml,
       text: emailText,
