@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { FieldValue } from 'firebase-admin/firestore';
-import { adminDb } from '../_lib/firebase-admin';
-import { verifyAdminAuth } from '../_lib/verify-auth';
+import { adminDb } from '../_lib/firebase-admin.js';
+import { verifyAdminAuth } from '../_lib/verify-auth.js';
 
 const VALID_STATUSES = ['new', 'processing', 'shipped', 'delivered'];
 

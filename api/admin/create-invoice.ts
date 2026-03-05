@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
-import { adminDb } from '../_lib/firebase-admin';
-import { verifyAdminAuth } from '../_lib/verify-auth';
+import { adminDb } from '../_lib/firebase-admin.js';
+import { verifyAdminAuth } from '../_lib/verify-auth.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { typescript: true });
 

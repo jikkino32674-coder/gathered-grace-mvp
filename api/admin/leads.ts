@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { adminDb } from '../_lib/firebase-admin';
-import { verifyAdminAuth } from '../_lib/verify-auth';
+import { adminDb } from '../_lib/firebase-admin.js';
+import { verifyAdminAuth } from '../_lib/verify-auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'OPTIONS') {
