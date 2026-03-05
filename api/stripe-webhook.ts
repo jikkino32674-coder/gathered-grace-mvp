@@ -243,10 +243,13 @@ async function sendThankYouEmail({
             <!-- Footer -->
             <tr>
               <td style="background-color: #f9f9f9; padding: 30px; text-align: center; font-size: 13px; color: #666; border-top: 1px solid #e0e0e0;">
-                <p style="margin: 5px 0;"><strong>Gathered Grace</strong></p>
-                <p style="margin: 5px 0;">Thoughtful gifts for meaningful connection</p>
-                <p style="margin: 15px 0 5px 0;">
-                  <a href="https://gatheredgrace.us" style="color: #8b7355; text-decoration: none; font-weight: 500;">Visit our website</a>
+                <p style="margin: 0 0 12px 0;"><strong>Gathered Grace</strong></p>
+                <p style="margin: 0 0 5px 0;">
+                  <a href="https://gatheredgrace.us" style="color: #8b7355; text-decoration: none; font-weight: 500;">Website</a>
+                  &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                  <a href="https://www.instagram.com/nikkijo74?igsh=NWd5dHZqMnU2NGp4" style="color: #8b7355; text-decoration: none; font-weight: 500;">Instagram</a>
+                  &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                  <a href="https://www.facebook.com/GatheredGraceGifts/" style="color: #8b7355; text-decoration: none; font-weight: 500;">Facebook</a>
                 </p>
               </td>
             </tr>
@@ -278,8 +281,9 @@ Questions about your order? Just reply to this email.
 
 ---
 Gathered Grace
-Thoughtful gifts for meaningful connection
 https://gatheredgrace.us
+Instagram: https://www.instagram.com/nikkijo74
+Facebook: https://www.facebook.com/GatheredGraceGifts/
   `.trim();
 
   try {
