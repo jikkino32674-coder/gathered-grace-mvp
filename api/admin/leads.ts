@@ -34,24 +34,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const pageNum = Math.max(1, parseInt(page));
     const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
 
-    let query = adminDb.collection('b2c_leads')
-      .orderBy(sort_by, sort_dir === 'asc' ? 'asc' : 'desc');
-
-    if (lead_type) {
-      query = query.where('lead_type', '==', lead_type);
-    }
-
-    if (status) {
-      if (status === 'new') {
-        // "new" is the default for docs without a status field — handled in post-processing
-      } else {
-        query = query.where('status', '==', status);
-      }
-    }
-
-    // Fetch all matching docs (Firestore doesn't support offset-based pagination efficiently)
-    // For the current scale this is fine
-    const snapshot = await query.get();
+    // Fetch all docs and filter in-memory to avoid Firestore composite index requirements
+    const snapshot = await adminDb.collection('b2c_leads').get();
 
     let leads = snapshot.docs.map(doc => {
       const data = doc.data();
@@ -71,10 +55,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       };
     });
 
-    // Filter by "new" status (docs without status field)
-    if (status === 'new') {
-      leads = leads.filter(l => l.status === 'new');
+    // Filter by lead_type
+    if (lead_type) {
+      leads = leads.filter(l => l.lead_type === lead_type);
     }
+
+    // Filter by status
+    if (status) {
+      leads = leads.filter(l => l.status === status);
+    }
+
+    // Sort in-memory
+    leads.sort((a, b) => {
+      const aVal = (a as any)[sort_by] || '';
+      const bVal = (b as any)[sort_by] || '';
+      if (sort_dir === 'asc') return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+    });
 
     // Client-side search (Firestore doesn't support full-text search)
     if (search) {
