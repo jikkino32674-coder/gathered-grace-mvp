@@ -16,6 +16,14 @@ import BuildCustomKit from "./pages/BuildCustomKit";
 import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 
+// Admin imports
+import { AuthProvider, RequireAuth } from "./admin/context/AuthContext";
+import { AdminLayout } from "./admin/components/AdminLayout";
+import AdminLogin from "./admin/pages/AdminLogin";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import AdminOrders from "./admin/pages/AdminOrders";
+import AdminContacts from "./admin/pages/AdminContacts";
+
 const queryClient = new QueryClient();
 
 // Scroll to top component
@@ -47,6 +55,25 @@ const App = () => (
           <Route path="/products/restore-kit" element={<RestoreKitDetails />} />
           <Route path="/build-custom" element={<BuildCustomKit />} />
           <Route path="/payment" element={<Payment />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={
+            <AuthProvider>
+              <AdminLogin />
+            </AuthProvider>
+          } />
+          <Route path="/admin" element={
+            <AuthProvider>
+              <RequireAuth>
+                <AdminLayout />
+              </RequireAuth>
+            </AuthProvider>
+          }>
+            <Route index element={<AdminDashboard />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="contacts" element={<AdminContacts />} />
+          </Route>
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
