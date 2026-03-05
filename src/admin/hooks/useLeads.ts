@@ -7,6 +7,7 @@ export function useLeads(filters: LeadsFilters = {}) {
   if (filters.lead_type) params.set('lead_type', filters.lead_type);
   if (filters.status) params.set('status', filters.status);
   if (filters.search) params.set('search', filters.search);
+  if (filters.category) params.set('category', filters.category);
   if (filters.page) params.set('page', String(filters.page));
   if (filters.limit) params.set('limit', String(filters.limit));
   if (filters.sort_by) params.set('sort_by', filters.sort_by);

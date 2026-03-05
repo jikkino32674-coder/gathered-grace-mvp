@@ -15,10 +15,11 @@ import { useLeads, useDeleteLead } from '../hooks/useLeads';
 import { LEAD_TYPE_LABELS } from '../types/admin';
 
 interface ContactsTableProps {
-  leadType: string;
+  leadType?: string;
+  category?: 'orders' | 'contacts';
 }
 
-export function ContactsTable({ leadType }: ContactsTableProps) {
+export function ContactsTable({ leadType, category }: ContactsTableProps) {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -35,7 +36,8 @@ export function ContactsTable({ leadType }: ContactsTableProps) {
   const deleteLead = useDeleteLead();
 
   const { data, isLoading } = useLeads({
-    lead_type: leadType,
+    ...(leadType && { lead_type: leadType }),
+    ...(category && { category }),
     page,
     limit: 25,
     ...(debouncedSearch && { search: debouncedSearch }),

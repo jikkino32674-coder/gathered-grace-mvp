@@ -71,6 +71,7 @@ export interface LeadsFilters {
   lead_type?: string;
   status?: string;
   search?: string;
+  category?: 'orders' | 'contacts';
   page?: number;
   limit?: number;
   sort_by?: string;

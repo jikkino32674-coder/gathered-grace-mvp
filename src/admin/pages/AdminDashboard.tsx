@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAdminStats } from '../hooks/useAdminStats';
 import { StatsCards } from '../components/StatsCards';
 import { RecentOrdersChart } from '../components/RecentOrdersChart';
+import { RevenueKPIs } from '../components/RevenueKPIs';
 import { StatusBadge } from '../components/StatusBadge';
 import { LEAD_TYPE_LABELS, type OrderStatus } from '../types/admin';
 
@@ -32,6 +33,8 @@ export default function AdminDashboard() {
       <h1 className="text-2xl font-bold">Dashboard</h1>
 
       <StatsCards stats={stats} loading={isLoading} />
+
+      <RevenueKPIs />
 
       <RecentOrdersChart stats={stats} loading={isLoading} />
 

@@ -19,15 +19,14 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Search, Trash2 } from 'lucide-react';
 import { useLeads, useDeleteLead } from '../hooks/useLeads';
 import { StatusBadge } from './StatusBadge';
-import { LEAD_TYPE_LABELS, ORDER_LEAD_TYPES, CONTACT_LEAD_TYPES, type Lead, type OrderStatus } from '../types/admin';
+import { LEAD_TYPE_LABELS, ORDER_LEAD_TYPES, type Lead, type OrderStatus } from '../types/admin';
 
 interface OrdersTableProps {
   onSelectOrder: (lead: Lead) => void;
   leadTypeFilter?: string[];
-  excludeContactTypes?: boolean;
 }
 
-export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes = true }: OrdersTableProps) {
+export function OrdersTable({ onSelectOrder, leadTypeFilter }: OrdersTableProps) {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [leadType, setLeadType] = useState<string>('all');
@@ -48,25 +47,13 @@ export function OrdersTable({ onSelectOrder, leadTypeFilter, excludeContactTypes
   const filters: Record<string, any> = {
     page,
     limit: 25,
+    category: 'orders',
     ...(debouncedSearch && { search: debouncedSearch }),
     ...(leadType !== 'all' && { lead_type: leadType }),
     ...(status !== 'all' && { status }),
   };
 
-  const { data: rawData, isLoading } = useLeads(filters);
-
-  // Filter out contact types (email_signup, discount_popup) and test entries from orders view
-  const data = rawData && excludeContactTypes ? {
-    ...rawData,
-    leads: rawData.leads.filter(l =>
-      !(CONTACT_LEAD_TYPES as string[]).includes(l.lead_type) &&
-      l.lead_type !== 'test_firebase_connection'
-    ),
-    total: rawData.leads.filter(l =>
-      !(CONTACT_LEAD_TYPES as string[]).includes(l.lead_type) &&
-      l.lead_type !== 'test_firebase_connection'
-    ).length,
-  } : rawData;
+  const { data, isLoading } = useLeads(filters);
 
   const filterTypes = leadTypeFilter || ORDER_LEAD_TYPES;
 

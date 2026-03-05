@@ -25,11 +25,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       lead_type,
       status,
       search,
+      category,
       page = '1',
       limit = '25',
       sort_by = 'created_at',
       sort_dir = 'desc',
     } = req.query as Record<string, string>;
+
+    const ORDER_TYPES = [
+      'rest_kit_form', 'reflect_kit_form', 'restore_kit_form',
+      'custom_care_form', 'build_custom_kit',
+      'gathered_grace_gift_box_form', 'lavender_eye_pillow_form',
+      'handmade_balm_form', 'journal_pen_form',
+    ];
+    const CONTACT_TYPES = ['email_signup', 'discount_popup'];
 
     const pageNum = Math.max(1, parseInt(page));
     const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
@@ -57,6 +66,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Exclude test entries
     leads = leads.filter(l => l.lead_type !== 'test_firebase_connection');
+
+    // Filter by category (orders = only order types, contacts = only contact types)
+    if (category === 'orders') {
+      leads = leads.filter(l => ORDER_TYPES.includes(l.lead_type));
+    } else if (category === 'contacts') {
+      // Contacts don't filter — show all people
+    }
 
     // Filter by lead_type
     if (lead_type) {
